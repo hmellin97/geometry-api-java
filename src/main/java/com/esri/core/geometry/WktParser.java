@@ -22,6 +22,7 @@
  email: contracts@esri.com
  */
 package com.esri.core.geometry;
+import big.brain.CoverageTool;
 
 final class WktParser {
 	interface WktToken {
@@ -276,45 +277,65 @@ final class WktParser {
 	}
 
 	private void attributes_() {
+		CoverageTool.CoverageFunction cf = CoverageTool.addFunction("WktParser:attributes_", 13);
+		cf.setReachedBranch(0);
+
 		skipWhiteSpace_();
 		m_start_token = m_end_token;
 		m_function_stack.removeLast();
 
 		// Z and M is not allowed to have a space between them
 		boolean b_has_zs = false, b_has_ms = false;
-
 		if (m_wkt_string.charAt(m_end_token) == 'z'
 				|| m_wkt_string.charAt(m_end_token) == 'Z') {
+			cf.setReachedBranch(1);
 			b_has_zs = true;
 
-			if (++m_end_token >= m_wkt_string.length())
+			if (++m_end_token >= m_wkt_string.length()) {
+				cf.setReachedBranch(2);
 				throw new IllegalArgumentException();
+			}
 		}
 
 		if (m_wkt_string.charAt(m_end_token) == 'm'
 				|| m_wkt_string.charAt(m_end_token) == 'M') {
 			b_has_ms = true;
+			cf.setReachedBranch(3);
 
-			if (++m_end_token >= m_wkt_string.length())
+			if (++m_end_token >= m_wkt_string.length()) {
+				cf.setReachedBranch(4);
 				throw new IllegalArgumentException();
+			}
 		}
 
 		if (m_b_check_consistent_attributes) {
-			if (b_has_zs != m_b_has_zs || b_has_ms != m_b_has_ms)
+			cf.setReachedBranch(5);
+			if (b_has_zs != m_b_has_zs || b_has_ms != m_b_has_ms) {
+				cf.setReachedBranch(6);
 				throw new IllegalArgumentException();
+			}
 		}
 
+		cf.setReachedBranch(7);
 		m_b_has_zs = b_has_zs;
 		m_b_has_ms = b_has_ms;
 
 		if (m_b_has_zs || m_b_has_ms) {
-			if (m_b_has_zs && !m_b_has_ms)
+			cf.setReachedBranch(8);
+			if (m_b_has_zs && !m_b_has_ms) {
+				cf.setReachedBranch(9);
 				m_current_token_type = WktToken.attribute_z;
-			else if (m_b_has_ms && !m_b_has_zs)
+			}
+			else if (m_b_has_ms && !m_b_has_zs) {
+				cf.setReachedBranch(10);
 				m_current_token_type = WktToken.attribute_m;
-			else
+			}
+			else {
+				cf.setReachedBranch(11);
 				m_current_token_type = WktToken.attribute_zm;
+			}
 		} else {
+			cf.setReachedBranch(12);
 			nextToken();
 		}
 	}
