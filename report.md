@@ -2,26 +2,21 @@
 
 ## Project
 
-Name: 
+Name: Esri Geometry API
 * Mathieu Desponds
 * My Helmisaari
 * Julian Jaramillo
 * Axel Kennedal
 * Henrik Mellin
 
-URL: https://github.com/hmellin97/geometry-api-java
+URL to our fork: https://github.com/hmellin97/geometry-api-java
 
-One or two sentences describing it
+The Esri Geometry API for Java can be used to enable spatial data processing in 3rd-party data-processing solutions.
 
 ## Onboarding experience
+The project has a decent README. Cloning, building and running the tests using the Maven command line tool was very easy and pain-free. All dependencies are installed automatically by the build script.  The project had 486 tests which all passed. One thing that wasn't clear from the instructions in the repo though was that it requires a Java SDK version lower than SDK 11. Java 8 works, so that's what we went with. We wanted to use IntelliJ for working on this lab. The repo didn't contain any instructions for how to do this, and we had some issues with getting it to work. Eventually we got it working for everyone though and we are going to stick with this project.
 
-Did it build and run as documented?
-    
-See the assignment for details; if everything works out of the box,
-there is no need to write much here. If the first project(s) you picked
-ended up being unsuitable, you can describe the "onboarding experience"
-for each project, along with reason(s) why you changed to a different one.
-
+Before we went with this project we looked at the Apache Commons library (Java) because we had used it ourselves, but it turned out that the coverage was too high for us to want to continue with it.
 
 ## Complexity
 
