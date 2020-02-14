@@ -29,9 +29,26 @@ for each project, along with reason(s) why you changed to a different one.
    * Did all tools/methods get the same result?
    * Are the results clear?
 2. Are the functions just complex, or also long?
+    * Mathieu : 
+    * My : 
+    * Julian : 
+    * Axel :
+    * Henrik :
 3. What is the purpose of the functions?
+    * <name of function 1>
+    * <name of function 2>
 4. Are exceptions taken into account in the given measurements?
+    * Mathieu : 
+    * My : 
+    * Julian : 
+    * Axel :
+    * Henrik :
 5. Is the documentation clear w.r.t. all the possible outcomes?
+    * Mathieu : 
+    * My : 
+    * Julian : 
+    * Axel :
+    * Henrik :
 
 ## Coverage
 
