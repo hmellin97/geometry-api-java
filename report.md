@@ -27,22 +27,22 @@ Before we went with this project we looked at the Apache Commons library (Java) 
    * Did all tools/methods get the same result?
    * Are the results clear?
 2. Are the functions just complex, or also long?
-    * Mathieu : 
+    * *ToDo* : Make a summary of what everyone said 
+    * Mathieu : The fonctions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
     * My : 
     * Julian : 
     * Axel :
     * Henrik :
 3. What is the purpose of the functions?
-    * <name of function 1>
-    * <name of function 2>
+    * The goal of `_intersectLineLine` is to see if two lines intersect. If it is the case it returns the points that are in both lines
+    * The goal of `intersect` in `SegmentIntersector` is to determine if there is an intersection between a Point and a Segment with a certain `tolerance` where a Segment is a collection of line 
+    * 
+    * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
 4. Are exceptions taken into account in the given measurements?
-    * Mathieu : 
-    * My : 
-    * Julian : 
-    * Axel :
-    * Henrik :
+    * Yes all the conditions in an `if`, a `for` or a `while` add 1 to the cyclomatic complexity. So if there are 10 conditions on arguments this will add ten to the cyclomatic complexity. However, almost no arguments are tested at the beginning of the functions so the ratio of exception is very low.
 5. Is the documentation clear w.r.t. all the possible outcomes?
-    * Mathieu : 
+    * *ToDo* : Make a summary of what everyone said 
+    * Mathieu : No, there is no documentation at all.
     * My : 
     * Julian : 
     * Axel :
