@@ -40,6 +40,8 @@ Before we went with this project we looked at the Apache Commons library (Java) 
     * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
 4. Are exceptions taken into account in the given measurements?
     * Yes all the conditions in an `if`, a `for` or a `while` add 1 to the cyclomatic complexity. So if there are 10 conditions on arguments this will add ten to the cyclomatic complexity. However, almost no arguments are tested at the beginning of the functions so the ratio of exception is very low.
+    * The `assert` are not taken into account.
+    * The ternary logic operator are taken into account
 5. Is the documentation clear w.r.t. all the possible outcomes?
     * *ToDo* : Make a summary of what everyone said 
     * Mathieu : No, there is no documentation at all.
