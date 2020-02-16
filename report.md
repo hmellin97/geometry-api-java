@@ -25,7 +25,9 @@ Before we went with this project we looked at the Apache Commons library (Java) 
 
 1. What are your results for ten complex functions?
    * Did all tools/methods get the same result?
+       * Mathieu : I have the same result copmuting the CC by hand or with `lizard` 
    * Are the results clear?
+       * Yes
 2. Are the functions just complex, or also long?
     * *ToDo* : Make a summary of what everyone said 
     * Mathieu : The fonctions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
