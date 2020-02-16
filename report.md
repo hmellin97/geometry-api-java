@@ -25,38 +25,35 @@ Before we went with this project we looked at the Apache Commons library (Java) 
 
 1. What are your results for ten complex functions?
    * Did all tools/methods get the same result?
-       * Mathieu : I have the same result copmuting the CC by hand or with `lizard`
-       * Axel : For the functions `WktParser::attributes_` and `RelationalOperations::polygonTouchesPolygonImpl_` lizard gives them a CCN of 16, which is the same I get when counting manually.
+       * Mathieu : I have the same result computing the CC by hand or with `lizard`
+       * My : I can not get the same results computing the CC by hand as I get using `lizard` for one function (clipLine, I get 15 but lizard says 22) but for the other function it is the same.
    * Are the results clear?
-       * Yup, it is very straightforward.
        * All the conditions in an `if`, a `for` or a `while` add 1 to the cyclomatic complexity. So if there are 10 conditions on arguments this will add ten to the cyclomatic complexity.
        * The `assert` are not taken into account.
        * The ternary logic operator are taken into account
        * At the end add 1 to have the cyclomatic complexity metric
 2. Are the functions just complex, or also long?
     * *ToDo* : Make a summary of what everyone said 
-    * Mathieu : The functions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
-    * My : 
+    * Mathieu : The fonctions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
+    * My : The functions I choose is both complex and long. The one with CC 22 has 106 LOC and the one with CC 16 has 43 LOC which is a lot less. The latter function contains a lot more loops (containing conditions) than the first one, which increases the cyclic complexity even though there are much fewer lines of code.
     * Julian : 
-    * Axel : `WktParser::attributes_` is quite short with only 34 LOC, and `RelationalOperations::polygonTouchesPolygonImpl_` is slightly longer with 76 LOC.
+    * Axel :
     * Henrik :
 3. What is the purpose of the functions?
-    * Mathieu : 
-      * The goal of `_intersectLineLine` is to see if two lines intersect. If it is the case it returns the points that are in both lines
-      * The goal of `intersect` in `SegmentIntersector` is to determine if there is an intersection between a Point and a Segment with a certain `tolerance` where a Segment is a collection of line
-      * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
-    * Axel : 
-      * `WktParser::attributes_` is part of a class which parses files in the WKT ("Well-Known Text representation of geometry") file format. The exact purpose of `WktParser::attributes_ is quite unclear due to the fact that there is zero documentation about it. But it appears that it is used to parse some sort of attributes. I wish I knew more, but there's simply not much to go on, and [the specification of the WKT standard](https://www.opengeospatial.org/standards/sfa) unfortunately doesn't help either. 
-      * `RelationalOperations::polygonTouchesPolygonImpl_` checks whether or not two polygons are touching/intersecting.
+    * The goal of `_intersectLineLine` is to see if two lines intersect. If it is the case it returns the points that are in both lines
+    * The goal of `intersect` in `SegmentIntersector` is to determine if there is an intersection between a Point and a Segment with a certain `tolerance` where a Segment is a collection of line 
+    * The goal of `clipLine` is to implement the Liang-Barsky algorithm for parametric line-clipping. The input parameters is: a start point and a end point. Depending on whether the points are within a given envelope, one of them will be modified and thus extending the line they create.
+    * The goal of `testPointsOnPolyline2D_`is to determine if two points are on a "polyline".
+    * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
 4. Are exceptions taken into account in the given measurements?
     * The `if` branch at the beginning of each function that test parameters and throws exceptions if the parameters are invalid are taken into account. However, almost no arguments is tested at the beginning of the functions so the ratio of exception is very low.
     * The `try...catch` also add 1 to the CC
 5. Is the documentation clear w.r.t. all the possible outcomes?
     * *ToDo* : Make a summary of what everyone said 
     * Mathieu : No, there is no documentation at all.
-    * My : 
+    * My : In one of the functions yes, in the other there is no documentation.
     * Julian : 
-    * Axel : No, for both the functions I looked at there was just two short comments for one of them.
+    * Axel :
     * Henrik :
 
 ## Coverage
