@@ -62,6 +62,7 @@ Document your experience in using a "new"/different coverage tool.
 
 How well was the tool documented? Was it possible/easy/difficult to
 integrate it with your build environment?
+* First we wanted to use `OpenCover` for `IntelliJ` but `OpenCover` is not supported anymore by `IntelliJ`. However, doing that, we found that there was a tool coverage integrated in ÌntelliJ. This is what we used.  
 
 ### DYI
 
@@ -79,10 +80,22 @@ its output?
 ### Evaluation
 
 1. How detailed is your coverage measurement?
+    * We can see the pourcentage of branch that were reached
 
-2. What are the limitations of your own tool?
+2. What are the limitations of your own tool? 
+    * It doesn't take into account ternary operators directly. However, we can easily rewrite a ternary operator `a?b:c` into 
+    ```java
+    if(a){
+        coverageTool.addReached(#);
+        b;
+    }else{
+        coverageTool.addReached(#+1);
+        c;
+    }
+    ```
 
 3. Are the results of your tool consistent with existing coverage tools?
+    * Mathieu : For me it gives the same results
 
 ### Coverage improvement
 
