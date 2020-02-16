@@ -26,12 +26,18 @@ public class CoverageTool {
             final int totalBranches = function.hasReachedBranch.length;
 
             int reachedBranches = 0;
+            ArrayList<Integer> notCovered = new ArrayList<>();
             for (int branchID = 0; branchID < totalBranches; branchID++) {
-                if (function.hasReachedBranch[branchID]) reachedBranches++;
+                if (function.hasReachedBranch[branchID]) {
+                    reachedBranches++;
+                }else{
+                    notCovered.add(branchID);
+                }
             }
 
             double coveragePercentage = ((double) reachedBranches / (double) totalBranches) * 100;
-            System.out.println(" * " + function + " has " + coveragePercentage + "% coverage, reached " + reachedBranches + "/" + totalBranches + " branches.");
+            System.out.println(" * " + function.functionName + " has " + coveragePercentage + "% coverage, reached " + reachedBranches + "/" + totalBranches + " branches.");
+            System.out.println("    * The Branch ID that are not reached are "+notCovered);
         }
     }
 

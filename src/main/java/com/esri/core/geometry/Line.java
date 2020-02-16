@@ -734,6 +734,7 @@ public final class Line extends Segment implements Serializable {
 		if (bExcludeExactEndpoints && (counter != 0))
 			return 0;// return false;
 
+
 		return _isIntersectingHelper(line1, line2) == false ? 0 : 1;
 	}
 
