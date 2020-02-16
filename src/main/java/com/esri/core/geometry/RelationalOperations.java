@@ -4508,6 +4508,7 @@ class RelationalOperations {
 
 		boolean b_boundaries_intersect = false;
 
+		// while there are parts to compare
 		while (intersector.next()) { //1
 			int vertex_a = intersector.getRedElement();
 			int vertex_b = intersector.getBlueElement();
@@ -4520,6 +4521,7 @@ class RelationalOperations {
 			int result = segmentB.intersect(segmentA, null, scalarsB, scalarsA,
 					tolerance);
 
+			// if there are two intersection points between the segments
 			if (result == 2) { //2
 				double scalar_a_0 = scalarsA[0];
 				double scalar_a_1 = scalarsA[1];
@@ -4534,6 +4536,7 @@ class RelationalOperations {
 
 				b_boundaries_intersect = true;
 			} else if (result != 0) { //6
+				// there was at least one intersection, but not exactly two
 				double scalar_a_0 = scalarsA[0];
 				double scalar_b_0 = scalarsB[0];
 
@@ -4546,6 +4549,7 @@ class RelationalOperations {
 			}
 		}
 
+		// the two polygons do not touch if their boundaries do not intersect
 		if (!b_boundaries_intersect) { //11
 			return false;
 		}
@@ -4561,6 +4565,8 @@ class RelationalOperations {
 		Polygon _polygonA;
 		Polygon _polygonB;
 
+		// no idea why 10 is the magic number here, but apparently if the polygons are small we can use another
+		// method for checking intersection
 		if (polygon_a.getPointCount() > 10) { //12
 			_polygonA = (Polygon) (Clipper.clip(polygon_a, envInter, tolerance,
 					0.0));
@@ -4571,6 +4577,8 @@ class RelationalOperations {
 			_polygonA = polygon_a;
 		}
 
+		// no idea why 10 is the magic number here, but apparently if the polygons are small we can use another
+		// method for checking intersection
 		if (polygon_b.getPointCount() > 10) { //14
 			_polygonB = (Polygon) (Clipper.clip(polygon_b, envInter, tolerance,
 					0.0));
