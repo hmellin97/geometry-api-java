@@ -81,6 +81,8 @@ its output?
 
 1. How detailed is your coverage measurement?
     * We can see the pourcentage of branch that were reached
+    * We can see which `branchId` was not reached 
+    * We can handle `try...catch` and see if the `catch` part is reached
 
 2. What are the limitations of your own tool? 
     * It doesn't take into account ternary operators directly. However, we can easily rewrite a ternary operator `a?b:c` into 
