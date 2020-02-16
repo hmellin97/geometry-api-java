@@ -27,7 +27,10 @@ Before we went with this project we looked at the Apache Commons library (Java) 
    * Did all tools/methods get the same result?
        * Mathieu : I have the same result copmuting the CC by hand or with `lizard` 
    * Are the results clear?
-       * Yes
+       * All the conditions in an `if`, a `for` or a `while` add 1 to the cyclomatic complexity. So if there are 10 conditions on arguments this will add ten to the cyclomatic complexity.
+       * The `assert` are not taken into account.
+       * The ternary logic operator are taken into account
+       * At the end add 1 to have the cyclomatic complexity metric
 2. Are the functions just complex, or also long?
     * *ToDo* : Make a summary of what everyone said 
     * Mathieu : The fonctions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
@@ -41,9 +44,8 @@ Before we went with this project we looked at the Apache Commons library (Java) 
     * 
     * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
 4. Are exceptions taken into account in the given measurements?
-    * Yes all the conditions in an `if`, a `for` or a `while` add 1 to the cyclomatic complexity. So if there are 10 conditions on arguments this will add ten to the cyclomatic complexity. However, almost no arguments are tested at the beginning of the functions so the ratio of exception is very low.
-    * The `assert` are not taken into account.
-    * The ternary logic operator are taken into account
+    * The `if` branch at the beginning of each function that test parameters and throws exceptions if the parameters are invalid are taken into account. However, almost no arguments is tested at the beginning of the functions so the ratio of exception is very low.
+    * The `try...catch` also add 1 to the CC
 5. Is the documentation clear w.r.t. all the possible outcomes?
     * *ToDo* : Make a summary of what everyone said 
     * Mathieu : No, there is no documentation at all.
