@@ -29,8 +29,10 @@ import com.esri.core.geometry.VertexDescription.Semantics;
 
 import java.io.Serializable;
 
+import static big.brain.CoverageTool.addFunction;
 import static com.esri.core.geometry.SizeOf.SIZE_OF_LINE;
-
+import big.brain.CoverageTool;
+import big.brain.CoverageTool.CoverageFunction;
 /**
  * A straight line between a pair of points.
  * 
@@ -743,6 +745,8 @@ public final class Line extends Segment implements Serializable {
 	static int _intersectLineLine(Line line1, Line line2,
 			Point2D[] intersectionPoints, double[] param1, double[] param2,
 			double tolerance) {
+		int branchNumber = 0;
+		CoverageFunction cF = addFunction("Line::_intersectLineLine", 37);
 		// _ASSERT(!param1 && !param2 || param1);
 		int counter = 0;
 		// Test the end points for exact coincidence.
@@ -751,32 +755,63 @@ public final class Line extends Segment implements Serializable {
 		double t21 = line2._intersection(line1.getStartXY(), tolerance, false);
 		double t22 = line2._intersection(line1.getEndXY(), tolerance, false);
 
-		if (!NumberUtils.isNaN(t11)) {
-			if (param1 != null)// if (param1)
+		if (!NumberUtils.isNaN(t11)) {												//1
+			cF.setReachedBranch(0);
+			if (param1 != null) {// if (param1)	{									//2
+				cF.setReachedBranch(1);
 				param1[counter] = t11;
-			if (param2 != null)// if (param2)
+			}else{
+				cF.setReachedBranch(2);
+			}
+			if (param2 != null){// if (param2)										//3
+				cF.setReachedBranch(3);
 				param2[counter] = 0;
 
-			if (intersectionPoints != null)// if (intersectionPoints)
+			}else {
+				cF.setReachedBranch(4);
+			}
+			if (intersectionPoints != null){// if (intersectionPoints)				//4
+				cF.setReachedBranch(5);
 				intersectionPoints[counter] = Point2D.construct(line2.m_xStart,
 						line2.m_yStart);
+			}else {
+				cF.setReachedBranch(6);
+			}
 			counter++;
+			// cF.setReachedBranch(branchNumber++);
+		}else {
+			cF.setReachedBranch(7);
 		}
 
-		if (!NumberUtils.isNaN(t12)) {
-			if (param1 != null)// if (param1)
+		if (!NumberUtils.isNaN(t12)) {												//5
+			cF.setReachedBranch(8);
+			if (param1 != null){// if (param1)										//6
+				cF.setReachedBranch(9);
 				param1[counter] = t12;
-			if (param2 != null)// if (param2)
+			}else {
+				cF.setReachedBranch(10);
+			}
+			if (param2 != null) {// if (param2)										//7
+				cF.setReachedBranch(11);
 				param2[counter] = 1.0;
-
-			if (intersectionPoints != null)// if (intersectionPoints)
+			}else {
+				cF.setReachedBranch(12);
+			}
+			if (intersectionPoints != null) {// if (intersectionPoints)				//8
+				cF.setReachedBranch(13);
 				intersectionPoints[counter] = Point2D.construct(line2.m_xEnd,
 						line2.m_yEnd);
+			}else {
+				cF.setReachedBranch(14);
+			}
 			counter++;
+		}else {
+			cF.setReachedBranch(15);
 		}
 
-		if (counter != 2 && !NumberUtils.isNaN(t21)) {
-			if (!(t11 == 0 && t21 == 0) && !(t12 == 0 && t21 == 1.0))// the "if"
+		if (counter != 2 && !NumberUtils.isNaN(t21)) {								//10
+			cF.setReachedBranch(16);
+			if (!(t11 == 0 && t21 == 0) && !(t12 == 0 && t21 == 1.0))// the "if"	//14
 																		// makes
 																		// sure
 																		// this
@@ -786,20 +821,37 @@ public final class Line extends Segment implements Serializable {
 																		// already
 																		// calculated
 			{
-				if (param1 != null)// if (param1)
+				cF.setReachedBranch(17);
+				if (param1 != null) {// if (param1)									//15
+					cF.setReachedBranch(18);
 					param1[counter] = 0;
-				if (param2 != null)// if (param2)
+				}else {
+					cF.setReachedBranch(19);
+				}
+				if (param2 != null) {// if (param2)									//16
+					cF.setReachedBranch(20);
 					param2[counter] = t21;
-
-				if (intersectionPoints != null)// if (intersectionPoints)
+				}else {
+					cF.setReachedBranch(21);
+				}
+				if (intersectionPoints != null) {// if (intersectionPoints)			//17
+					cF.setReachedBranch(22);
 					intersectionPoints[counter] = Point2D.construct(
 							line1.m_xStart, line1.m_yStart);
-				counter++;
+				}else {
+					cF.setReachedBranch(23);
+				}
+					counter++;
+			}else {
+				cF.setReachedBranch(24);
 			}
+		}else {
+			cF.setReachedBranch(25);
 		}
 
-		if (counter != 2 && !NumberUtils.isNaN(t22)) {
-			if (!(t11 == 1.0 && t22 == 0) && !(t12 == 1.0 && t22 == 1.0))// the
+		if (counter != 2 && !NumberUtils.isNaN(t22)) {								//19
+			cF.setReachedBranch(26);
+			if (!(t11 == 1.0 && t22 == 0) && !(t12 == 1.0 && t22 == 1.0))// the		//23
 																			// "if"
 																			// makes
 																			// sure
@@ -810,20 +862,37 @@ public final class Line extends Segment implements Serializable {
 																			// already
 																			// calculated
 			{
-				if (param1 != null)// if (param1)
+				cF.setReachedBranch(27);
+				if (param1 != null) {// if (param1)									//24
+					cF.setReachedBranch(28);
 					param1[counter] = 1.0;
-				if (param2 != null)// if (param2)
+				}else {
+					cF.setReachedBranch(29);
+				}
+				if (param2 != null) {// if (param2)									//25
+					cF.setReachedBranch(30);
 					param2[counter] = t22;
-
-				if (intersectionPoints != null)// if (intersectionPoints)
+				}else {
+					cF.setReachedBranch(31);
+				}
+				if (intersectionPoints != null) {// if (intersectionPoints)			//26
+					cF.setReachedBranch(32);
 					intersectionPoints[counter] = Point2D.construct(
 							line2.m_xEnd, line2.m_yEnd);
+				}else {
+					cF.setReachedBranch(33);
+				}
 				counter++;
+			}else {
+				cF.setReachedBranch(34);
 			}
+		}else {
+			cF.setReachedBranch(35);
 		}
 
-		if (counter > 0) {
-			if (counter == 2 && param1 != null && param1[0] > param1[1]) {// make
+		if (counter > 0) {															//27
+			cF.setReachedBranch(36);
+			if (counter == 2 && param1 != null && param1[0] > param1[1]) {// make	//30
 																			// sure
 																			// the
 																			// intersection
@@ -840,52 +909,78 @@ public final class Line extends Segment implements Serializable {
 																			// java
 																			// NumberUtils::Swap(param1[0],
 																			// param1[1]);
+				cF.setReachedBranch(37);
 				double zeroParam1 = param1[0];
 				param1[0] = param1[1];
 				param1[1] = zeroParam1;
 
-				if (param2 != null)// if (param2)
+				if (param2 != null)// if (param2)							//31
 				{
+					cF.setReachedBranch(38);
 					double zeroParam2 = param2[0];
 					param2[0] = param2[1];
 					param2[1] = zeroParam2;// NumberUtils::Swap(ARRAYELEMENT(param2,
 											// 0), ARRAYELEMENT(param2, 1));
+				}else {
+					cF.setReachedBranch(39);
 				}
 
-				if (intersectionPoints != null)// if (intersectionPoints)
+				if (intersectionPoints != null)// if (intersectionPoints)	//32
 				{
+					cF.setReachedBranch(40);
 					Point2D tmp = new Point2D(intersectionPoints[0].x,
 							intersectionPoints[0].y);
 					intersectionPoints[0] = intersectionPoints[1];
 					intersectionPoints[1] = tmp;
+				}else {
+					cF.setReachedBranch(41);
 				}
+			}else {
+				cF.setReachedBranch(42);
 			}
 
+			CoverageTool.printCoverageResults();
 			return counter;
+		}else {
+			cF.setReachedBranch(43);
 		}
 
 		Point2D params = _intersectHelper1(line1, line2, tolerance);
-		if (NumberUtils.isNaN(params.x))
+		if (NumberUtils.isNaN(params.x)) {                                //33
+			cF.setReachedBranch(44);
+			CoverageTool.printCoverageResults();
 			return 0;
+		}else {
+			cF.setReachedBranch(45);
+		}
 
-		if (intersectionPoints != null)// if (intersectionPoints)
+		if (intersectionPoints != null)// if (intersectionPoints)			//34
 		{
+			cF.setReachedBranch(46);
 			intersectionPoints[0] = line1.getCoord2D(params.x);
+		}else {
+			cF.setReachedBranch(47);
 		}
 
-		if (param1 != null)// if (param1)
+		if (param1 != null)// if (param1)									//35
 		{
+			cF.setReachedBranch(48);
 			param1[0] = params.x;
+		}else {
+			cF.setReachedBranch(49);
 		}
 
-		if (param2 != null)// if (param2)
+		if (param2 != null)// if (param2)									//36
 		{
+			cF.setReachedBranch(50);
 			param2[0] = params.y;
+		}else {
+			cF.setReachedBranch(51);
 		}
-
-		return 1;
+		CoverageTool.printCoverageResults();
+		return 1;															//+1 = 37
 	}
-	
+
     @Override
     public void replaceNaNs(int semantics, double value) {
     	addAttribute(semantics);
