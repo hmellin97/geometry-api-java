@@ -25,24 +25,29 @@ Before we went with this project we looked at the Apache Commons library (Java) 
 
 1. What are your results for ten complex functions?
    * Did all tools/methods get the same result?
-       * Mathieu : I have the same result copmuting the CC by hand or with `lizard` 
+       * Mathieu : I have the same result copmuting the CC by hand or with `lizard`
+       * Axel : For the functions `WktParser::attributes_` and `RelationalOperations::polygonTouchesPolygonImpl_` lizard gives them a CCN of 16, which is the same I get when counting manually.
    * Are the results clear?
+       * Yup, it is very straightforward.
        * All the conditions in an `if`, a `for` or a `while` add 1 to the cyclomatic complexity. So if there are 10 conditions on arguments this will add ten to the cyclomatic complexity.
        * The `assert` are not taken into account.
        * The ternary logic operator are taken into account
        * At the end add 1 to have the cyclomatic complexity metric
 2. Are the functions just complex, or also long?
     * *ToDo* : Make a summary of what everyone said 
-    * Mathieu : The fonctions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
+    * Mathieu : The functions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
     * My : 
     * Julian : 
-    * Axel :
+    * Axel : `WktParser::attributes_` is quite short with only 34 LOC, and `RelationalOperations::polygonTouchesPolygonImpl_` is slightly longer with 76 LOC.
     * Henrik :
 3. What is the purpose of the functions?
-    * The goal of `_intersectLineLine` is to see if two lines intersect. If it is the case it returns the points that are in both lines
-    * The goal of `intersect` in `SegmentIntersector` is to determine if there is an intersection between a Point and a Segment with a certain `tolerance` where a Segment is a collection of line 
-    * 
-    * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
+    * Mathieu : 
+      * The goal of `_intersectLineLine` is to see if two lines intersect. If it is the case it returns the points that are in both lines
+      * The goal of `intersect` in `SegmentIntersector` is to determine if there is an intersection between a Point and a Segment with a certain `tolerance` where a Segment is a collection of line
+      * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
+    * Axel : 
+      * `WktParser::attributes_` is part of a class which parses files in the WKT ("Well-Known Text representation of geometry") file format. The exact purpose of `WktParser::attributes_ is quite unclear due to the fact that there is zero documentation about it. But it appears that it is used to parse some sort of attributes. I wish I knew more, but there's simply not much to go on, and [the specification of the WKT standard](https://www.opengeospatial.org/standards/sfa) unfortunately doesn't help either. 
+      * `RelationalOperations::polygonTouchesPolygonImpl_` checks whether or not two polygons are touching/intersecting.
 4. Are exceptions taken into account in the given measurements?
     * The `if` branch at the beginning of each function that test parameters and throws exceptions if the parameters are invalid are taken into account. However, almost no arguments is tested at the beginning of the functions so the ratio of exception is very low.
     * The `try...catch` also add 1 to the CC
@@ -51,7 +56,7 @@ Before we went with this project we looked at the Apache Commons library (Java) 
     * Mathieu : No, there is no documentation at all.
     * My : 
     * Julian : 
-    * Axel :
+    * Axel : No, for both the functions I looked at there was just two short comments for one of them.
     * Henrik :
 
 ## Coverage
