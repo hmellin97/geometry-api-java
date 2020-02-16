@@ -31,7 +31,7 @@ public class CoverageTool {
             }
 
             double coveragePercentage = ((double) reachedBranches / (double) totalBranches) * 100;
-            System.out.println(" * " + function + " has " + coveragePercentage + "% coverage, reached " + reachedBranches + "/" + totalBranches + " branches.");
+            System.out.println(" * " + function.functionName + " has " + coveragePercentage + "% coverage, reached " + reachedBranches + "/" + totalBranches + " branches.");
         }
     }
 
