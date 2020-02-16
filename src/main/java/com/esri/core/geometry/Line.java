@@ -743,10 +743,9 @@ public final class Line extends Segment implements Serializable {
 	}
 
 	static int _intersectLineLine(Line line1, Line line2,
-			Point2D[] intersectionPoints, double[] param1, double[] param2,
-			double tolerance) {
-		int branchNumber = 0;
-		CoverageFunction cF = addFunction("Line::_intersectLineLine", 37);
+								  Point2D[] intersectionPoints, double[] param1, double[] param2,
+								  double tolerance) {
+		CoverageFunction cF = addFunction("Line::_intersectLineLine", 52);
 		// _ASSERT(!param1 && !param2 || param1);
 		int counter = 0;
 		// Test the end points for exact coincidence.
@@ -755,7 +754,7 @@ public final class Line extends Segment implements Serializable {
 		double t21 = line2._intersection(line1.getStartXY(), tolerance, false);
 		double t22 = line2._intersection(line1.getEndXY(), tolerance, false);
 
-		if (!NumberUtils.isNaN(t11)) {												//1
+		if (!NumberUtils.isNaN(t11)) {											//1
 			cF.setReachedBranch(0);
 			if (param1 != null) {// if (param1)	{									//2
 				cF.setReachedBranch(1);
@@ -766,7 +765,6 @@ public final class Line extends Segment implements Serializable {
 			if (param2 != null){// if (param2)										//3
 				cF.setReachedBranch(3);
 				param2[counter] = 0;
-
 			}else {
 				cF.setReachedBranch(4);
 			}
@@ -778,9 +776,8 @@ public final class Line extends Segment implements Serializable {
 				cF.setReachedBranch(6);
 			}
 			counter++;
-			// cF.setReachedBranch(branchNumber++);
 		}else {
-			cF.setReachedBranch(7);
+		cF.setReachedBranch(7);
 		}
 
 		if (!NumberUtils.isNaN(t12)) {												//5
@@ -812,14 +809,14 @@ public final class Line extends Segment implements Serializable {
 		if (counter != 2 && !NumberUtils.isNaN(t21)) {								//10
 			cF.setReachedBranch(16);
 			if (!(t11 == 0 && t21 == 0) && !(t12 == 0 && t21 == 1.0))// the "if"	//14
-																		// makes
-																		// sure
-																		// this
-																		// has
-																		// not
-																		// been
-																		// already
-																		// calculated
+			// makes
+			// sure
+			// this
+			// has
+			// not
+			// been
+			// already
+			// calculated
 			{
 				cF.setReachedBranch(17);
 				if (param1 != null) {// if (param1)									//15
@@ -841,7 +838,7 @@ public final class Line extends Segment implements Serializable {
 				}else {
 					cF.setReachedBranch(23);
 				}
-					counter++;
+				counter++;
 			}else {
 				cF.setReachedBranch(24);
 			}
@@ -852,15 +849,15 @@ public final class Line extends Segment implements Serializable {
 		if (counter != 2 && !NumberUtils.isNaN(t22)) {								//19
 			cF.setReachedBranch(26);
 			if (!(t11 == 1.0 && t22 == 0) && !(t12 == 1.0 && t22 == 1.0))// the		//23
-																			// "if"
-																			// makes
-																			// sure
-																			// this
-																			// has
-																			// not
-																			// been
-																			// already
-																			// calculated
+			// "if"
+			// makes
+			// sure
+			// this
+			// has
+			// not
+			// been
+			// already
+			// calculated
 			{
 				cF.setReachedBranch(27);
 				if (param1 != null) {// if (param1)									//24
@@ -893,22 +890,22 @@ public final class Line extends Segment implements Serializable {
 		if (counter > 0) {															//27
 			cF.setReachedBranch(36);
 			if (counter == 2 && param1 != null && param1[0] > param1[1]) {// make	//30
-																			// sure
-																			// the
-																			// intersection
-																			// events
-																			// are
-																			// sorted
-																			// along
-																			// the
-																			// line1
-																			// can't
-																			// swap
-																			// doulbes
-																			// in
-																			// java
-																			// NumberUtils::Swap(param1[0],
-																			// param1[1]);
+				// sure
+				// the
+				// intersection
+				// events
+				// are
+				// sorted
+				// along
+				// the
+				// line1
+				// can't
+				// swap
+				// doulbes
+				// in
+				// java
+				// NumberUtils::Swap(param1[0],
+				// param1[1]);
 				cF.setReachedBranch(37);
 				double zeroParam1 = param1[0];
 				param1[0] = param1[1];
@@ -920,7 +917,7 @@ public final class Line extends Segment implements Serializable {
 					double zeroParam2 = param2[0];
 					param2[0] = param2[1];
 					param2[1] = zeroParam2;// NumberUtils::Swap(ARRAYELEMENT(param2,
-											// 0), ARRAYELEMENT(param2, 1));
+					// 0), ARRAYELEMENT(param2, 1));
 				}else {
 					cF.setReachedBranch(39);
 				}
@@ -938,8 +935,6 @@ public final class Line extends Segment implements Serializable {
 			}else {
 				cF.setReachedBranch(42);
 			}
-
-			CoverageTool.printCoverageResults();
 			return counter;
 		}else {
 			cF.setReachedBranch(43);
@@ -948,7 +943,6 @@ public final class Line extends Segment implements Serializable {
 		Point2D params = _intersectHelper1(line1, line2, tolerance);
 		if (NumberUtils.isNaN(params.x)) {                                //33
 			cF.setReachedBranch(44);
-			CoverageTool.printCoverageResults();
 			return 0;
 		}else {
 			cF.setReachedBranch(45);
@@ -977,11 +971,11 @@ public final class Line extends Segment implements Serializable {
 		}else {
 			cF.setReachedBranch(51);
 		}
-		CoverageTool.printCoverageResults();
-		return 1;															//+1 = 37
+		return 1;
 	}
 
-    @Override
+
+	@Override
     public void replaceNaNs(int semantics, double value) {
     	addAttribute(semantics);
     	if (isEmpty())
