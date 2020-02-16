@@ -287,30 +287,30 @@ final class WktParser {
 		// Z and M is not allowed to have a space between them
 		boolean b_has_zs = false, b_has_ms = false;
 		if (m_wkt_string.charAt(m_end_token) == 'z'
-				|| m_wkt_string.charAt(m_end_token) == 'Z') {
+				|| m_wkt_string.charAt(m_end_token) == 'Z') { // 2
 			cf.setReachedBranch(1);
 			b_has_zs = true;
 
-			if (++m_end_token >= m_wkt_string.length()) {
+			if (++m_end_token >= m_wkt_string.length()) { //3
 				cf.setReachedBranch(2);
 				throw new IllegalArgumentException();
 			}
 		}
 
 		if (m_wkt_string.charAt(m_end_token) == 'm'
-				|| m_wkt_string.charAt(m_end_token) == 'M') {
+				|| m_wkt_string.charAt(m_end_token) == 'M') { //5
 			b_has_ms = true;
 			cf.setReachedBranch(3);
 
-			if (++m_end_token >= m_wkt_string.length()) {
+			if (++m_end_token >= m_wkt_string.length()) { //6
 				cf.setReachedBranch(4);
 				throw new IllegalArgumentException();
 			}
 		}
 
-		if (m_b_check_consistent_attributes) {
+		if (m_b_check_consistent_attributes) { //7
 			cf.setReachedBranch(5);
-			if (b_has_zs != m_b_has_zs || b_has_ms != m_b_has_ms) {
+			if (b_has_zs != m_b_has_zs || b_has_ms != m_b_has_ms) { //9
 				cf.setReachedBranch(6);
 				throw new IllegalArgumentException();
 			}
@@ -320,13 +320,13 @@ final class WktParser {
 		m_b_has_zs = b_has_zs;
 		m_b_has_ms = b_has_ms;
 
-		if (m_b_has_zs || m_b_has_ms) {
+		if (m_b_has_zs || m_b_has_ms) { //11
 			cf.setReachedBranch(8);
-			if (m_b_has_zs && !m_b_has_ms) {
+			if (m_b_has_zs && !m_b_has_ms) { //13
 				cf.setReachedBranch(9);
 				m_current_token_type = WktToken.attribute_z;
 			}
-			else if (m_b_has_ms && !m_b_has_zs) {
+			else if (m_b_has_ms && !m_b_has_zs) { //15
 				cf.setReachedBranch(10);
 				m_current_token_type = WktToken.attribute_m;
 			}
@@ -338,6 +338,7 @@ final class WktParser {
 			cf.setReachedBranch(12);
 			nextToken();
 		}
+		//+1 = 16
 	}
 
 	private void geometryCollectionStart_() {

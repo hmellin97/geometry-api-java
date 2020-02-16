@@ -4508,7 +4508,7 @@ class RelationalOperations {
 
 		boolean b_boundaries_intersect = false;
 
-		while (intersector.next()) {
+		while (intersector.next()) { //1
 			int vertex_a = intersector.getRedElement();
 			int vertex_b = intersector.getBlueElement();
 
@@ -4520,25 +4520,25 @@ class RelationalOperations {
 			int result = segmentB.intersect(segmentA, null, scalarsB, scalarsA,
 					tolerance);
 
-			if (result == 2) {
+			if (result == 2) { //2
 				double scalar_a_0 = scalarsA[0];
 				double scalar_a_1 = scalarsA[1];
 				double length_a = segmentA.calculateLength2D();
 
 				if (b_geometries_simple
-						&& (scalar_a_1 - scalar_a_0) * length_a > tolerance) {
+						&& (scalar_a_1 - scalar_a_0) * length_a > tolerance) { //5, because b_geometries_simple has &&
 					// If the line segments overlap along the same direction,
 					// then we have an Interior-Interior intersection
 					return false;
 				}
 
 				b_boundaries_intersect = true;
-			} else if (result != 0) {
+			} else if (result != 0) { //6
 				double scalar_a_0 = scalarsA[0];
 				double scalar_b_0 = scalarsB[0];
 
 				if (scalar_a_0 > 0.0 && scalar_a_0 < 1.0 && scalar_b_0 > 0.0
-						&& scalar_b_0 < 1.0) {
+						&& scalar_b_0 < 1.0) { //10
 					return false;
 				}
 
@@ -4546,7 +4546,7 @@ class RelationalOperations {
 			}
 		}
 
-		if (!b_boundaries_intersect) {
+		if (!b_boundaries_intersect) { //11
 			return false;
 		}
 
@@ -4561,20 +4561,20 @@ class RelationalOperations {
 		Polygon _polygonA;
 		Polygon _polygonB;
 
-		if (polygon_a.getPointCount() > 10) {
+		if (polygon_a.getPointCount() > 10) { //12
 			_polygonA = (Polygon) (Clipper.clip(polygon_a, envInter, tolerance,
 					0.0));
-			if (_polygonA.isEmpty()) {
+			if (_polygonA.isEmpty()) { //13
 				return false;
 			}
 		} else {
 			_polygonA = polygon_a;
 		}
 
-		if (polygon_b.getPointCount() > 10) {
+		if (polygon_b.getPointCount() > 10) { //14
 			_polygonB = (Polygon) (Clipper.clip(polygon_b, envInter, tolerance,
 					0.0));
-			if (_polygonB.isEmpty()) {
+			if (_polygonB.isEmpty()) { //15
 				return false;
 			}
 		} else {
@@ -4587,6 +4587,7 @@ class RelationalOperations {
 				_polygonA, _polygonB, tolerance, scl, progressTracker);
 
 		return bRelation;
+		//+1 = 16
 	}
 
 	private static boolean polygonOverlapsPolygonImpl_(Polygon polygon_a,
