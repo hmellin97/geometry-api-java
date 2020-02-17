@@ -148,14 +148,14 @@ Show the comments that describe the requirements for the coverage.
 
 Report of old coverage: [link]
 * Mathieu : 
-* My :
+* My : Envelope2D: methods coverage 59%, line coverage 48%. PolygonUtils: method coverage 56%, line coverage 41%. 
 * Julian : 
 * Axel :
 * Henrik : 
 
 Report of new coverage: [link]
 * Mathieu : 
-* My :
+* My : Envelope2D: methods coverage 60%, line coverage 50%. PolygonUtils: method coverage 56%, line coverage 42%. 
 * Julian : 
 * Axel :
 * Henrik : 
@@ -169,7 +169,7 @@ Test cases added:
 
 Can the functions you test be called directly or did you need to make them public?
 * Mathieu : 
-* My :
+* My : The functions are called directly.
 * Julian : 
 * Axel :
 * Henrik : 
