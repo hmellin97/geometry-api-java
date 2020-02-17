@@ -37,7 +37,7 @@ import org.junit.runners.JUnit4;
 public class TestWktParser extends TestCase {
 	@AfterClass
 	public static void afterAllTests() {
-		System.out.println("afterAllTests");
+		System.out.println("afterAllTests TestWktParser");
 		CoverageTool.printCoverageResults();
 	}
 

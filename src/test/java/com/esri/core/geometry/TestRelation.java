@@ -26,13 +26,23 @@ package com.esri.core.geometry;
 
 import java.io.IOException;
 
+import big.brain.CoverageTool;
 import junit.framework.TestCase;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import com.esri.core.geometry.Geometry.GeometryAccelerationDegree;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
+@RunWith(JUnit4.class)
 public class TestRelation extends TestCase {
+	@AfterClass
+	public static void afterAllTests() {
+		System.out.println("afterAllTests TestRelation");
+		CoverageTool.printCoverageResults();
+	}
 
 	@Override
 	protected void setUp() throws Exception {

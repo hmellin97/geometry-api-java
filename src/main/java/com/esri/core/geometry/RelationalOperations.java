@@ -23,6 +23,8 @@
  */
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 import java.util.ArrayList;
 
 class RelationalOperations {
@@ -4491,6 +4493,9 @@ class RelationalOperations {
 
 	private static boolean polygonTouchesPolygonImpl_(Polygon polygon_a,
 			Polygon polygon_b, double tolerance, ProgressTracker progressTracker) {
+		CoverageTool.CoverageFunction cf = CoverageTool.addFunction("RelationalOperations::polygonTouchesPolygonImpl_", 17);
+		cf.setReachedBranch(0);
+
 		MultiPathImpl polygon_impl_a = (MultiPathImpl) polygon_a._getImpl();
 		MultiPathImpl polygon_impl_b = (MultiPathImpl) polygon_b._getImpl();
 
@@ -4510,6 +4515,7 @@ class RelationalOperations {
 
 		// while there are parts to compare
 		while (intersector.next()) { //1
+			cf.setReachedBranch(1);
 			int vertex_a = intersector.getRedElement();
 			int vertex_b = intersector.getBlueElement();
 
@@ -4523,6 +4529,7 @@ class RelationalOperations {
 
 			// if there are two intersection points between the segments
 			if (result == 2) { //2
+				cf.setReachedBranch(2);
 				double scalar_a_0 = scalarsA[0];
 				double scalar_a_1 = scalarsA[1];
 				double length_a = segmentA.calculateLength2D();
@@ -4531,28 +4538,33 @@ class RelationalOperations {
 						&& (scalar_a_1 - scalar_a_0) * length_a > tolerance) { //5, because b_geometries_simple has &&
 					// If the line segments overlap along the same direction,
 					// then we have an Interior-Interior intersection
+					cf.setReachedBranch(3);
 					return false;
 				}
-
+				cf.setReachedBranch(4);
 				b_boundaries_intersect = true;
 			} else if (result != 0) { //6
+				cf.setReachedBranch(5);
 				// there was at least one intersection, but not exactly two
 				double scalar_a_0 = scalarsA[0];
 				double scalar_b_0 = scalarsB[0];
 
 				if (scalar_a_0 > 0.0 && scalar_a_0 < 1.0 && scalar_b_0 > 0.0
 						&& scalar_b_0 < 1.0) { //10
+					cf.setReachedBranch(6);
 					return false;
 				}
-
+				cf.setReachedBranch(7);
 				b_boundaries_intersect = true;
 			}
 		}
 
 		// the two polygons do not touch if their boundaries do not intersect
 		if (!b_boundaries_intersect) { //11
+			cf.setReachedBranch(8);
 			return false;
 		}
+		cf.setReachedBranch(9);
 
 		Envelope2D env_a = new Envelope2D(), env_b = new Envelope2D(), envInter = new Envelope2D();
 		polygon_a.queryEnvelope2D(env_a);
@@ -4568,27 +4580,33 @@ class RelationalOperations {
 		// no idea why 10 is the magic number here, but apparently if the polygons are small we can use another
 		// method for checking intersection
 		if (polygon_a.getPointCount() > 10) { //12
+			cf.setReachedBranch(10);
 			_polygonA = (Polygon) (Clipper.clip(polygon_a, envInter, tolerance,
 					0.0));
 			if (_polygonA.isEmpty()) { //13
+				cf.setReachedBranch(11);
 				return false;
 			}
 		} else {
+			cf.setReachedBranch(12);
 			_polygonA = polygon_a;
 		}
 
 		// no idea why 10 is the magic number here, but apparently if the polygons are small we can use another
 		// method for checking intersection
 		if (polygon_b.getPointCount() > 10) { //14
+			cf.setReachedBranch(13);
 			_polygonB = (Polygon) (Clipper.clip(polygon_b, envInter, tolerance,
 					0.0));
 			if (_polygonB.isEmpty()) { //15
+				cf.setReachedBranch(14);
 				return false;
 			}
 		} else {
+			cf.setReachedBranch(15);
 			_polygonB = polygon_b;
 		}
-
+		cf.setReachedBranch(16);
 		// We just need to determine whether interior_interior is false
 		String scl = "F********";
 		boolean bRelation = RelationalOperationsMatrix.polygonRelatePolygon_(
