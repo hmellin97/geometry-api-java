@@ -24,6 +24,8 @@
 
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 final class PolygonUtils {
 
 	public enum PiPResult {
@@ -266,37 +268,50 @@ final class PolygonUtils {
 
 	static void testPointsOnPolyline2D_(Polyline poly, Point2D[] input_points,
 			int count, double tolerance, PolygonUtils.PiPResult[] test_results) {
+
+		//CoverageTool.CoverageFunction cF = CoverageTool.addFunction("PolygonUtils::testPointsonPolyLine2D_", 12);
+
 		MultiPathImpl mp_impl = (MultiPathImpl) poly._getImpl();
 		GeometryAccelerators accel = mp_impl._getAccelerators();
 		RasterizedGeometry2D rgeom = null;
-		if (accel != null) {
+		if (accel != null) { 													// 1
 			rgeom = accel.getRasterizedGeometry();
+			//cF.setReachedBranch(0);
 		}
 
 		int pointsLeft = count;
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < count; i++) { 										// 2
+			//cF.setReachedBranch(1);
 			test_results[i] = PiPResult.PiPInside;// set to impossible value
 
-			if (rgeom != null) {
+			if (rgeom != null) {												// 3
+				//cF.setReachedBranch(2);
 				Point2D input_point = input_points[i];
 				RasterizedGeometry2D.HitType hit = rgeom.queryPointInGeometry(
 						input_point.x, input_point.y);
-				if (hit == RasterizedGeometry2D.HitType.Outside) {
+				if (hit == RasterizedGeometry2D.HitType.Outside) {				// 4
+					//cF.setReachedBranch(3);
 					test_results[i] = PiPResult.PiPOutside;
 					pointsLeft--;
 				}
 			}
 		}
 
-		if (pointsLeft != 0) {
+		if (pointsLeft != 0) {													// 5
+			//cF.setReachedBranch(4);
 			SegmentIteratorImpl iter = mp_impl.querySegmentIterator();
-			while (iter.nextPath() && pointsLeft != 0) {
-				while (iter.hasNextSegment() && pointsLeft != 0) {
+			while (iter.nextPath() && pointsLeft != 0) {						// 6 + 7
+				//cF.setReachedBranch(5);
+				while (iter.hasNextSegment() && pointsLeft != 0) {				// 8 + 9
+					//cF.setReachedBranch(6);
 					Segment segment = iter.nextSegment();
-					for (int i = 0; i < count && pointsLeft != 0; i++) {
-						if (test_results[i] == PiPResult.PiPInside) {
-							if (segment.isIntersecting(input_points[i],
+					for (int i = 0; i < count && pointsLeft != 0; i++) {		// 10 + 11
+						//cF.setReachedBranch(7);
+						if (test_results[i] == PiPResult.PiPInside) {			// 12
+							//cF.setReachedBranch(8);
+							if (segment.isIntersecting(input_points[i],			// 13
 									tolerance)) {
+								//cF.setReachedBranch(9);
 								test_results[i] = PiPResult.PiPBoundary;
 								pointsLeft--;
 							}
@@ -306,11 +321,13 @@ final class PolygonUtils {
 			}
 		}
 
-		for (int i = 0; i < count; i++) {
-			if (test_results[i] == PiPResult.PiPInside)
+		for (int i = 0; i < count; i++) {										// 14
+			//cF.setReachedBranch(10);
+			if (test_results[i] == PiPResult.PiPInside)							// 15
+				//cF.setReachedBranch(11);
 				test_results[i] = PiPResult.PiPOutside;
 		}
-	}
+	} 																			// + 1 = 16
 
 	static void testPointsOnLine2D(Geometry line, Point2D[] input_points,
 			int count, double tolerance, PolygonUtils.PiPResult[] test_results) {

@@ -24,10 +24,17 @@
 
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
 import junit.framework.TestCase;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 public class TestPolygonUtils extends TestCase {
+	@AfterClass
+	public static void afterTestEnvelope2D(){
+		CoverageTool.printCoverageResults();
+	}
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();

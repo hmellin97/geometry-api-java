@@ -24,6 +24,8 @@
 
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 import java.io.IOException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
@@ -986,7 +988,10 @@ public final class Envelope2D implements Serializable {
 	// 4 - the segment is complitely inside of the clipping window
 	int clipLine(Point2D p0, Point2D p1, int lineExtension, double[] segParams,
 			double[] boundaryDistances) {
-		if (boundaryDistances != null) {
+		CoverageTool.CoverageFunction cF = CoverageTool.addFunction("Envelope2D::clipLine", 7);
+
+		if (boundaryDistances != null) { 										// 1
+			cF.setReachedBranch(0);
 			boundaryDistances[0] = -1.0;
 			boundaryDistances[1] = -1.0;
 		}
@@ -997,44 +1002,50 @@ public final class Envelope2D implements Serializable {
 
 		Point2D delta = new Point2D(p1.x - p0.x, p1.y - p0.y);
 
-		if (delta.x == 0.0 && delta.y == 0.0) // input line degenerates to a
+		if (delta.x == 0.0 && delta.y == 0.0) // input line degenerates to a 	// 2 + 3
 												// point
 		{
+			cF.setReachedBranch(1);
 			segParams[0] = 0.0;
 			segParams[1] = 0.0;
-			return contains(p0) ? 4 : 0;
+			return contains(p0) ? 4 : 0; 										// 4
 		}
 
 		segParams[0] = ((lineExtension & 1) != 0) ? NumberUtils.negativeInf()
-				: 0.0;
+				: 0.0; 															// 5
 		segParams[1] = ((lineExtension & 2) != 0) ? NumberUtils.positiveInf()
-				: 1.0;
+				: 1.0; 															// 6
 		tOld[0] = segParams[0];
 		tOld[1] = segParams[1];
 
 		if (clipLineAuxiliary(delta.x, xmin - p0.x, segParams)
 				&& clipLineAuxiliary(-delta.x, p0.x - xmax, segParams)
 				&& clipLineAuxiliary(delta.y, ymin - p0.y, segParams)
-				&& clipLineAuxiliary(-delta.y, p0.y - ymax, segParams)) {
-			if (segParams[1] < tOld[1]) {
+				&& clipLineAuxiliary(-delta.y, p0.y - ymax, segParams)) { // 7 + 8 + 9 + 10
+			cF.setReachedBranch(2);
+			if (segParams[1] < tOld[1]) { 										// 11
+				cF.setReachedBranch(3);
 				p1.scaleAdd(segParams[1], delta, p0);
 				_snapToBoundary(p1); // needed for accuracy
 				modified |= 2;
 
-				if (boundaryDistances != null)
+				if (boundaryDistances != null) 									// 12
+					cF.setReachedBranch(4);
 					boundaryDistances[1] = _boundaryDistance(p1);
 			}
-			if (segParams[0] > tOld[0]) {
+			if (segParams[0] > tOld[0]) { 										// 13
+				cF.setReachedBranch(5);
 				p0.scaleAdd(segParams[0], delta, p0);
 				_snapToBoundary(p0); // needed for accuracy
 				modified |= 1;
 
-				if (boundaryDistances != null)
+				if (boundaryDistances != null) 									// 14
+					cF.setReachedBranch(6);
 					boundaryDistances[0] = _boundaryDistance(p0);
 			}
 		}
 
-		return modified;
+		return modified;														// + 1 = 15
 	}
 
 	boolean clipLineAuxiliary(double denominator, double numerator,
