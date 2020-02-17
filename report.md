@@ -162,7 +162,7 @@ Report of new coverage: [link]
 
 Test cases added:
 * Mathieu : 
-* My : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the command git diff My-DIY..My-test
+* My : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the `command git diff My-DIY..My-test`.
 * Julian : 
 * Axel :
 * Henrik : 
