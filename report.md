@@ -75,10 +75,10 @@ integrate it with your build environment?
 Link to branch with our coverage tool: [Link](https://github.com/hmellin97/geometry-api-java/blob/manual-coverage/src/main/java/big/brain/CoverageTool.java)
 
 To see the DIY-coverage tool implemented in the functions you can use the following command:
-```
+
 git diff master..{name}-DIY (where name is Mathieu, Henrik, Julian or My)
 git diff master..axel-manual-coverage
-```
+
 Our tool supports conditions for: `if`, `for` and `while`.
 The tool outputs how many of the set branches are being visited in the functions that we have chosen. It is dependent on the developer implementing it correctly.
 
@@ -115,28 +115,76 @@ COVERAGE RESULTS
 
 3. Are the results of your tool consistent with existing coverage tools?
     * Mathieu : For me it gives the same results
+    * My :
+    * Julian : 
     * Axel : Yes, see the image below
     ![Coverage comparison for WktParser](https://i.imgur.com/oq26u3a.png)
+    * Henrik : 
+
 
 ### Coverage improvement
+What is the coverage like overall for your project?
 
 Show the comments that describe the requirements for the coverage.
 
 Report of old coverage: [link]
+* Mathieu : 
+* My :
+* Julian : 
+* Axel :
+* Henrik : 
 
 Report of new coverage: [link]
+* Mathieu : 
+* My :
+* Julian : 
+* Axel :
+* Henrik : 
 
 Test cases added:
+* Mathieu : 
+* My :
+* Julian : 
+* Axel :
+* Henrik : 
+
+Can the functions you test be called directly or did you need to make them public?
+* Mathieu : 
+* My :
+* Julian : 
+* Axel :
+* Henrik : 
 
 git diff ...
 
 ## Refactoring
+Is the complexity of the functions really necessary?
+* Mathieu : 
+* My :
+* Julian : 
+* Axel :
+* Henrik : 
 
 Plan for refactoring complex code:
+* Mathieu : 
+* My :
+* Julian : 
+* Axel :
+* Henrik : 
 
 Estimated impact of refactoring (lower CC, but other drawbacks?).
+* Mathieu : 
+* My :
+* Julian : 
+* Axel :
+* Henrik : 
 
 Carried out refactoring (optional)
+* Mathieu : 
+* My :
+* Julian : 
+* Axel :
+* Henrik : 
 
 git diff ...
 
