@@ -38,27 +38,27 @@ Before we went with this project we looked at the Apache Commons library (Java) 
     * My : The functions I choose is both complex and long. The one with CC 22 has 106 LOC and the one with CC 16 has 43 LOC which is a lot less. The latter function contains a lot more loops (containing conditions) than the first one, which increases the cyclic complexity even though there are much fewer lines of code.
     * Julian : 
     * Axel :
-    * Henrik : `removeVertex` has 41 LOC and `equals` has 27 LOC.
+    * Henrik : `construct` has 81 LOC and `insertPath` has 67 LOC
 3. What is the purpose of the functions?
     * The goal of `_intersectLineLine` is to see if two lines intersect. If it is the case it returns the points that are in both lines
     * The goal of `intersect` in `SegmentIntersector` is to determine if there is an intersection between a Point and a Segment with a certain `tolerance` where a Segment is a collection of line 
     * The goal of `clipLine` is to implement the Liang-Barsky algorithm for parametric line-clipping. The input parameters is: a start point and a end point. Depending on whether the points are within a given envelope, one of them will be modified and thus extending the line they create.
     * The goal of `testPointsOnPolyline2D_`is to determine if two points are on a "polyline".
     * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
-    * The goal of `removeVertex` is to remove a vertex from a shape.
-    * The goal of `equals` is to see if two 'MultiPaths' are equal
+    * The goal of `construct` is to create a convex hull.
+    * The goal of `insertPath` is to insert a vertex into a path.
 4. Are exceptions taken into account in the given measurements?
     * The `if` branch at the beginning of each function that test parameters and throws exceptions if the parameters are invalid are taken into account. However, almost no arguments is tested at the beginning of the functions so the ratio of exception is very low.
     * The `try...catch` also add 1 to the CC
-    * `removeVertex` does a lot of checks, for instance it checks whether there exists a vertex before and after the vertex you want to remove.
-    * `equals` has an exception for when the shape is not a polygon
+    * `construct` only has one exception, when the input is empty.
+    * `insertPath` has a few exceptions, such as when the index is less than 0 and when the index is larger than the path.
 5. Is the documentation clear w.r.t. all the possible outcomes?
     * *ToDo* : Make a summary of what everyone said 
     * Mathieu : No, there is no documentation at all.
     * My : In one of the functions yes, in the other there is no documentation.
     * Julian : 
     * Axel :
-    * Henrik : There are a few comments explaining what the the method does but it's not even close at documenting all outcomes.
+    * Henrik : There are very few comments that explain what the functions does, which makes it hard to fully understand them.
 
 ## Coverage
 
