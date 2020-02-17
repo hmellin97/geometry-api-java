@@ -21,25 +21,44 @@ The project has a decent README. Cloning, building and running the tests using t
 
 Before we went with this project we looked at the Apache Commons library (Java) because we had used it ourselves, but it turned out that the coverage was too high for us to want to continue with it.
 
+## Chosen Functions
+These are the functions each group member has chosen to work with.
+* Mathieu : 
+* My :
+* Julian : 
+* Axel : `WktParser::attributes_` and `RelationalOperations::polygonTouchesPolygonImpl_`
+* Henrik : 
+
+Please write here if you used any other functions for the part about increasing coverage/writing tests.
+* Mathieu : 
+* My :
+* Julian : 
+* Axel : 
+* Henrik : 
+
 ## Complexity
 
 1. What are your results for ten complex functions?
    * Did all tools/methods get the same result?
        * Mathieu : I have the same result computing the CC by hand or with `lizard`
        * My : I can not get the same results computing the CC by hand as I get using `lizard` for one function (clipLine, I get 15 but lizard says 22) but for the other function it is the same.
+       * Axel : I get the same results (16) both with `lizard` and by hand.
    * Are the results clear?
+       * Yes, it is very straightforward.
        * All the conditions in an `if`, a `for` or a `while` add 1 to the cyclomatic complexity. So if there are 10 conditions on arguments this will add ten to the cyclomatic complexity.
        * The `assert` are not taken into account.
        * The ternary logic operator are taken into account
        * At the end add 1 to have the cyclomatic complexity metric
 2. Are the functions just complex, or also long?
-    * *ToDo* : Make a summary of what everyone said 
-    * Mathieu : The fonctions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
+    * Mathieu : The functions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
     * My : The functions I choose is both complex and long. The one with CC 22 has 106 LOC and the one with CC 16 has 43 LOC which is a lot less. The latter function contains a lot more loops (containing conditions) than the first one, which increases the cyclic complexity even though there are much fewer lines of code.
     * Julian : 
-    * Axel :
+    * Axel : `attributes_` has 34 LOC and `polygonTouchesPolygonImpl_` has 76 LOC (both have CC 16).
     * Henrik : `construct` has 81 LOC and `insertPath` has 67 LOC
 3. What is the purpose of the functions?
+    * Axel : 
+      * `attributes_` is a function in a class for parsing files in the WKT file format. It is responsible for parsing attributes.
+      * `polygonTouchesPolygonImpl_` returns true if two polygons touch/intersect, false otherwise.
     * The goal of `_intersectLineLine` is to see if two lines intersect. If it is the case it returns the points that are in both lines
     * The goal of `intersect` in `SegmentIntersector` is to determine if there is an intersection between a Point and a Segment with a certain `tolerance` where a Segment is a collection of line 
     * The goal of `clipLine` is to implement the Liang-Barsky algorithm for parametric line-clipping. The input parameters is: a start point and a end point. Depending on whether the points are within a given envelope, one of them will be modified and thus extending the line they create.
@@ -53,11 +72,10 @@ Before we went with this project we looked at the Apache Commons library (Java) 
     * `construct` only has one exception, when the input is empty.
     * `insertPath` has a few exceptions, such as when the index is less than 0 and when the index is larger than the path.
 5. Is the documentation clear w.r.t. all the possible outcomes?
-    * *ToDo* : Make a summary of what everyone said 
     * Mathieu : No, there is no documentation at all.
     * My : In one of the functions yes, in the other there is no documentation.
     * Julian : 
-    * Axel :
+    * Axel : No, there is close to no documentation at all. There are just two short comments, in one of the functions. The fact that variable names are cryptic doesn't help either.
     * Henrik : There are very few comments that explain what the functions does, which makes it hard to fully understand them.
 
 ## Coverage
