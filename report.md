@@ -72,8 +72,6 @@ integrate it with your build environment?
 
 ### DYI
 
-Show a patch (or link to a branch) that shows the instrumented code to
-gather coverage measurements.
 Link to branch with our coverage tool: [Link](https://github.com/hmellin97/geometry-api-java/blob/manual-coverage/src/main/java/big/brain/CoverageTool.java)
 
 The patch is probably too long to be copied here, so please add
