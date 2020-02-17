@@ -95,6 +95,7 @@ Link to branch with our coverage tool: [Link](https://github.com/hmellin97/geome
 To see the DIY-coverage tool implemented in the functions you can use the following command:
 
 git diff master..{name}-DIY (where name is Mathieu, Henrik, Julian or My)
+
 git diff master..axel-manual-coverage
 
 Our tool supports conditions for: `if`, `for` and `while`.
@@ -133,7 +134,7 @@ COVERAGE RESULTS
 
 3. Are the results of your tool consistent with existing coverage tools?
     * Mathieu : For me it gives the same results
-    * My :
+    * My : It gives the same results
     * Julian : 
     * Axel : Yes, see the image below
     ![Coverage comparison for WktParser](https://i.imgur.com/oq26u3a.png)
