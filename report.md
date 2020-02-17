@@ -75,34 +75,48 @@ integrate it with your build environment?
 Link to branch with our coverage tool: [Link](https://github.com/hmellin97/geometry-api-java/blob/manual-coverage/src/main/java/big/brain/CoverageTool.java)
 
 To see the DIY-coverage tool implemented in the functions you can use the following command:
-```
+
 git diff master..{name}-DIY (where name is Mathieu, Henrik, Julian or My)
 git diff master..axel-manual-coverage
-```
+
 Our tool supports conditions for: `if`, `for` and `while`.
 The tool outputs how many of the set branches are being visited in the functions that we have chosen. It is dependent on the developer implementing it correctly.
 
+Example output:
+```
+COVERAGE RESULTS
+ * RelationalOperations::polygonTouchesPolygonImpl_ has 70.58823529411765% coverage, reached 12/17 branches.
+    * The Branch ID that are not reached are [3, 8, 11, 13, 14]
+ * WktParser:attributes_ has 76.92307692307693% coverage, reached 10/13 branches.
+    * The Branch ID that are not reached are [2, 4, 6]
+```
 ### Evaluation
 
 1. How detailed is your coverage measurement?
-    * We can see the pourcentage of branch that were reached
-    * We can see which `branchId` was not reached 
+    * We can see the percentage of branches that were reached
+    * We can see which `branchId`s were not reached 
     * We can handle `try...catch` and see if the `catch` part is reached
 
 2. What are the limitations of your own tool? 
-    * It doesn't take into account ternary operators directly. However, we can easily rewrite a ternary operator `a?b:c` into 
+    * It doesn't take into account ternary operators directly. However, we can easily rewrite a ternary operator `a ? b() : c()` as 
     ```java
-    if(a){
-        coverageTool.addReached(#);
-        b;
-    }else{
-        coverageTool.addReached(#+1);
-        c;
+    if (a) {
+        cf.setReachedBranch(#);
+        b();
+    } else {
+        cf.setReachedBranch(#+1);
+        c();
     }
     ```
+    
+    How would the instrumentation change if you modify the program?
+    * You might need to add or remove some calls to `cf.setReachedBranch();`, and if you do; modify the `numberOfBranches` parameter set at the top of the function, when initializing the coverage tool for the function.
+    
 
 3. Are the results of your tool consistent with existing coverage tools?
     * Mathieu : For me it gives the same results
+    * Axel : Yes, see the image below
+    ![Coverage comparison for WktParser](https://i.imgur.com/oq26u3a.png)
 
 ### Coverage improvement
 
