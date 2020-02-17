@@ -75,10 +75,10 @@ integrate it with your build environment?
 Link to branch with our coverage tool: [Link](https://github.com/hmellin97/geometry-api-java/blob/manual-coverage/src/main/java/big/brain/CoverageTool.java)
 
 To see the DIY-coverage tool implemented in the functions you can use the following command:
-
+```
 git diff master..{name}-DIY (where name is Mathieu, Henrik, Julian or My)
 git diff master..axel-manual-coverage
-
+```
 Our tool supports conditions for: `if`, `for` and `while`.
 The tool outputs how many of the set branches are being visited in the functions that we have chosen. It is dependent on the developer implementing it correctly.
 
