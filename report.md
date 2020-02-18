@@ -168,7 +168,7 @@ Report of old coverage:
 
 Report of new coverage:
 * Mathieu : 
-* My : `Envelope2D`: methods coverage 60%, line coverage 50%. `PolygonUtils`: method coverage 56%, line coverage 42%. 
+* My : `Envelope2D`: methods coverage 60%, line coverage 50%. `PolygonUtils`: method coverage 56%, line coverage 45%. 
 * Julian : 
 * Axel : `RelationalOperations`: IntelliJ reports the same coverage percentages, because I just added one test which covers one new branch (it's just a return statement) and the source file has 2565 lines of code. My DIY branch coverage instrumentation shows that the previously unreached branch (8) was now reached:
 ```
