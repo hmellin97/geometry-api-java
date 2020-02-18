@@ -162,7 +162,7 @@ Show the comments that describe the requirements for the coverage.
 #### Old and new Coverage
 * Mathieu : 
 * My :
-    * old : `Envelope2D`: methods coverage 59%, line coverage 48%, function coverage 0% (not tests at all). `PolygonUtils`: method coverage 56%, line coverage 41%, function coverage 66.6%. Output from our coverage tool:
+    * old : `Envelope2D`: methods coverage 59%, line coverage 48%, function coverage 0% (no tests at all). `PolygonUtils`: method coverage 56%, line coverage 41%, function coverage 66.6%. Output from our coverage tool:
 	```
 	* PolygonUtils::testPointsonPolyLine2D_ has 66.66666666666666% coverage, reached 8/12 branches.
     		* The Branch ID that are not reached are [0, 2, 3, 11]
