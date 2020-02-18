@@ -23,38 +23,54 @@
  */
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 class Boundary {
 
 	static boolean hasNonEmptyBoundary(Geometry geom,
 			ProgressTracker progress_tracker) {
-		if (geom.isEmpty())
+		CoverageTool.CoverageFunction cf = CoverageTool.addFunction("Boundary::hasNonEmptyBoundary", 13);
+		cf.setReachedBranch(0);
+		if (geom.isEmpty()) { //1
+			cf.setReachedBranch(1);
 			return false;
+		}
+		cf.setReachedBranch(2);
 
 		Geometry.Type gt = geom.getType();
-		if (gt == Geometry.Type.Polygon) {
-			if (geom.calculateArea2D() == 0)
+		if (gt == Geometry.Type.Polygon) { //2
+			cf.setReachedBranch(3);
+			if (geom.calculateArea2D() == 0) { //3
+				cf.setReachedBranch(4);
 				return false;
-
+			}
+			cf.setReachedBranch(5);
 			return true;
-		} else if (gt == Geometry.Type.Polyline) {
+		} else if (gt == Geometry.Type.Polyline) { //4
+			cf.setReachedBranch(6);
 			boolean[] b = new boolean[1];
 			b[0] = false;
 			calculatePolylineBoundary_(geom._getImpl(), progress_tracker, true,
 					b);
 			return b[0];
-		} else if (gt == Geometry.Type.Envelope) {
+		} else if (gt == Geometry.Type.Envelope) { //5
+			cf.setReachedBranch(7);
 			return true;
-		} else if (Geometry.isSegment(gt.value())) {
-			if (!((Segment) geom).isClosed()) {
+		} else if (Geometry.isSegment(gt.value())) { //6
+			cf.setReachedBranch(8);
+			if (!((Segment) geom).isClosed()) { //7
+				cf.setReachedBranch(9);
 				return true;
 			}
-
+			cf.setReachedBranch(10);
 			return false;
-		} else if (Geometry.isPoint(gt.value())) {
+		} else if (Geometry.isPoint(gt.value())) { //8
+			cf.setReachedBranch(11);
 			return false;
 		}
-
+		cf.setReachedBranch(12);
 		return false;
+		//8+1 = 9 CC
 	}
 
 	static Geometry calculate(Geometry geom, ProgressTracker progress_tracker) {
