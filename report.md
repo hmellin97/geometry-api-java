@@ -33,7 +33,7 @@ Please write here if you used any other functions for the part about increasing 
 * Mathieu : 
 * My :
 * Julian : 
-* Axel : 
+* Axel : `Boundary::hasNonEmptyBoundary`
 * Henrik : 
 
 ## Complexity
@@ -51,7 +51,7 @@ Please write here if you used any other functions for the part about increasing 
        * At the end add 1 to have the cyclomatic complexity metric
 2. Are the functions just complex, or also long?
     * Mathieu : The functions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
-    * My : The functions I chose is both complex and long. The one with CC 22 has 106 LOC and the one with CC 16 has 43 LOC which is a lot less. The latter function contains a lot more loops (containing conditions) than the first one, which increases the cyclic complexity even though there are much fewer lines of code.
+    * My : The functions I choose is both complex and long. The one with CC 22 has 106 LOC and the one with CC 16 has 43 LOC which is a lot less. The latter function contains a lot more loops (containing conditions) than the first one, which increases the cyclic complexity even though there are much fewer lines of code.
     * Julian : 
     * Axel : `attributes_` has 34 LOC and `polygonTouchesPolygonImpl_` has 76 LOC (both have CC 16).
     * Henrik : `construct` has 81 LOC and `insertPath` has 67 LOC
@@ -153,10 +153,20 @@ Report of old coverage:
 * Mathieu : 
 * My : `Envelope2D`: methods coverage 59%, line coverage 48%. `PolygonUtils`: method coverage 56%, line coverage 41%. 
 * Julian : 
-* Axel : `RelationalOperations`: 97% method coverage and 85% line coverage.
+* Axel : 
+  * `polygonTouchesPolygonImpl_`: The containing class has 97% method coverage and 85% line coverage. The function has 70.6% branch coverage;
+  ```
+  * RelationalOperations::polygonTouchesPolygonImpl_ has 70.58823529411765% coverage, reached 12/17 branches.
+    * The Branch ID that are not reached are [3, 8, 11, 13, 14]
+  ```
+  * `hasNonEmptyBoundary` : The containing class has 87% method coverage and 65% line coverage. The function has 23% branch coverage;
+  ```
+  * Boundary::hasNonEmptyBoundary has 23.076923076923077% coverage, reached 3/13 branches.
+      * The Branch ID that are not reached are [1, 3, 4, 5, 7, 8, 9, 10, 11, 12]
+  ```
 * Henrik : 
 
-Report of new coverage: [link]
+Report of new coverage:
 * Mathieu : 
 * My : `Envelope2D`: methods coverage 60%, line coverage 50%. `PolygonUtils`: method coverage 56%, line coverage 42%. 
 * Julian : 
