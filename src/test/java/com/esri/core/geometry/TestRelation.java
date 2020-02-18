@@ -282,6 +282,10 @@ public class TestRelation extends TestCase {
 		}
 	}
 
+	/**
+	 * Two polygons that touch each other along an edge should be
+	 * considered touching, by a touch-operator.
+	 */
 	@Test
 	public void testTouchPolygonPolygon() {
 		OperatorTouches operatorTouches = (OperatorTouches) (OperatorFactoryLocal
@@ -305,6 +309,10 @@ public class TestRelation extends TestCase {
 		assertTrue(isTouched && isTouched2);
 	}
 
+	/**
+	 * Two polygons that do not touch at all should not be considered
+	 * touching, by a touch-operator.
+	 */
 	@Test
 	public void testNoTouchPolygonPolygon() {
 		Polygon pg = new Polygon();
