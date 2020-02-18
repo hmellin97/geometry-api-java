@@ -24,7 +24,7 @@ Before we went with this project we looked at the Apache Commons library (Java) 
 ## Chosen Functions
 These are the functions each group member has chosen to work with.
 * Mathieu : 
-* My :
+* My : `PolygonUtils::testPointsOnPolyLine2D_` and `Envelope2D::clipLine`
 * Julian : 
 * Axel : `WktParser::attributes_` and `RelationalOperations::polygonTouchesPolygonImpl_`
 * Henrik : 
