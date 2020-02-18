@@ -24,6 +24,8 @@
 
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 import java.io.IOException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
@@ -712,39 +714,62 @@ public final class Envelope2D implements Serializable {
 	}
 
 	Point2D _snapToBoundary(Point2D pt) {
+		CoverageTool.CoverageFunction cf = CoverageTool.addFunction("Envelope2D::_snapToBoundary", 14);
+		cf.setReachedBranch(0);
 		Point2D p = new Point2D();
 		p.setCoords(pt);
-		if (p._isNan())
-			return p;
-
-		if (isEmpty()) {
-			p._setNan();
+		if (p._isNan()) {
+			cf.setReachedBranch(1);
 			return p;
 		}
 
-		if (p.x < xmin)
-			p.x = xmin;
-		else if (p.x > xmax)
-			p.x = xmax;
-
-		if (p.y < ymin)
-			p.y = ymin;
-		else if (p.y > ymax)
-			p.y = ymax;
-
-		if (!p.equals(pt))
+		cf.setReachedBranch(2);
+		if (isEmpty()) {
+			p._setNan();
+			cf.setReachedBranch(3);
 			return p;
+		}
 
+		cf.setReachedBranch(4);
+		if (p.x < xmin) {
+			p.x = xmin;
+			cf.setReachedBranch(5);
+		}
+		else if (p.x > xmax) {
+			cf.setReachedBranch(6);
+			p.x = xmax;
+		}
+
+		if (p.y < ymin) {
+			cf.setReachedBranch(7);
+			p.y = ymin;
+		}
+		else if (p.y > ymax) {
+			cf.setReachedBranch(8);
+			p.y = ymax;
+		}
+
+		if (!p.equals(pt)) {
+			cf.setReachedBranch(9);
+			return p;
+		}
+
+		cf.setReachedBranch(10);
 		// p is inside envelope
 		Point2D center = getCenter();
 		double deltax = p.x < center.x ? p.x - xmin : xmax - p.x;
 		double deltay = p.y < center.y ? p.y - ymin : ymax - p.y;
 
-		if (deltax < deltay)
+		if (deltax < deltay) {
+			cf.setReachedBranch(11);
 			p.x = p.x < center.x ? xmin : xmax;
-		else
+		}
+		else {
+			cf.setReachedBranch(12);
 			p.y = p.y < center.y ? ymin : ymax;
+		}
 
+		cf.setReachedBranch(13);
 		return p;
 	}
 

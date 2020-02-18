@@ -33,12 +33,8 @@ import org.junit.runners.JUnit4;
 
 import com.esri.core.geometry.ogc.OGCGeometry;
 
-@RunWith(JUnit4.class)
 public class TestConvexHull extends TestCase {
-	@AfterClass
-	public static void afterTestConvexHull() throws Exception{
-		CoverageTool.printCoverageResults();
-	}
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
