@@ -211,7 +211,7 @@ Show the comments that describe the requirements for the coverage.
 
 #### Test cases added:
 * My : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the command `git diff My-DIY..My-test`.
-* Mathieu : The branch [mathieu-test](https://github.com/hmellin97/geometry-api-java/tree/mathieu-test) contains the added tests in the `TestLine` class. To easily display them use the command `git diff mathieu-diy..mathieu-test`.
+* Mathieu : The branch [mathieu-test](https://github.com/hmellin97/geometry-api-java/tree/mathieu-test) contains the added tests in the `TestLine` and `TestSegmentIntersector`class. To easily display them use the command `git diff mathieu-diy..mathieu-test`.
 * Julian : 
 * Axel : The branch [Axel-test](https://github.com/hmellin97/geometry-api-java/tree/Axel-test) contains the added tests. To easily display them use the command `git diff axel-manual-coverage..Axel-test`.
 * Henrik : 
@@ -226,14 +226,14 @@ Can the functions you test be called directly or did you need to make them publi
 
 ## Refactoring
 Is the complexity of the functions really necessary?
-* Mathieu : 
+* Mathieu : No. The dunction can be easily splitted in many smaller function.
 * My :
 * Julian : For `Clipper::checkSegmentIntersection_` the complexity is necessary. It has a higher complexity since it needs to be able to handle the three different cases. In each case it needs to be able to identify whether to return 0, 1, -1. It can however be broken down into smaller functions and still achieve its purpose. `SweepComparator::compareSegments` is similarly also dependant on having high complexity. This is because a large part of the function aims to just understand what type of objects that are being compared. Depending on this, different types comparisons are being called. 
 * Axel : As mentioned before, I don't understand `WktParser::attributes_` in detail, though I get on a higher level what it is supposed to do. I can understand that most of this complexity is needed because there are a lot of different cases for how the attributes to be parsed can be formatted. There are however some improvements that can be made to decrease complexity.
 * Henrik : 
 
 Plan for refactoring complex code:
-* Mathieu : 
+* Mathieu : in `SegmentIntersector` l.291 they test whichi rank is bigger and then do exactly the same thing but with different line. The code could easily be rewritten using an helper function `private boolean notEqualRank(Line l1, Line l2)` that should be used to set the boolean `bigmove`. Moreover l.318 the first line is splitted and the the second one. We could easily implement a `private void splitLine(Line l, int count, double [] m_param)` that could be used for both `line1` and `line2`. 
 * My :
 * Julian : 
   *`Clipper::checkSegmentIntersection_` works with different `cases`. The plan would be to break each section of code in each `case` into their own functions. This would how a great impact since a lot of the CC lies in the fact that the function has to be able to return 3 different values depending on the outcome for all cases. These new functions can be broken down into 1 new function that can handle all three cases but in order to lower the complexity of the new functions it would be best to have a new function for each case. The same applies for `SweepComparator::compareSegments`. Many parts of the function can be broken down into smaller functions. For example, there is a part of the function that checks the left edge and one part that checks the right edge. These parts are big contributors to the high CC. They can be broken down into their individual function. At the end of the code we have a group of `if`-statements that each call on other functions depending on what kind of check that needs to be done. So it is clear here that some work has previously been done in order to simplify the function.
