@@ -26,11 +26,8 @@ package com.esri.core.geometry;
 
 import big.brain.CoverageTool;
 import junit.framework.TestCase;
-
 import org.junit.AfterClass;
 import org.junit.Test;
-
-import com.esri.core.geometry.PolygonUtils.PiPResult;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -41,6 +38,22 @@ public class TestIntersection extends TestCase {
 	@AfterClass
 	public static void afterTestPolygon(){
 		CoverageTool.printCoverageResults();
+	}
+
+	@Test
+	public void testPolyLineIntersect(){
+		Polyline polyline = new Polyline();
+		polyline.startPath(0, 0);
+		polyline.lineTo(0, 10);
+		polyline.lineTo(20, 10);
+		polyline.lineTo(20, 0);
+		polyline.m_impl.m_accelerators = new GeometryAccelerators();
+		polyline.m_impl.m_accelerators._setRasterizedGeometry(new RasterizedGeometry2DImpl(polyline, 0, 0));
+
+		OperatorIntersection operatorIntersection = (OperatorIntersection) projEnv
+				.getOperator(Operator.Type.Intersection);
+		Geometry geom = operatorIntersection.execute(polyline, new Point(0, 5, 7), null,null);
+		assertFalse(geom.isEmpty());
 	}
 
 	static OperatorFactoryLocal projEnv = OperatorFactoryLocal.getInstance();
@@ -586,7 +599,6 @@ public class TestIntersection extends TestCase {
 		polyline.lineTo(0, 10);
 		polyline.lineTo(20, 10);
 		polyline.lineTo(20, 0);
-		polyline.m_impl.m_accelerators = new GeometryAccelerators();
 		MultiPoint mp = new MultiPoint();
 		mp.add(0, 10, 7);
 		mp.add(0, 5, 7);
