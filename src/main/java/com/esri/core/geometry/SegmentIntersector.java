@@ -27,7 +27,11 @@
  */
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 import java.util.ArrayList;
+
+import static big.brain.CoverageTool.addFunction;
 
 class SegmentIntersector {
 	private static class IntersectionPart {
@@ -194,8 +198,11 @@ class SegmentIntersector {
 
 	// Performs the intersection
 	public boolean intersect(double tolerance, boolean b_intersecting) {
-		if (m_input_segments.size() != 2)										//1
+		CoverageTool.CoverageFunction cF = addFunction("SegmentIntersector::intersect", 52);
+		if (m_input_segments.size() != 2) {
+			cF.setReachedBranch(0);                                    //1
 			throw GeometryException.GeometryInternalError();
+		}
 
 		m_tolerance = tolerance;
 		double small_tolerance_sqr = MathUtils.sqr(tolerance * 0.01);
@@ -205,18 +212,25 @@ class SegmentIntersector {
 		IntersectionPart part2 = m_input_segments.get(1);
 		if (b_intersecting
 				|| (part1.seg._isIntersecting(part2.seg, tolerance, true) & 5) != 0) { //3
+			cF.setReachedBranch(1);
 			if (part1.seg.getType().value() == Geometry.GeometryType.Line) {    //4
+				cF.setReachedBranch(2);
 				Line line_1 = (Line) part1.seg;
 				if (part2.seg.getType().value() == Geometry.GeometryType.Line) { //5
+					cF.setReachedBranch(3);
 					Line line_2 = (Line) part2.seg;
 					int count = Line._intersectLineLine(line_1, line_2, null,
 							m_param_1, m_param_2, tolerance);
 					if (count == 0) {                                            //6
+						cF.setReachedBranch(4);
 						//assert (count > 0);
 						throw GeometryException.GeometryInternalError();
+					}else{
+						cF.setReachedBranch(5);
 					}
 					Point2D[] points = new Point2D[9];
 					for (int i = 0; i < count; i++) {                            //7
+						cF.setReachedBranch(6);
 						// For each point of intersection, we calculate a
 						// weighted point
 						// based on the ranks and weights of the endpoints and
@@ -227,27 +241,36 @@ class SegmentIntersector {
 						double weight1 = 1.0;
 
 						if (t1 == 0) {                                            //8
+							cF.setReachedBranch(7);
 							rank1 = part1.rank_start;
 							weight1 = part1.weight_start;
 						} else if (t1 == 1.0) {                                    //9
+							cF.setReachedBranch(8);
 							rank1 = part1.rank_end;
 							weight1 = part1.weight_end;
+						}else{
+							cF.setReachedBranch(9);
 						}
 
 						int rank2 = part2.rank_interior;
 						double weight2 = 1.0;
 						if (t2 == 0) {                                            //10
+							cF.setReachedBranch(10);
 							rank2 = part2.rank_start;
 							weight2 = part2.weight_start;
 						} else if (t2 == 1.0) {                                    //11
+							cF.setReachedBranch(11);
 							rank2 = part2.rank_end;
 							weight2 = part2.weight_end;
+						}else{
+							cF.setReachedBranch(12);
 						}
 
 						double ptWeight;
 
 						Point2D pt = new Point2D();
 						if (rank1 == rank2) {// for equal ranks use weighted sum//12
+							cF.setReachedBranch(13);
 							Point2D pt_1 = new Point2D();
 							line_1.getCoord2D(t1, pt_1);
 							Point2D pt_2 = new Point2D();
@@ -256,24 +279,37 @@ class SegmentIntersector {
 							double t = weight2 / ptWeight;
 							MathUtils.lerp(pt_1, pt_2, t, pt);
 							if (Point2D.sqrDistance(pt, pt_1)                    //13
-									+ Point2D.sqrDistance(pt, pt_2) > small_tolerance_sqr)
+									+ Point2D.sqrDistance(pt, pt_2) > small_tolerance_sqr) {
+								cF.setReachedBranch(14);
 								bigmove = true;
+							}else{
+								cF.setReachedBranch(15);
+							}
 
 						} else {// for non-equal ranks, the higher rank wins
+							cF.setReachedBranch(16);
 							if (rank1 > rank2) {                                //14
+								cF.setReachedBranch(17);
 								line_1.getCoord2D(t1, pt);
 								ptWeight = weight1;
 								Point2D pt_2 = new Point2D();
 								line_2.getCoord2D(t2, pt_2);
-								if (Point2D.sqrDistance(pt, pt_2) > small_tolerance_sqr) //15
+								if (Point2D.sqrDistance(pt, pt_2) > small_tolerance_sqr) { //15
+									cF.setReachedBranch(18);
 									bigmove = true;
+								}
 							} else {
+								cF.setReachedBranch(19);
 								line_2.getCoord2D(t2, pt);
 								ptWeight = weight2;
 								Point2D pt_1 = new Point2D();
 								line_1.getCoord2D(t1, pt_1);
-								if (Point2D.sqrDistance(pt, pt_1) > small_tolerance_sqr) //16
+								if (Point2D.sqrDistance(pt, pt_1) > small_tolerance_sqr) { //16
+									cF.setReachedBranch(20);
 									bigmove = true;
+								}else{
+									cF.setReachedBranch(21);
+								}
 							}
 						}
 						points[i] = pt;
@@ -284,69 +320,105 @@ class SegmentIntersector {
 					double t0 = 0;
 					int i0 = -1;
 					for (int i = 0; i <= count; i++) {                        //17
+						cF.setReachedBranch(22);
 						double t = i < count ? m_param_1[i] : 1.0;            //18
 						if (t != t0) {                                        //19
+							cF.setReachedBranch(23);
 							SegmentBuffer seg_buffer = newSegmentBuffer_();
 							line_1.cut(t0, t, seg_buffer);
-							if (i0 != -1)                                    //20
+							if (i0 != -1) {                   //20
+								cF.setReachedBranch(24);
 								seg_buffer.get().setStartXY(points[i0]);
-							if (i != count)                                    //21
+							}else {
+								cF.setReachedBranch(25);
+							}
+							if (i != count) {                             //21
+								cF.setReachedBranch(26);
 								seg_buffer.get().setEndXY(points[i]);
+							}else {
+								cF.setReachedBranch(27);
+							}
 
 							t0 = t;
 							m_result_segments_1
 									.add(newIntersectionPart_(seg_buffer.get()));
+						}else {
+							cF.setReachedBranch(28);
 						}
 						i0 = i;
 					}
 
 					int[] indices = new int[9];
-					for (int i = 0; i < count; i++)                            //22
+					for (int i = 0; i < count; i++) {                       //22
+						cF.setReachedBranch(29);
 						indices[i] = i;
+					}
 
 					if (count > 1) {                                        //23
+						cF.setReachedBranch(30);
 						if (m_param_2[0] > m_param_2[1]) {                    //24
+							cF.setReachedBranch(31);
 							double t = m_param_2[0];
 							m_param_2[0] = m_param_2[1];
 							m_param_2[1] = t;
 							int i = indices[0];
 							indices[0] = indices[1];
 							indices[1] = i;
+						}else{
+							cF.setReachedBranch(32);
 						}
+					}else {
+						cF.setReachedBranch(33);
 					}
 
 					// Split the line_2
 					t0 = 0;
 					i0 = -1;
 					for (int i = 0; i <= count; i++) {                        //25
+						cF.setReachedBranch(34);
 						double t = i < count ? m_param_2[i] : 1.0;            //26
 						if (t != t0) {                                        //27
+							cF.setReachedBranch(35);
 							SegmentBuffer seg_buffer = newSegmentBuffer_();
 							line_2.cut(t0, t, seg_buffer);
 							if (i0 != -1) {                                    //28
+								cF.setReachedBranch(36);
 								int ind = indices[i0];
 								seg_buffer.get().setStartXY(points[ind]);
+							}else {
+								cF.setReachedBranch(37);
 							}
 							if (i != count) {                                //29
+								cF.setReachedBranch(38);
 								int ind = indices[i];
 								seg_buffer.get().setEndXY(points[ind]);
+							}else{
+								cF.setReachedBranch(39);
 							}
 
 							t0 = t;
 							m_result_segments_2
 									.add(newIntersectionPart_(seg_buffer.get()));
+						}else {
+							cF.setReachedBranch(40);
 						}
 						i0 = i;
 					}
 
 					return bigmove;
+				}else{
+					cF.setReachedBranch(41);
 				}
 
 				throw GeometryException.GeometryInternalError();
+			}else {
+				cF.setReachedBranch(42);
 			}
 
 			throw GeometryException.GeometryInternalError();
-		}																	//+1 = 30
+		}	else {
+			cF.setReachedBranch(43);
+		}//+1 = 30
 		return false;
 	}
 
