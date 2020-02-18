@@ -291,7 +291,8 @@ To refactor `testPointsOnPolyLine2D_`, I would break the code down into smaller 
 
 Estimated impact of refactoring (lower CC, but other drawbacks?).
 * Mathieu : The first proposition will reduce the CC by 2 and the second will reduce it by 8. But most of all, it will increase the readability of the function. A function that is more than 100 LOC with `if`s depth of 6 without documentation it is really hard to follow. For those two proposition I cannot find a drawback.
-* My :
+* My : For the refactoring of `clipLine` 4/7 branches would disappear, but the drawback would be that some outcomes are not possible. Perhaps there is some change that could be done so that the function works properly instead.
+Dividing `testPointsOnPolyLine2D_` into 4 functions would decrease the CC to 25% of the original assuming each function would have ~4 CC each.
 * Julian : `Clipper::checkSegmentIntersection_` will experience CC will drop to around 1/3 of what it had before. So a lower CC is applicable. Other drawbacks may be that it will be harder to understand the code. Since the documentation is not so extensive and there are no comments at the moment. It will be even more difficult for a new member to learn and understand how the function is executed. `SweepComparator::compareSegments` can also expect a large drop in CC due to the division into smaller functions. Compared to the `Clipper::checkSegmentIntersection_`, this function will be easier to follow since the name of the functions are much more straight forward.
 * Axel :
   * Simplifying character-comparisons reduces CC from 16 to 14.
@@ -301,7 +302,7 @@ Estimated impact of refactoring (lower CC, but other drawbacks?).
 
 Carried out refactoring (optional)
 * Mathieu : None.
-* My :
+* My : None.
 * Julian : None.
 * Axel : None.
 * Henrik : 
