@@ -226,8 +226,15 @@ Can the functions you test be called directly or did you need to make them publi
 
 ## Refactoring
 Is the complexity of the functions really necessary?
-* Mathieu : No. The dunction can be easily splitted in many smaller function.
-* My :
+* Mathieu : No. The function can be easily splitted in many smaller function.
+* My : The complexity of `Envelope2D::clipLine` is, in my opinion necessary. There are many if-statements, but what is actually executed beneath them is very short and at most 3-4 LOC. However, there is one part of this function that is questionable. The following code is executed:
+```
+tOld[0] = segParams[0];
+tOld[1] = segParams[1];
+```
+And shortly after this, without changing any of these variables, there is if statements containing: `segParams[1] < tOld[1]` and `segParams[0] > tOld[0]` which will never be true due to the code above. So, this part adds unnecessary complexity to the function. There might be some thought behind it, but there are no comments to explain why it is done in that way. 
+
+The complexity of `PolygonUtils:: testPointsOnPolyLine2D_` is not necessary in my opinion. It could easily be broken down to smaller functions.
 * Julian : For `Clipper::checkSegmentIntersection_` the complexity is necessary. It has a higher complexity since it needs to be able to handle the three different cases. In each case it needs to be able to identify whether to return 0, 1, -1. It can however be broken down into smaller functions and still achieve its purpose. `SweepComparator::compareSegments` is similarly also dependant on having high complexity. This is because a large part of the function aims to just understand what type of objects that are being compared. Depending on this, different types comparisons are being called. 
 * Axel : As mentioned before, I don't understand `WktParser::attributes_` in detail, though I get on a higher level what it is supposed to do. I can understand that most of this complexity is needed because there are a lot of different cases for how the attributes to be parsed can be formatted. There are however some improvements that can be made to decrease complexity.
 * Henrik : 
@@ -242,14 +249,8 @@ if (rank1 > rank2) {
 }
 ```
 Moreover l.318 the first line is splitted and the the second one. We could easily implement a `private void splitLine(Line l, int count, double [] m_param)` that could be used for both `line1` and `line2`. 
-* My : The complexity of `Envelope2D::clipLine` is, in my opinion necessary. There are many if-statements, but what is actually executed beneath them is very short and at most 3-4 LOC. However, there is one part of this function that is questionable. The following code is executed:
-```
-tOld[0] = segParams[0];
-tOld[1] = segParams[1];
-```
-And shortly after this, without changing any of these variables, there is if statements containing: `segParams[1] < tOld[1]` and `segParams[0] > tOld[0]` which will never be true due to the code above. So, this part adds unnecessary complexity to the function. There might be some thought behind it, but there are no comments to explain why it is done in that way. 
-
-The complexity of `PolygonUtils:: testPointsOnPolyLine2D_` is not necessary in my opinion. It could easily be broken down to smaller functions.
+* My : in `clipLine`, the only thing I would change is to take away the code that can’t be reached. This would make it impossible for the function to have some of its possible outcomes (thus, they are already impossible because they can’t be reached). 
+To refactor `testPointsOnPolyLine2D_`, I would break the code down into smaller functions. If you take a look at the function it is clearly divided into 4 blocks, where each block could be put into a separate function. The variables that are used would be passed on as input-parameters in the new help-functions. And the new help-functions would return new values of updated variables that are used. 
 
 * Julian : 
   *`Clipper::checkSegmentIntersection_` works with different `cases`. The plan would be to break each section of code in each `case` into their own functions. This would how a great impact since a lot of the CC lies in the fact that the function has to be able to return 3 different values depending on the outcome for all cases. These new functions can be broken down into 1 new function that can handle all three cases but in order to lower the complexity of the new functions it would be best to have a new function for each case. The same applies for `SweepComparator::compareSegments`. Many parts of the function can be broken down into smaller functions. For example, there is a part of the function that checks the left edge and one part that checks the right edge. These parts are big contributors to the high CC. They can be broken down into their individual function. At the end of the code we have a group of `if`-statements that each call on other functions depending on what kind of check that needs to be done. So it is clear here that some work has previously been done in order to simplify the function.
