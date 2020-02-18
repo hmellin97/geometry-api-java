@@ -242,7 +242,15 @@ if (rank1 > rank2) {
 }
 ```
 Moreover l.318 the first line is splitted and the the second one. We could easily implement a `private void splitLine(Line l, int count, double [] m_param)` that could be used for both `line1` and `line2`. 
-* My :
+* My : The complexity of `Envelope2D::clipLine` is, in my opinion necessary. There are many if-statements, but what is actually executed beneath them is very short and at most 3-4 LOC. However, there is one part of this function that is questionable. The following code is executed:
+```
+tOld[0] = segParams[0];
+tOld[1] = segParams[1];
+```
+And shortly after this, without changing any of these variables, there is if statements containing: `segParams[1] < tOld[1]` and `segParams[0] > tOld[0]` which will never be true due to the code above. So, this part adds unnecessary complexity to the function. There might be some thought behind it, but there are no comments to explain why it is done in that way. 
+
+The complexity of `PolygonUtils:: testPointsOnPolyLine2D_` is not necessary in my opinion. It could easily be broken down to smaller functions.
+
 * Julian : 
   *`Clipper::checkSegmentIntersection_` works with different `cases`. The plan would be to break each section of code in each `case` into their own functions. This would how a great impact since a lot of the CC lies in the fact that the function has to be able to return 3 different values depending on the outcome for all cases. These new functions can be broken down into 1 new function that can handle all three cases but in order to lower the complexity of the new functions it would be best to have a new function for each case. The same applies for `SweepComparator::compareSegments`. Many parts of the function can be broken down into smaller functions. For example, there is a part of the function that checks the left edge and one part that checks the right edge. These parts are big contributors to the high CC. They can be broken down into their individual function. At the end of the code we have a group of `if`-statements that each call on other functions depending on what kind of check that needs to be done. So it is clear here that some work has previously been done in order to simplify the function.
 * Axel :
