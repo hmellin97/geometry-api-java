@@ -160,14 +160,20 @@ Report of new coverage: [link]
 * Mathieu : 
 * My : Envelope2D: methods coverage 60%, line coverage 50%. PolygonUtils: method coverage 56%, line coverage 42%. 
 * Julian : 
-* Axel :
+* Axel : `RelationalOperations`: IntelliJ reports the same coverage percentages, because I just added one test which covers one new branch (it's just a return statement) and the source file has 2565 lines of code. My DIY branch coverage instrumentation shows that the previously unreached branch (8) was now reached:
+```
+* RelationalOperations::polygonTouchesPolygonImpl_ has 76.47058823529412% coverage, reached 13/17 branches.
+    * The Branch ID that are not reached are [3, 11, 13, 14]
+```
+So the branch coverage for the specific function was increased from 70.6% to 76.5%.
+
 * Henrik : 
 
 Test cases added:
 * Mathieu : 
 * My : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the command `git diff My-DIY..My-test`.
 * Julian : 
-* Axel :
+* Axel : The branch [Axel-test](https://github.com/hmellin97/geometry-api-java/tree/Axel-test) contains the added tests. To easily display them use the command `git diff axel-manual-coverage..Axel-test`.
 * Henrik : 
 
 Can the functions you test be called directly or did you need to make them public?
