@@ -198,7 +198,7 @@ class SegmentIntersector {
 
 	// Performs the intersection
 	public boolean intersect(double tolerance, boolean b_intersecting) {
-		CoverageTool.CoverageFunction cF = addFunction("SegmentIntersector::intersect", 43);
+		CoverageTool.CoverageFunction cF = addFunction("SegmentIntersector::intersect", 44);
 		if (m_input_segments.size() != 2) {
 			cF.setReachedBranch(0);                                    //1
 			throw GeometryException.GeometryInternalError();
