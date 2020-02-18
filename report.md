@@ -162,53 +162,48 @@ Show the comments that describe the requirements for the coverage.
 
 Report of old coverage:
 * Mathieu : 
-* My : `Envelope2D`: methods coverage 59%, line coverage 48%, function coverage 0% (not tests at all). `PolygonUtils`: method coverage 56%, line coverage 41%, function coverage 66.6%. Output from our coverage tool:
-```
-* PolygonUtils::testPointsonPolyLine2D_ has 66.66666666666666% coverage, reached 8/12 branches.
-    * The Branch ID that are not reached are [0, 2, 3, 11]
-```
+
 * Julian : 
-* Axel : 
-  * `polygonTouchesPolygonImpl_`: The containing class has 97% method coverage and 85% line coverage. The function has 70.6% branch coverage;
-  ```
-  * RelationalOperations::polygonTouchesPolygonImpl_ has 70.58823529411765% coverage, reached 12/17 branches.
-    * The Branch ID that are not reached are [3, 8, 11, 13, 14]
-  ```
-  * `hasNonEmptyBoundary` : The containing class has 87% method coverage and 65% line coverage. The function has 23% branch coverage;
-  ```
-  * Boundary::hasNonEmptyBoundary has 23.076923076923077% coverage, reached 3/13 branches.
-      * The Branch ID that are not reached are [1, 3, 4, 5, 7, 8, 9, 10, 11, 12]
-  ```
 * Henrik : 
 
 Report of new coverage:
 * Mathieu : 
-* My : `Envelope2D`: methods coverage 60%, line coverage 50%, function coverage 28.6%. `PolygonUtils`: method coverage 56%, line coverage 45%, function coverage 83.3%. Output from our coverage tool: 
-```
- * Envelope2D::clipLine has 28.57142857142857% coverage, reached 2/7 branches.
-    * The Branch ID that are not reached are [2, 3, 4, 5, 6]
- * PolygonUtils::testPointsonPolyLine2D_ has 83.33333333333334% coverage, reached 10/12 branches.
-    * The Branch ID that are not reached are [3, 11]
-```
+* My :
+    * old : `Envelope2D`: methods coverage 59%, line coverage 48%, function coverage 0% (not tests at all). `PolygonUtils`: method coverage 56%, line coverage 41%, function coverage 66.6%. Output from our coverage tool:
+	```
+	* PolygonUtils::testPointsonPolyLine2D_ has 66.66666666666666% coverage, reached 8/12 branches.
+    		* The Branch ID that are not reached are [0, 2, 3, 11]
+	```
+    * new : `Envelope2D`: methods coverage 60%, line coverage 50%, function coverage 28.6%. `PolygonUtils`: method coverage 56%, line coverage 45%, function coverage 83.3%. Output from our coverage tool: 
+	```
+ 	* Envelope2D::clipLine has 28.57142857142857% coverage, reached 2/7 branches.
+    		* The Branch ID that are not reached are [2, 3, 4, 5, 6]
+ 	* PolygonUtils::testPointsonPolyLine2D_ has 83.33333333333334% coverage, reached 10/12 branches.
+    		* The Branch ID that are not reached are [3, 11]
+	```
 * Julian : 
 * Axel : 
-  * `RelationalOperations`: IntelliJ reports the same coverage percentages, because I just added one test which covers one new branch (it's just a return statement) and the source file has 2565 lines of code. My DIY branch coverage instrumentation shows that the previously unreached branch (8) was now reached:
-  ```
-  * RelationalOperations::polygonTouchesPolygonImpl_ has 76.47058823529412% coverage, reached 13/17 branches.
-      * The Branch ID that are not reached are [3, 11, 13, 14]
-  ```
-  So the branch coverage for the specific function was increased from 70.6% to 76.5%.
-  * `hasNonEmptyBoundary` : The line coverage for the containing class increased from 65% to 77%. My DIY branch coverage instrumentation shows that branch coverage was increased from 23% to 69%:
-  ```
-  * Boundary::hasNonEmptyBoundary has 69.23076923076923% coverage, reached 9/13 branches.
-    * The Branch ID that are not reached are [8, 9, 10, 12]
-  ```
+   * old : `polygonTouchesPolygonImpl_`: The containing class has 97% method coverage and 85% line coverage. The function has 70.6% branch coverage and `hasNonEmptyBoundary` : The containing class has 87% method coverage and 65% line coverage. The function has 23% branch coverage
+   	```
+   	* RelationalOperations::polygonTouchesPolygonImpl_ has 70.58823529411765% coverage, reached 12/17 branches.
+    		* The Branch ID that are not reached are [3, 8, 11, 13, 14]
+  	* Boundary::hasNonEmptyBoundary has 23.076923076923077% coverage, reached 3/13 branches.
+     		 * The Branch ID that are not reached are [1, 3, 4, 5, 7, 8, 9, 10, 11, 12]
+  	```
+   * new:  `RelationalOperations`: IntelliJ reports the same coverage percentages, because I just added one test which covers one new branch (it's just a return statement) and the source file has 2565 lines of code. My DIY branch coverage instrumentation shows that the previously unreached branch (8) was now reached. So the branch coverage for the specific function was increased from 70.6% to 76.5%. 
+   For `hasNonEmptyBoundary` : The line coverage for the containing class increased from 65% to 77%. My DIY branch coverage instrumentation shows that branch coverage was increased from 23% to 69%:
+  	```
+  	* RelationalOperations::polygonTouchesPolygonImpl_ has 76.47058823529412% coverage, reached 13/17 branches.
+      		* The Branch ID that are not reached are [3, 11, 13, 14]
+  	* Boundary::hasNonEmptyBoundary has 69.23076923076923% coverage, reached 9/13 branches.
+    		* The Branch ID that are not reached are [8, 9, 10, 12]
+  	```
 
 * Henrik : 
 
 Test cases added:
-* Mathieu : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the command `git diff mathieu-DIY..My-test`.
 * My : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the command `git diff My-DIY..My-test`.
+* Mathieu : The branch [mathieu-test](https://github.com/hmellin97/geometry-api-java/tree/mathieu-test) contains the added tests in the `TestLine` class. To easily display them use the command `git diff mathieu-diy..mathieu-test`.
 * Julian : 
 * Axel : The branch [Axel-test](https://github.com/hmellin97/geometry-api-java/tree/Axel-test) contains the added tests. To easily display them use the command `git diff axel-manual-coverage..Axel-test`.
 * Henrik : 
