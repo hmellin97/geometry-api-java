@@ -29,12 +29,11 @@ import com.esri.core.geometry.Geometry.Type;
 import junit.framework.TestCase;
 import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
 
 public class TestIntersect2 extends TestCase {
-	@AfterClass
-	public static void afterTestEnvelope2D(){
-		CoverageTool.printCoverageResults();
-	}
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
