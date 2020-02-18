@@ -32,7 +32,7 @@ These are the functions each group member has chosen to work with.
 Please write here if you used any other functions for the part about increasing coverage/writing tests. 
 * Mathieu : 
 * My :
-* Julian : 
+* Julian : test
 * Axel : `Boundary::hasNonEmptyBoundary`
 * Henrik : 
 
