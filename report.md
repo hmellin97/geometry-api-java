@@ -149,11 +149,11 @@ TODO: branch coverage %?
 
 Show the comments that describe the requirements for the coverage.
 
-Report of old coverage: [link]
+Report of old coverage:
 * Mathieu : 
 * My : Envelope2D: methods coverage 59%, line coverage 48%. PolygonUtils: method coverage 56%, line coverage 41%. 
 * Julian : 
-* Axel :
+* Axel : `RelationalOperations`: 97% method coverage and 85% line coverage.
 * Henrik : 
 
 Report of new coverage: [link]
