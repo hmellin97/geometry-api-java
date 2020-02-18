@@ -194,7 +194,7 @@ class SegmentIntersector {
 
 	// Performs the intersection
 	public boolean intersect(double tolerance, boolean b_intersecting) {
-		if (m_input_segments.size() != 2)
+		if (m_input_segments.size() != 2)										//1
 			throw GeometryException.GeometryInternalError();
 
 		m_tolerance = tolerance;
@@ -204,19 +204,19 @@ class SegmentIntersector {
 		IntersectionPart part1 = m_input_segments.get(0);
 		IntersectionPart part2 = m_input_segments.get(1);
 		if (b_intersecting
-				|| (part1.seg._isIntersecting(part2.seg, tolerance, true) & 5) != 0) {
-			if (part1.seg.getType().value() == Geometry.GeometryType.Line) {
+				|| (part1.seg._isIntersecting(part2.seg, tolerance, true) & 5) != 0) { //3
+			if (part1.seg.getType().value() == Geometry.GeometryType.Line) {    //4
 				Line line_1 = (Line) part1.seg;
-				if (part2.seg.getType().value() == Geometry.GeometryType.Line) {
+				if (part2.seg.getType().value() == Geometry.GeometryType.Line) { //5
 					Line line_2 = (Line) part2.seg;
 					int count = Line._intersectLineLine(line_1, line_2, null,
 							m_param_1, m_param_2, tolerance);
-					if (count == 0) {
-						assert (count > 0);
+					if (count == 0) {                                            //6
+						//assert (count > 0);
 						throw GeometryException.GeometryInternalError();
 					}
 					Point2D[] points = new Point2D[9];
-					for (int i = 0; i < count; i++) {
+					for (int i = 0; i < count; i++) {                            //7
 						// For each point of intersection, we calculate a
 						// weighted point
 						// based on the ranks and weights of the endpoints and
@@ -226,20 +226,20 @@ class SegmentIntersector {
 						int rank1 = part1.rank_interior;
 						double weight1 = 1.0;
 
-						if (t1 == 0) {
+						if (t1 == 0) {                                            //8
 							rank1 = part1.rank_start;
 							weight1 = part1.weight_start;
-						} else if (t1 == 1.0) {
+						} else if (t1 == 1.0) {                                    //9
 							rank1 = part1.rank_end;
 							weight1 = part1.weight_end;
 						}
 
 						int rank2 = part2.rank_interior;
 						double weight2 = 1.0;
-						if (t2 == 0) {
+						if (t2 == 0) {                                            //10
 							rank2 = part2.rank_start;
 							weight2 = part2.weight_start;
-						} else if (t2 == 1.0) {
+						} else if (t2 == 1.0) {                                    //11
 							rank2 = part2.rank_end;
 							weight2 = part2.weight_end;
 						}
@@ -247,7 +247,7 @@ class SegmentIntersector {
 						double ptWeight;
 
 						Point2D pt = new Point2D();
-						if (rank1 == rank2) {// for equal ranks use weighted sum
+						if (rank1 == rank2) {// for equal ranks use weighted sum//12
 							Point2D pt_1 = new Point2D();
 							line_1.getCoord2D(t1, pt_1);
 							Point2D pt_2 = new Point2D();
@@ -255,24 +255,24 @@ class SegmentIntersector {
 							ptWeight = weight1 + weight2;
 							double t = weight2 / ptWeight;
 							MathUtils.lerp(pt_1, pt_2, t, pt);
-							if (Point2D.sqrDistance(pt, pt_1)
+							if (Point2D.sqrDistance(pt, pt_1)                    //13
 									+ Point2D.sqrDistance(pt, pt_2) > small_tolerance_sqr)
 								bigmove = true;
-							
+
 						} else {// for non-equal ranks, the higher rank wins
-							if (rank1 > rank2) {
+							if (rank1 > rank2) {                                //14
 								line_1.getCoord2D(t1, pt);
 								ptWeight = weight1;
 								Point2D pt_2 = new Point2D();
 								line_2.getCoord2D(t2, pt_2);
-								if (Point2D.sqrDistance(pt, pt_2) > small_tolerance_sqr)
+								if (Point2D.sqrDistance(pt, pt_2) > small_tolerance_sqr) //15
 									bigmove = true;
 							} else {
 								line_2.getCoord2D(t2, pt);
 								ptWeight = weight2;
 								Point2D pt_1 = new Point2D();
 								line_1.getCoord2D(t1, pt_1);
-								if (Point2D.sqrDistance(pt, pt_1) > small_tolerance_sqr)
+								if (Point2D.sqrDistance(pt, pt_1) > small_tolerance_sqr) //16
 									bigmove = true;
 							}
 						}
@@ -283,14 +283,14 @@ class SegmentIntersector {
 					// to the weighted
 					double t0 = 0;
 					int i0 = -1;
-					for (int i = 0; i <= count; i++) {
-						double t = i < count ? m_param_1[i] : 1.0;
-						if (t != t0) {
+					for (int i = 0; i <= count; i++) {                        //17
+						double t = i < count ? m_param_1[i] : 1.0;            //18
+						if (t != t0) {                                        //19
 							SegmentBuffer seg_buffer = newSegmentBuffer_();
 							line_1.cut(t0, t, seg_buffer);
-							if (i0 != -1)
+							if (i0 != -1)                                    //20
 								seg_buffer.get().setStartXY(points[i0]);
-							if (i != count)
+							if (i != count)                                    //21
 								seg_buffer.get().setEndXY(points[i]);
 
 							t0 = t;
@@ -301,11 +301,11 @@ class SegmentIntersector {
 					}
 
 					int[] indices = new int[9];
-					for (int i = 0; i < count; i++)
+					for (int i = 0; i < count; i++)                            //22
 						indices[i] = i;
 
-					if (count > 1) {
-						if (m_param_2[0] > m_param_2[1]) {
+					if (count > 1) {                                        //23
+						if (m_param_2[0] > m_param_2[1]) {                    //24
 							double t = m_param_2[0];
 							m_param_2[0] = m_param_2[1];
 							m_param_2[1] = t;
@@ -318,16 +318,16 @@ class SegmentIntersector {
 					// Split the line_2
 					t0 = 0;
 					i0 = -1;
-					for (int i = 0; i <= count; i++) {
-						double t = i < count ? m_param_2[i] : 1.0;
-						if (t != t0) {
+					for (int i = 0; i <= count; i++) {                        //25
+						double t = i < count ? m_param_2[i] : 1.0;            //26
+						if (t != t0) {                                        //27
 							SegmentBuffer seg_buffer = newSegmentBuffer_();
 							line_2.cut(t0, t, seg_buffer);
-							if (i0 != -1) {
+							if (i0 != -1) {                                    //28
 								int ind = indices[i0];
 								seg_buffer.get().setStartXY(points[ind]);
 							}
-							if (i != count) {
+							if (i != count) {                                //29
 								int ind = indices[i];
 								seg_buffer.get().setEndXY(points[ind]);
 							}
@@ -346,24 +346,23 @@ class SegmentIntersector {
 			}
 
 			throw GeometryException.GeometryInternalError();
-		}
-		
+		}																	//+1 = 30
 		return false;
 	}
 
 	public void intersect(double tolerance, Point pt_intersector_point,
 			int point_rank, double point_weight, boolean b_intersecting) {
 		pt_intersector_point.copyTo(m_point);
-		if (m_input_segments.size() != 1)
-			throw GeometryException.GeometryInternalError();
+//		if (m_input_segments.size() != 1)											//1
+//			throw GeometryException.GeometryInternalError();
 
 		m_tolerance = tolerance;
 
 		IntersectionPart part1 = m_input_segments.get(0);
 		if (b_intersecting
-				|| part1.seg._isIntersectingPoint(pt_intersector_point.getXY(),
+				|| part1.seg._isIntersectingPoint(pt_intersector_point.getXY(),		//3
 						tolerance, true)) {
-			if (part1.seg.getType().value() == Geometry.GeometryType.Line) {
+			if (part1.seg.getType().value() == Geometry.GeometryType.Line) {		//4
 				Line line_1 = (Line) (part1.seg);
 				double t1 = line_1.getClosestCoordinate(
 						pt_intersector_point.getXY(), false);
@@ -374,10 +373,10 @@ class SegmentIntersector {
 				int rank1 = part1.rank_interior;
 				double weight1 = 1.0;
 
-				if (t1 == 0) {
+				if (t1 == 0) {														//5
 					rank1 = part1.rank_start;
 					weight1 = part1.weight_start;
-				} else if (t1 == 1.0) {
+				} else if (t1 == 1.0) {												//6
 					rank1 = part1.rank_end;
 					weight1 = part1.weight_end;
 				}
@@ -388,7 +387,7 @@ class SegmentIntersector {
 				double ptWeight;
 
 				Point2D pt = new Point2D();
-				if (rank1 == rank2) {// for equal ranks use weighted sum
+				if (rank1 == rank2) {// for equal ranks use weighted sum			//7
 					Point2D pt_1 = new Point2D();
 					line_1.getCoord2D(t1, pt_1);
 					Point2D pt_2 = pt_intersector_point.getXY();
@@ -396,7 +395,7 @@ class SegmentIntersector {
 					double t = weight2 / ptWeight;
 					MathUtils.lerp(pt_1,  pt_2, t, pt);
 				} else {// for non-equal ranks, the higher rank wins
-					if (rank1 > rank2) {
+					if (rank1 > rank2) {											//8
 						pt = new Point2D();
 						line_1.getCoord2D(t1, pt);
 						ptWeight = weight1;
@@ -411,14 +410,14 @@ class SegmentIntersector {
 				double t0 = 0;
 				int i0 = -1;
 				int count = 1;
-				for (int i = 0; i <= count; i++) {
-					double t = i < count ? m_param_1[i] : 1.0;
-					if (t != t0) {
+				for (int i = 0; i <= count; i++) {									//9
+					double t = i < count ? m_param_1[i] : 1.0;						//30
+					if (t != t0) {													//10
 						SegmentBuffer seg_buffer = newSegmentBuffer_();
 						line_1.cut(t0, t, seg_buffer);
-						if (i0 != -1)
+						if (i0 != -1)												//11
 							seg_buffer.get().setStartXY(pt);
-						if (i != count)
+						if (i != count)												//12
 							seg_buffer.get().setEndXY(pt);
 
 						t0 = t;

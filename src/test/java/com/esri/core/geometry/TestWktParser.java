@@ -26,10 +26,20 @@ package com.esri.core.geometry;
 
 import static org.junit.Assert.*;
 import junit.framework.TestCase;
+import big.brain.CoverageTool;
 
+import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
+@RunWith(JUnit4.class)
 public class TestWktParser extends TestCase {
+	@AfterClass
+	public static void afterAllTests() {
+		System.out.println("afterAllTests");
+		CoverageTool.printCoverageResults();
+	}
 
 	@Test
 	public void testGeometryCollection() {

@@ -1,0 +1,146 @@
+static int _intersectLineLine(Line line1, Line line2,
+			Point2D[] intersectionPoints, double[] param1, double[] param2,
+			double tolerance) {
+		// _ASSERT(!param1 && !param2 || param1);
+		int counter = 0;
+		// Test the end points for exact coincidence.
+		double t11 = line1._intersection(line2.getStartXY(), tolerance, false);
+		double t12 = line1._intersection(line2.getEndXY(), tolerance, false);
+		double t21 = line2._intersection(line1.getStartXY(), tolerance, false);
+		double t22 = line2._intersection(line1.getEndXY(), tolerance, false);
+
+		if (!NumberUtils.isNaN(t11)) {
+			if (param1 != null)// if (param1)
+				param1[counter] = t11;
+			if (param2 != null)// if (param2)
+				param2[counter] = 0;
+
+			if (intersectionPoints != null)// if (intersectionPoints)
+				intersectionPoints[counter] = Point2D.construct(line2.m_xStart,
+						line2.m_yStart);
+			counter++;
+		}
+
+		if (!NumberUtils.isNaN(t12)) {
+			if (param1 != null)// if (param1)
+				param1[counter] = t12;
+			if (param2 != null)// if (param2)
+				param2[counter] = 1.0;
+
+			if (intersectionPoints != null)// if (intersectionPoints)
+				intersectionPoints[counter] = Point2D.construct(line2.m_xEnd,
+						line2.m_yEnd);
+			counter++;
+		}
+
+		if (counter != 2 && !NumberUtils.isNaN(t21)) {
+			if (!(t11 == 0 && t21 == 0) && !(t12 == 0 && t21 == 1.0))// the "if"
+																		// makes
+																		// sure
+																		// this
+																		// has
+																		// not
+																		// been
+																		// already
+																		// calculated
+			{
+				if (param1 != null)// if (param1)
+					param1[counter] = 0;
+				if (param2 != null)// if (param2)
+					param2[counter] = t21;
+
+				if (intersectionPoints != null)// if (intersectionPoints)
+					intersectionPoints[counter] = Point2D.construct(
+							line1.m_xStart, line1.m_yStart);
+				counter++;
+			}
+		}
+
+		if (counter != 2 && !NumberUtils.isNaN(t22)) {
+			if (!(t11 == 1.0 && t22 == 0) && !(t12 == 1.0 && t22 == 1.0))// the
+																			// "if"
+																			// makes
+																			// sure
+																			// this
+																			// has
+																			// not
+																			// been
+																			// already
+																			// calculated
+			{
+				if (param1 != null)// if (param1)
+					param1[counter] = 1.0;
+				if (param2 != null)// if (param2)
+					param2[counter] = t22;
+
+				if (intersectionPoints != null)// if (intersectionPoints)
+					intersectionPoints[counter] = Point2D.construct(
+							line2.m_xEnd, line2.m_yEnd);
+				counter++;
+			}
+		}
+
+		if (counter > 0) {
+			if (counter == 2 && param1 != null && param1[0] > param1[1]) {// make
+																			// sure
+																			// the
+																			// intersection
+																			// events
+																			// are
+																			// sorted
+																			// along
+																			// the
+																			// line1
+																			// can't
+																			// swap
+																			// doulbes
+																			// in
+																			// java
+																			// NumberUtils::Swap(param1[0],
+																			// param1[1]);
+				double zeroParam1 = param1[0];
+				param1[0] = param1[1];
+				param1[1] = zeroParam1;
+
+				if (param2 != null)// if (param2)
+				{
+					double zeroParam2 = param2[0];
+					param2[0] = param2[1];
+					param2[1] = zeroParam2;// NumberUtils::Swap(ARRAYELEMENT(param2,
+											// 0), ARRAYELEMENT(param2, 1));
+				}
+
+				if (intersectionPoints != null)// if (intersectionPoints)
+				{
+					Point2D tmp = new Point2D(intersectionPoints[0].x,
+							intersectionPoints[0].y);
+					intersectionPoints[0] = intersectionPoints[1];
+					intersectionPoints[1] = tmp;
+				}
+			}
+
+			return counter;
+		}
+
+		Point2D params = _intersectHelper1(line1, line2, tolerance);
+		if (NumberUtils.isNaN(params.x))
+			return 0;
+
+		if (intersectionPoints != null)// if (intersectionPoints)
+		{
+			intersectionPoints[0] = line1.getCoord2D(params.x);
+		}
+
+		if (param1 != null)// if (param1)
+		{
+			param1[0] = params.x;
+		}
+
+		if (param2 != null)// if (param2)
+		{
+			param2[0] = params.y;
+		}
+
+		return 1;
+	}
+	
