@@ -86,7 +86,7 @@ Please write here if you used any other functions for the part about increasing 
     * Julian : One of the function had a short comment but not too helpful. It did however help to understand the return values (0,1,-1) and their meaning. The other had no documentation or comments. 
     * Axel : No, there is close to no documentation at all. There are just two short comments, in one of the functions. The fact that variable names are cryptic doesn't help either.
     * Henrik : There are very few comments that explain what the functions does, which makes it hard to fully understand them.
-
+    * *Summary* : Most of the functions are not documented which is really strange for a big project like that. 
 ## Coverage
 
 ### Tools
@@ -149,6 +149,7 @@ COVERAGE RESULTS
     * Axel : Yes, see the image below
     ![Coverage comparison for WktParser](https://i.imgur.com/oq26u3a.png)
     * Henrik : 
+    * *Summary* : Our tool give the same result as the coverage tool of IntelliJ. The only difference that can happend is when there are ternary operator that we haven't change into `if...else` statement.
 
 
 ### Coverage improvement
@@ -206,7 +207,7 @@ Report of new coverage:
 * Henrik : 
 
 Test cases added:
-* Mathieu : 
+* Mathieu : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the command `git diff mathieu-DIY..My-test`.
 * My : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the command `git diff My-DIY..My-test`.
 * Julian : 
 * Axel : The branch [Axel-test](https://github.com/hmellin97/geometry-api-java/tree/Axel-test) contains the added tests. To easily display them use the command `git diff axel-manual-coverage..Axel-test`.
