@@ -673,7 +673,7 @@ final class MultiPathImpl extends MultiVertexGeometryImpl {
 		}
 
 		closePathWithLine();
-		m_bPathStarted = false;
+		m_bPathStarted = false	;
 
 		if (bWasEmpty && !bReverse)
 			_setDirtyFlag(DirtyFlags.DirtyIsEnvelope, false);// now we know the

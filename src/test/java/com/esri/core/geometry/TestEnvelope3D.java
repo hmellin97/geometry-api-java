@@ -25,14 +25,23 @@
 package com.esri.core.geometry;
 
 import junit.framework.TestCase;
+import big.brain.CoverageTool;
+import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
+import com.esri.core.geometry.ogc.OGCGeometry;
+
+@RunWith(JUnit4.class)
 public class TestEnvelope3D extends TestCase {
-
-
+    @AfterClass
+    public static void afterTestEnvelope3D() throws Exception {
+        CoverageTool.printCoverageResults();
+    }
 
     @Test
-    public void testIsIntersectingTrue() {
+    public void testIntersectTrue() {
         Envelope3D e1 = new Envelope3D();
         Envelope3D e2 = new Envelope3D();
         e1.zmin = 1;
@@ -48,11 +57,11 @@ public class TestEnvelope3D extends TestCase {
         e2.ymax = 1;
         e2.xmin = 2;
         e2.xmax = 4;
-        assertTrue(e1.isIntersecting(e2));
+        assertTrue(e1.intersect(e2));
     }
 
     @Test
-    public void testIsIntersectingFalse() {
+    public void testIsIntersectFalse() {
         Envelope3D e1 = new Envelope3D();
         Envelope3D e2 = new Envelope3D();
         e1.zmin = 1;
@@ -68,6 +77,7 @@ public class TestEnvelope3D extends TestCase {
         e2.ymax = 6;
         e2.xmin = 1;
         e2.xmax = 10;
-        assertFalse(e1.isIntersecting(e2));
+        assertFalse(e1.intersect(e2));
     }
+
 }

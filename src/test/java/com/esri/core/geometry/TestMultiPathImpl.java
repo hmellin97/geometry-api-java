@@ -41,7 +41,31 @@ public class TestMultiPathImpl extends TestCase {
     }
 
     @Test
-    public void dummy() {
-        assertTrue(true);
+    public void testSame() {
+        MultiPath m = new MultiPath() {
+            @Override
+            public Type getType() {
+                return Type.Polygon;
+            }
+
+            @Override
+            public int getDimension() {
+                return 3;
+            }
+
+            @Override
+            public long estimateMemorySize() {
+                return 3;
+            }
+            @Override
+            public Geometry createInstance() {
+                return new MultiPathImpl(true, getDescription());
+            }
+        };
+        m.startPath(0,0);
+        m.lineTo(0,10);
+        m.lineTo(20,10);
+        m.lineTo(20,0);
+        m.insertPath(-1,m,1,true);
     }
 }

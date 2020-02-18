@@ -25,6 +25,8 @@
 
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 import java.io.Serializable;
 
 /**
@@ -265,32 +267,50 @@ public final class Envelope3D implements Serializable{
 	 * envelope to empty state and returns False.
 	 */
 	public boolean intersect(Envelope3D other) {
-		if (isEmpty() || other.isEmpty())
+		CoverageTool.CoverageFunction cf = CoverageTool.addFunction("Envelope3D::intersect", 12);
+		cf.setReachedBranch(0);
+		if (isEmpty() || other.isEmpty()) {
+			cf.setReachedBranch(1);
 			return false;
-
-		if (other.xmin > xmin)
+		}
+		cf.setReachedBranch(2);
+		if (other.xmin > xmin) {
+			cf.setReachedBranch(3);
 			xmin = other.xmin;
+		}
 
-		if (other.xmax < xmax)
+		if (other.xmax < xmax) {
+			cf.setReachedBranch(4);
 			xmax = other.xmax;
+		}
 
-		if (other.ymin > ymin)
+		if (other.ymin > ymin) {
+			cf.setReachedBranch(5);
 			ymin = other.ymin;
+		}
 
-		if (other.ymax < ymax)
+		if (other.ymax < ymax) {
+			cf.setReachedBranch(6);
 			ymax = other.ymax;
+		}
 
-		if (other.zmin > zmin)
+		if (other.zmin > zmin) {
+			cf.setReachedBranch(7);
 			zmin = other.zmin;
+		}
 
-		if (other.zmax < zmax)
+		if (other.zmax < zmax) {
+			cf.setReachedBranch(8);
 			zmax = other.zmax;
+		}
 
 		boolean bIntersecting = xmin <= xmax && ymin <= ymax && zmin <= zmax;
-
-		if (!bIntersecting)
+		cf.setReachedBranch(9);
+		if (!bIntersecting) {
+			cf.setReachedBranch(10);
 			setEmpty();
-
+		}
+		cf.setReachedBranch(11);
 		return bIntersecting;
 	}
 
