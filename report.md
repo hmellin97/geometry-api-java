@@ -41,7 +41,7 @@ Please write here if you used any other functions for the part about increasing 
 1. What are your results for ten complex functions?
    * Did all tools/methods get the same result?
        * Mathieu : I have the same result computing the CC by hand or with `lizard`
-       * My : I can not get the same results computing the CC by hand as I get using `lizard` for one function (clipLine, I get 15 but lizard says 22) but for the other function it is the same.
+       * My : Yes, they are the same!
        * Axel : I get the same results (16) both with `lizard` and by hand.
        * Julian : Yes I get exactly the same results by hand and with lizard.
    * Are the results clear?
@@ -52,7 +52,7 @@ Please write here if you used any other functions for the part about increasing 
        * At the end add 1 to have the cyclomatic complexity metric
 2. Are the functions just complex, or also long?
     * Mathieu : The functions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
-    * My : The functions I choose is both complex and long. The one with CC 22 has 106 LOC and the one with CC 16 has 43 LOC which is a lot less. The latter function contains a lot more loops (containing conditions) than the first one, which increases the cyclic complexity even though there are much fewer lines of code.
+    * My : The functions I choose is both complex and long. The one with CC 15 has 50 LOC and the one with CC 16 has 43 LOC.
     * Julian : `SweepComparator::compareSegments` has CC 16 and LOC of 63. `Clipper::checkSegmentIntersection_` has CC 17 and LOC of 42. So one of them is cleary on the shorter end but has slightly higher complexity. 
     * Axel : `attributes_` has 34 LOC and `polygonTouchesPolygonImpl_` has 76 LOC (both have CC 16).
     * Henrik : `construct` has 81 LOC and `insertPath` has 67 LOC
