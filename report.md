@@ -67,7 +67,6 @@ Please write here if you used any other functions for the part about increasing 
     * My : 
       * The goal of `Envelope2D::clipLine` is to implement the Liang-Barsky algorithm for parametric line-clipping. The input parameters is: a start point and a end point. Depending on whether the points are within a given envelope, one of them will be modified and thus extending the line they create.
       * The goal of `PolygonUtils::testPointsOnPolyLine2D_` is to determine if two points are on a "polyline".
-      * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
     * Henrik :
       * The goal of `construct` is to create a convex hull.
       * The goal of `insertPath` is to insert a vertex into a path.
