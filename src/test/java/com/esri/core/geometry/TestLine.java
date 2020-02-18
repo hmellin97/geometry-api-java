@@ -8,11 +8,11 @@ import static org.junit.Assert.*;
 public class TestLine {
     /**
      * 2. There are no tests for the function _intersectLineLine when the argument intersectingPoint is not null
-     * a. We have to test that if the two lines are the same the 1st and 2nd element of intersctionPoint are res-
+     * a. We have to test that if the two lines are the same the 1st and 2nd element of intersectionPoint are res-
      *     pectively the point of start of the line and the point of end.
-     * b. We have to check that if the two lines have the same start point the second element in  intersctionPoint
+     * b. We have to check that if the two lines have the same start point the second element in  intersectionPoint
      *      is the point of end of the second line
-     * c. We have to check that if the two lines have the same end point the first element in  intersctionPoint
+     * c. We have to check that if the two lines have the same end point the first element in  intersectionPoint
      *      is the point of start of the first line (not the second because at the end a swap should happens)
      *
      * 3. This is too hard to expand on existing tests because the function tested is called via 10 other functions
