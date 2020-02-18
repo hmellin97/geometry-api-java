@@ -56,19 +56,24 @@ Please write here if you used any other functions for the part about increasing 
     * Julian : `SweepComparator::compareSegments` has CC 16 and LOC of 63. `Clipper::checkSegmentIntersection_` has CC 17 and LOC of 42. So one of them is cleary on the shorter end but has slightly higher complexity. 
     * Axel : `attributes_` has 34 LOC and `polygonTouchesPolygonImpl_` has 76 LOC (both have CC 16).
     * Henrik : `construct` has 81 LOC and `insertPath` has 67 LOC
+    * *Summary* : There is no direct relation between the CC and the LOC. This is normal because a function that has plenty of `if`s with one statement will be smaller then a function with only few `if`s but long statement in it. However, the CC will be much larger.
 3. What is the purpose of the functions?
     * Axel : 
-      * `attributes_` is a function in a class for parsing files in the WKT file format. It is responsible for parsing attributes.
-      * `polygonTouchesPolygonImpl_` returns true if two polygons touch/intersect, false otherwise.
-    * The goal of `_intersectLineLine` is to see if two lines intersect. If it is the case it returns the points that are in both lines
-    * The goal of `intersect` in `SegmentIntersector` is to determine if there is an intersection between a Point and a Segment with a certain `tolerance` where a Segment is a collection of line 
-    * The goal of `clipLine` is to implement the Liang-Barsky algorithm for parametric line-clipping. The input parameters is: a start point and a end point. Depending on whether the points are within a given envelope, one of them will be modified and thus extending the line they create.
-    * The goal of `testPointsOnPolyline2D_`is to determine if two points are on a "polyline".
-    * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
-    * The goal of `construct` is to create a convex hull.
-    * The goal of `insertPath` is to insert a vertex into a path.
-    * The goal of `SweepComparator::compareSegments` is to compare x values of the edge given by its origin (elm) and the edge in the sweep structure and checks them for intersection at the same time.
-    * The goal of `Clipper::checkSegmentIntersection_` is to say whether there is an intersection and if there is not an intersection, it will say whether it is on the inside or outside of the border. 
+      * `WktParser::attributes_` is a function in a class for parsing files in the WKT file format. It is responsible for parsing attributes.
+      * `RelationalOperations::polygonTouchesPolygonImpl_` returns true if two polygons touch/intersect, false otherwise.
+    * Mathieu :
+      * The goal of `Line::_intersectLineLine` is to see if two lines intersect. If it is the case it returns the points that are in both lines
+      * The goal of `SegmentIntersecot::intersect` is to determine if there is an intersection between a Point and a Segment with a certain `tolerance` where a Segment is a collection of line 
+    * My : 
+      * The goal of `Envelope2D::clipLine` is to implement the Liang-Barsky algorithm for parametric line-clipping. The input parameters is: a start point and a end point. Depending on whether the points are within a given envelope, one of them will be modified and thus extending the line they create.
+      * The goal of `PolygonUtils::testPointsOnPolyLine2D_` is to determine if two points are on a "polyline".
+      * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
+    * Henrik :
+      * The goal of `construct` is to create a convex hull.
+      * The goal of `insertPath` is to insert a vertex into a path.
+    * Julian : 
+      * The goal of `SweepComparator::compareSegments` is to compare x values of the edge given by its origin (elm) and the edge in the sweep structure and checks them for intersection at the same time.
+      * The goal of `Clipper::checkSegmentIntersection_` is to say whether there is an intersection and if there is not an intersection, it will say whether it is on the inside or outside of the border. 
     
 4. Are exceptions taken into account in the given measurements?
     * The `if` branch at the beginning of each function that test parameters and throws exceptions if the parameters are invalid are taken into account. However, almost no arguments is tested at the beginning of the functions so the ratio of exception is very low.
