@@ -124,6 +124,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.openclover</groupId>
+			<artifactId>clover-maven-plugin</artifactId>
+			<version>4.4.1</version>
+			<type>maven-plugin</type>
+		</dependency>
+		<dependency>
 			<groupId>org.openjdk.jol</groupId>
 			<artifactId>jol-core</artifactId>
 			<version>${jol.version}</version>

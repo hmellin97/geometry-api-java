@@ -23,6 +23,8 @@
  */
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 class ConvexHull {
 	/*
 	 * Constructor for a Convex_hull object. Used for dynamic insertion of geometries to create a convex hull.
@@ -58,7 +60,7 @@ class ConvexHull {
 	void addGeometry(Geometry geometry) {
 		if (geometry.isEmpty())
 			return;
-		
+
 		int type = geometry.getType().value();
 
 		if (MultiVertexGeometry.isMultiVertex(type))
@@ -85,7 +87,7 @@ class ConvexHull {
 		Polygon hull = new Polygon(m_shape.getVertexDescription());
 		if (m_tree_hull.size(-1) == 0)
 			return hull;
-		
+
 		m_shape.queryPoint(m_tree_hull.getElement(first), point);
 		hull.startPath(point);
 
@@ -104,18 +106,24 @@ class ConvexHull {
 	 */
 
 	static Geometry construct(MultiVertexGeometry mvg) {
-		if (mvg.isEmpty())
+		CoverageTool.CoverageFunction cf = CoverageTool.addFunction("ConvexHull::construct", 23);
+		cf.setReachedBranch(0);
+		if (mvg.isEmpty()) { //1
+			cf.setReachedBranch(1);
 			return new Polygon(mvg.getDescription());
-
+		}
 		MultiVertexGeometryImpl mvg_impl = (MultiVertexGeometryImpl) mvg._getImpl();
 		int N = mvg_impl.getPointCount();
 
-		if (N <= 2) {
-			if (N == 1 || mvg_impl.getXY(0).equals(mvg_impl.getXY(1))) {
+		if (N <= 2) { //2
+			cf.setReachedBranch(2);
+			if (N == 1 || mvg_impl.getXY(0).equals(mvg_impl.getXY(1))) { //4
+				cf.setReachedBranch(3);
 				Point point = new Point(mvg_impl.getDescription());
 				mvg_impl.getPointByVal(0, point);
 				return point;
 			} else {
+				cf.setReachedBranch(4);
 				Point pt = new Point();
 				Polyline polyline = new Polyline(mvg_impl.getDescription());
 				mvg_impl.getPointByVal(0, pt);
@@ -125,7 +133,6 @@ class ConvexHull {
 				return polyline;
 			}
 		}
-
 		AttributeStreamOfDbl stream = (AttributeStreamOfDbl) mvg_impl.getAttributeStreamRef(VertexDescription.Semantics.POSITION);
 		ConvexHull convex_hull = new ConvexHull(stream, N);
 
@@ -136,32 +143,38 @@ class ConvexHull {
 
 		stream.read(t0 << 1, pt_0);
 
-		while (true) {
-			if (tm >= N)
+		cf.setReachedBranch(5);
+		while (true) { //5
+			cf.setReachedBranch(6);
+			if (tm >= N) { //6
+				cf.setReachedBranch(7);
 				break;
-
+			}
 			stream.read(tm << 1, pt_m);
-			if (!pt_m.isEqual(pt_0, NumberUtils.doubleEps()))
+			if (!pt_m.isEqual(pt_0, NumberUtils.doubleEps())) { //7
+				cf.setReachedBranch(8);
 				break;
-
+			}
 			tm++; // We don't want to close the gap between t0 and tm.
 		}
-
 		convex_hull.m_tree_hull.addElement(t0, -1);
 
-		if (tm < N) {
+		if (tm < N) { // 8
+			cf.setReachedBranch(9);
 			convex_hull.m_tree_hull.addBiggestElement(tm, -1);
 
+			// 9
 			for (int tp = tm + 1; tp < mvg_impl.getPointCount(); tp++) {// Dynamically insert into the current convex hull
-
+				cf.setReachedBranch(10);
 				stream.read(tp << 1, pt_p);
 				int p = convex_hull.treeHull_(pt_p);
 
-				if (p != -1)
+				if (p != -1) {// 10
+					cf.setReachedBranch(11);
 					convex_hull.m_tree_hull.setElement(p, tp); // reset the place holder to the point index.
+				}
 			}
 		}
-
 		// Extracts the convex hull from the tree. Reading the tree in order from first to last is the resulting convex hull.
 
 		VertexDescription description = mvg_impl.getDescription();
@@ -170,41 +183,53 @@ class ConvexHull {
 
 		Geometry hull;
 
-		if (point_count >= 2) {
-			if (point_count >= 3)
+		if (point_count >= 2) { // 11
+			cf.setReachedBranch(12);
+			if (point_count >= 3) { // 12
+				cf.setReachedBranch(13);
 				hull = new Polygon(description);
-			else
+			}
+			else {
+				cf.setReachedBranch(14);
 				hull = new Polyline(description);
-
+			}
 			MultiPathImpl hull_impl = (MultiPathImpl) hull._getImpl();
 			hull_impl.addPath((Point2D[]) null, 0, true);
 
 			Point point = null;
-			if (b_has_attributes)
+			if (b_has_attributes) { // 13
+				cf.setReachedBranch(15);
 				point = new Point();
-
-			for (int i = convex_hull.m_tree_hull.getFirst(-1); i != -1; i = convex_hull.m_tree_hull.getNext(i)) {
-				if (b_has_attributes) {
+			}
+			for (int i = convex_hull.m_tree_hull.getFirst(-1); i != -1; i = convex_hull.m_tree_hull.getNext(i)) { //14
+				cf.setReachedBranch(16);
+				if (b_has_attributes) { // 15
+					cf.setReachedBranch(17);
 					mvg_impl.getPointByVal(convex_hull.m_tree_hull.getElement(i), point);
 					hull_impl.insertPoint(0, -1, point);
 				} else {
+					cf.setReachedBranch(18);
 					stream.read(convex_hull.m_tree_hull.getElement(i) << 1, pt_p);
 					hull_impl.insertPoint(0, -1, pt_p);
 				}
 			}
 		} else {
+			cf.setReachedBranch(19);
 			assert (point_count == 1);
 
-			if (b_has_attributes) {
+			if (b_has_attributes) { // 16
+				cf.setReachedBranch(20);
 				Point point = new Point(description);
 				mvg_impl.getPointByVal(convex_hull.m_tree_hull.getElement(convex_hull.m_tree_hull.getFirst(-1)), point);
 				hull = point;
 			} else {
+				cf.setReachedBranch(21);
 				stream.read(convex_hull.m_tree_hull.getElement(convex_hull.m_tree_hull.getFirst(-1)) << 1, pt_p);
 				hull = new Point(pt_p);
 			}
 		}
-
+		cf.setReachedBranch(22);
+		// 17
 		return hull;
 	}
 

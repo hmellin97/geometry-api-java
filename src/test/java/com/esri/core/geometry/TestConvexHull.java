@@ -25,11 +25,20 @@
 package com.esri.core.geometry;
 
 import junit.framework.TestCase;
+import big.brain.CoverageTool;
+import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import com.esri.core.geometry.ogc.OGCGeometry;
 
+@RunWith(JUnit4.class)
 public class TestConvexHull extends TestCase {
+	@AfterClass
+	public static void afterTestConvexHull() throws Exception{
+		CoverageTool.printCoverageResults();
+	}
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -40,8 +49,9 @@ public class TestConvexHull extends TestCase {
 		super.tearDown();
 	}
 
+
 	@Test
-	public static void testFewPoints() {
+	public void testFewPoints() {
 		{
 			Polygon polygon = new Polygon();
 			polygon.addPath((Point2D[]) null, 0, true);
@@ -76,7 +86,7 @@ public class TestConvexHull extends TestCase {
 	}
 
 	@Test
-	public static void testDegenerate() {
+	public void testDegenerate() {
 		OperatorConvexHull bounding = (OperatorConvexHull) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.ConvexHull);
 		OperatorDensifyByLength densify = (OperatorDensifyByLength) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.DensifyByLength);
 
@@ -386,7 +396,7 @@ public class TestConvexHull extends TestCase {
 	}
 
 	@Test
-	public static void testSegment() {
+	public void testSegment() {
 		{
 			Line line = new Line();
 			line.setStartXY(5, 5);
@@ -412,7 +422,7 @@ public class TestConvexHull extends TestCase {
 
 
 	@Test
-	public static void testSquare() {
+	public void testSquare() {
 		OperatorConvexHull bounding = (OperatorConvexHull) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.ConvexHull);
 		OperatorDensifyByLength densify = (OperatorDensifyByLength) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.DensifyByLength);
 		OperatorDifference difference = (OperatorDifference) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.Difference);
@@ -458,7 +468,7 @@ public class TestConvexHull extends TestCase {
 	}
 
 	@Test
-	public static void testPolygons() {
+	public void testPolygons() {
 		OperatorConvexHull bounding = (OperatorConvexHull) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.ConvexHull);
 		OperatorDensifyByLength densify = (OperatorDensifyByLength) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.DensifyByLength);
 		OperatorDifference difference = (OperatorDifference) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.Difference);
@@ -630,7 +640,7 @@ public class TestConvexHull extends TestCase {
 	}
 
 	@Test
-	public static void testPolylines() {
+	public void testPolylines() {
 		OperatorConvexHull bounding = (OperatorConvexHull) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.ConvexHull);
 		OperatorDensifyByLength densify = (OperatorDensifyByLength) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.DensifyByLength);
 		OperatorDifference difference = (OperatorDifference) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.Difference);
@@ -671,7 +681,7 @@ public class TestConvexHull extends TestCase {
 	}
 
 	@Test
-	public static void testNonSimpleShape() {
+	public void testNonSimpleShape() {
 		OperatorConvexHull bounding = (OperatorConvexHull) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.ConvexHull);
 		OperatorDensifyByLength densify = (OperatorDensifyByLength) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.DensifyByLength);
 		OperatorDifference difference = (OperatorDifference) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.Difference);
@@ -762,7 +772,7 @@ public class TestConvexHull extends TestCase {
 	}
 
 	@Test
-	public static void testStar() {
+	public void testStar() {
 		OperatorConvexHull bounding = (OperatorConvexHull) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.ConvexHull);
 		OperatorDensifyByLength densify = (OperatorDensifyByLength) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.DensifyByLength);
 
@@ -802,7 +812,7 @@ public class TestConvexHull extends TestCase {
 	}
 
 	@Test
-	public static void testPointsArray() {
+	public void testPointsArray() {
 		Point2D[] points = new Point2D[6];
 		int[] convex_hull = new int[6];
 
@@ -832,7 +842,7 @@ public class TestConvexHull extends TestCase {
 	}
 
 	@Test
-	public static void testMergeCursor() {
+	public void testMergeCursor() {
 		OperatorConvexHull bounding = (OperatorConvexHull) OperatorFactoryLocal.getInstance().getOperator(Operator.Type.ConvexHull);
 
 		Polygon geom1 = new Polygon();
@@ -994,7 +1004,7 @@ public class TestConvexHull extends TestCase {
 		assertTrue(p5.x == -5.0 && p5.y == 1.25);
 		assertTrue(p6.x == 0.0 && p6.y == 10.0);
 	}
-	
+
 	@Test
 	public void testHullIssueGithub172() {
 		{
@@ -1025,7 +1035,7 @@ public class TestConvexHull extends TestCase {
 			String text = result.asText();
 			assertTrue(text.compareTo("POINT EMPTY") == 0);
 		}
-		
+
 		{
 			//empty
 			OGCGeometry geom = OGCGeometry.fromText("GEOMETRYCOLLECTION (POINT (1 2))");
@@ -1069,4 +1079,5 @@ public class TestConvexHull extends TestCase {
 			assertTrue(text.compareTo("POLYGON ((-10 -10, 10 -10, 10 10, -10 10, -10 -10))") == 0);
 		}
 	}
+
 }
