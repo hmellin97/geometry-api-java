@@ -151,14 +151,14 @@ Show the comments that describe the requirements for the coverage.
 
 Report of old coverage:
 * Mathieu : 
-* My : Envelope2D: methods coverage 59%, line coverage 48%. PolygonUtils: method coverage 56%, line coverage 41%. 
+* My : `Envelope2D`: methods coverage 59%, line coverage 48%. `PolygonUtils`: method coverage 56%, line coverage 41%. 
 * Julian : 
 * Axel : `RelationalOperations`: 97% method coverage and 85% line coverage.
 * Henrik : 
 
 Report of new coverage: [link]
 * Mathieu : 
-* My : Envelope2D: methods coverage 60%, line coverage 50%. PolygonUtils: method coverage 56%, line coverage 42%. 
+* My : `Envelope2D`: methods coverage 60%, line coverage 50%. `PolygonUtils`: method coverage 56%, line coverage 42%. 
 * Julian : 
 * Axel : `RelationalOperations`: IntelliJ reports the same coverage percentages, because I just added one test which covers one new branch (it's just a return statement) and the source file has 2565 lines of code. My DIY branch coverage instrumentation shows that the previously unreached branch (8) was now reached:
 ```
@@ -183,7 +183,6 @@ Can the functions you test be called directly or did you need to make them publi
 * Axel :
 * Henrik : 
 
-git diff ...
 
 ## Refactoring
 Is the complexity of the functions really necessary?
