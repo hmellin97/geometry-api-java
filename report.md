@@ -29,7 +29,7 @@ These are the functions each group member has chosen to work with.
 * Axel : `WktParser::attributes_` and `RelationalOperations::polygonTouchesPolygonImpl_`
 * Henrik : 
 
-Please write here if you used any other functions for the part about increasing coverage/writing tests.
+Please write here if you used any other functions for the part about increasing coverage/writing tests. 
 * Mathieu : 
 * My :
 * Julian : 
@@ -170,12 +170,18 @@ Report of new coverage:
 * Mathieu : 
 * My : `Envelope2D`: methods coverage 60%, line coverage 50%. `PolygonUtils`: method coverage 56%, line coverage 45%. 
 * Julian : 
-* Axel : `RelationalOperations`: IntelliJ reports the same coverage percentages, because I just added one test which covers one new branch (it's just a return statement) and the source file has 2565 lines of code. My DIY branch coverage instrumentation shows that the previously unreached branch (8) was now reached:
-```
-* RelationalOperations::polygonTouchesPolygonImpl_ has 76.47058823529412% coverage, reached 13/17 branches.
-    * The Branch ID that are not reached are [3, 11, 13, 14]
-```
-So the branch coverage for the specific function was increased from 70.6% to 76.5%.
+* Axel : 
+  * `RelationalOperations`: IntelliJ reports the same coverage percentages, because I just added one test which covers one new branch (it's just a return statement) and the source file has 2565 lines of code. My DIY branch coverage instrumentation shows that the previously unreached branch (8) was now reached:
+  ```
+  * RelationalOperations::polygonTouchesPolygonImpl_ has 76.47058823529412% coverage, reached 13/17 branches.
+      * The Branch ID that are not reached are [3, 11, 13, 14]
+  ```
+  So the branch coverage for the specific function was increased from 70.6% to 76.5%.
+  * `hasNonEmptyBoundary` : The line coverage for the containing class increased from 65% to 77%. My DIY branch coverage instrumentation shows that branch coverage was increased from 23% to 69%:
+  ```
+  * Boundary::hasNonEmptyBoundary has 69.23076923076923% coverage, reached 9/13 branches.
+    * The Branch ID that are not reached are [8, 9, 10, 12]
+  ```
 
 * Henrik : 
 
@@ -190,7 +196,7 @@ Can the functions you test be called directly or did you need to make them publi
 * Mathieu : 
 * My : The functions are called directly.
 * Julian : 
-* Axel :
+* Axel : I had to make `polygonTouchesPolygonImpl_` public, but `hasNonEmptyBoundary` can be called directly.
 * Henrik : 
 
 
