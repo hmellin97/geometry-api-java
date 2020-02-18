@@ -34,7 +34,7 @@ Please write here if you used any other functions for the part about increasing 
 * My :
 * Julian : 
 * Axel : `Boundary::hasNonEmptyBoundary`
-* Henrik : `Envelope3D::isIntersecting` and `Point3D::mul`
+* Henrik : `Envelope3D::intersect` and `Envelope2D::_snapToBoundary`
 
 ## Complexity
 
@@ -208,21 +208,27 @@ Show the comments that describe the requirements for the coverage.
     		* The Branch ID that are not reached are [8, 9, 10, 12]
   	```
 
-* Henrik : 
+* Henrik : I chose two new functions to create tests for, `Envelope3D::intersect` and `Envelope2D::_snapToBoundary`. Neither of them had any tests to begin with, so our coverage tool showed nothing before I added tests. However after adding a few tests to the two methods I got the following results:
+
+	* Envelope3D::intersect has 83.33333333333334% coverage, reached 10/12 branches.
+    		* The Branch ID that are not reached are [1, 6]
+
+ 	* Envelope2D::_snapToBoundary has 64.28571428571429% coverage, reached 9/14 branches.
+  	        * The Branch ID that are not reached are [1, 10, 11, 12, 13]
 
 #### Test cases added:
 * My : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the command `git diff My-DIY..My-test`.
 * Mathieu : The branch [mathieu-test](https://github.com/hmellin97/geometry-api-java/tree/mathieu-test) contains the added tests in the `TestLine` and `TestSegmentIntersector`class. To easily display them use the command `git diff mathieu-diy..mathieu-test`.
 * Julian : 
 * Axel : The branch [Axel-test](https://github.com/hmellin97/geometry-api-java/tree/Axel-test) contains the added tests. To easily display them use the command `git diff axel-manual-coverage..Axel-test`.
-* Henrik : 
+* Henrik : The branch [henrik-test](https://github.com/hmellin97/geometry-api-java/tree/henrik-test) contains the added tests. To easily display them use the command `git diff henrik-DIY..henrik-test`.
 
 Can the functions you test be called directly or did you need to make them public?
 * Mathieu : The function are called directly because they are static
 * My : The functions are called directly.
 * Julian : 
 * Axel : I had to make `polygonTouchesPolygonImpl_` public, but `hasNonEmptyBoundary` can be called directly.
-* Henrik : 
+* Henrik : They were public so that was not a problem.
 
 
 ## Refactoring
@@ -236,9 +242,12 @@ tOld[1] = segParams[1];
 And shortly after this, without changing any of these variables, there is if statements containing: `segParams[1] < tOld[1]` and `segParams[0] > tOld[0]` which will never be true due to the code above. So, this part adds unnecessary complexity to the function. There might be some thought behind it, but there are no comments to explain why it is done in that way. 
 
 The complexity of `PolygonUtils:: testPointsOnPolyLine2D_` is not necessary in my opinion. It could easily be broken down to smaller functions.
+
 * Julian : For `Clipper::checkSegmentIntersection_` the complexity is necessary. It has a higher complexity since it needs to be able to handle the three different cases. In each case it needs to be able to identify whether to return 0, 1, -1. It can however be broken down into smaller functions and still achieve its purpose. `SweepComparator::compareSegments` is similarly also dependant on having high complexity. This is because a large part of the function aims to just understand what type of objects that are being compared. Depending on this, different types comparisons are being called. 
+
 * Axel : As mentioned before, I don't understand `WktParser::attributes_` in detail, though I get on a higher level what it is supposed to do. I can understand that most of this complexity is needed because there are a lot of different cases for how the attributes to be parsed can be formatted. There are however some improvements that can be made to decrease complexity.
-* Henrik : 
+
+* Henrik : The start of `construct` has some special cases when the number of points is low. These special cases could be split up into a separate function. The same thing goes with `insertPath` it has a few if-statements that throw exceptions in the beginning of the function. You could also split them up into a seperate function.
 
 Plan for refactoring complex code:
 * Mathieu : in `SegmentIntersector` l.291 they test whichi rank is bigger and then do exactly the same thing but with different line. The code could easily be rewritten using an helper function `private boolean notEqualRank(Line l1, Line l2)` that should be used to set the boolean `bigmove`.
@@ -288,7 +297,26 @@ To refactor `testPointsOnPolyLine2D_`, I would break the code down into smaller 
       }
     }
   ```
-* Henrik : 
+* Henrik : Move 
+```java
+	if (src == this) {
+			throw new IllegalArgumentException();
+		}
+
+		if (srcPathIndex >= src.getPathCount()) 
+			throw new IllegalArgumentException();
+		}
+
+		int oldPathCount = getPathCount();
+		if (pathIndex > oldPathCount) {
+			throw new IllegalArgumentException();
+
+		}
+		
+	} 
+	
+``` 
+Into a function called `checkForExceptions`. The same idea goes for the if-statements in `construct`.
 
 Estimated impact of refactoring (lower CC, but other drawbacks?).
 * Mathieu : The first proposition will reduce the CC by 2 and the second will reduce it by 8. But most of all, it will increase the readability of the function. A function that is more than 100 LOC with `if`s depth of 6 without documentation it is really hard to follow. For those two proposition I cannot find a drawback.
@@ -299,14 +327,14 @@ Dividing `testPointsOnPolyLine2D_` into 4 functions would decrease the CC to 25%
   * Simplifying character-comparisons reduces CC from 16 to 14.
   * Breaking code into subroutine: reduces CC from 14 to 8.
   * In total my suggestions would reduce CC by half (16 to 8) and make the code more readable.
-* Henrik : 
+* Henrik : I can't think of any drawbacks with this refactoring. It would reduce the CC and make the functions less bloated.
 
 Carried out refactoring (optional)
 * Mathieu : None.
 * My : None.
 * Julian : None.
 * Axel : None.
-* Henrik : 
+* Henrik : None.
 
 git diff ...
 
@@ -316,5 +344,6 @@ What are your main take-aways from this project? What did you learn?
 * Axel : I haven't really worked that much with coverage before so it was interesting and a good experience. I particularly enjoyed implementing the manual coverage implementation, and seeing how the branch coverage went up when I added tests. A slightly unrelated take-away is that using the built-in editor in GitHub to collaborate on a report (without pull requests) is not a good idea, because sometimes your changes get lost in the void.
 * Julian : This was completely new for me so it was interesting to see how large programs are dealt with when collaborating with others. Coverage is also something that I now have opened my eyes for since I had not thought about testing in this manner. 
 * Mathieu : It was my first experience with OpenSource and I was surprise by the fact that almost none of the functions were documented, that the function were really long without reason and without using other methods. Except that it was interesting to see how coverage work and to see where we can improve our code easily.
+* It was good to learn about coverage and cyclic complexity. I was surprised to see that lizard worked so well at quickly analyzing your code like that. I also learned that open-source projects can be a hazzle to work with.
 
 Is there something special you want to mention here?
