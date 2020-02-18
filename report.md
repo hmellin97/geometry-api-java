@@ -34,7 +34,7 @@ Please write here if you used any other functions for the part about increasing 
 * My :
 * Julian : 
 * Axel : `Boundary::hasNonEmptyBoundary`
-* Henrik : 
+* Henrik : `Envelope3D::isIntersecting` and `Point3D::mul`
 
 ## Complexity
 
@@ -44,6 +44,7 @@ Please write here if you used any other functions for the part about increasing 
        * My : Yes, they are the same!
        * Axel : I get the same results (16) both with `lizard` and by hand.
        * Julian : Yes I get exactly the same results by hand and with lizard.
+       * Henrik: Yes I got 17 on both.
    * Are the results clear?
        * Yes, it is very straightforward.
        * All the conditions in an `if`, a `for` or a `while` add 1 to the cyclomatic complexity. So if there are 10 conditions on arguments this will add ten to the cyclomatic complexity.
@@ -147,7 +148,7 @@ COVERAGE RESULTS
     * Julian : Yes, they are. 
     * Axel : Yes, see the image below
     ![Coverage comparison for WktParser](https://i.imgur.com/oq26u3a.png)
-    * Henrik : 
+    * Henrik : Yes, it's consistant.
     * *Summary* : Our tool give the same result as the coverage tool of IntelliJ. The only difference that can happend is when there are ternary operator that we haven't change into `if...else` statement.
 
 
@@ -315,6 +316,5 @@ What are your main take-aways from this project? What did you learn?
 * Axel : I haven't really worked that much with coverage before so it was interesting and a good experience. I particularly enjoyed implementing the manual coverage implementation, and seeing how the branch coverage went up when I added tests. A slightly unrelated take-away is that using the built-in editor in GitHub to collaborate on a report (without pull requests) is not a good idea, because sometimes your changes get lost in the void.
 * Julian : This was completely new for me so it was interesting to see how large programs are dealt with when collaborating with others. Coverage is also something that I now have opened my eyes for since I had not thought about testing in this manner. 
 * Mathieu : It was my first experience with OpenSource and I was surprise by the fact that almost none of the functions were documented, that the function were really long without reason and without using other methods. Except that it was interesting to see how coverage work and to see where we can improve our code easily.
-* My: This was my first time working with coverage and OpenSource. I was also surprised on how small parts of the project had decent documentation, especially since it is OpenSource. The reason for having an OpenSource-project is for others to contribute, so why make it so hard to understand? I think the coverage part of the project was good to learn about and it will be my main take-away from this project.
 
 Is there something special you want to mention here?
