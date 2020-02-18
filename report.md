@@ -89,6 +89,7 @@ integrate it with your build environment?
 * First we wanted to use `OpenCover` for `IntelliJ` but `OpenCover` is not supported anymore by `IntelliJ`. However, doing that, we found that there was a tool coverage integrated in ÌntelliJ. This is what we used.  
 
 ### DYI
+Axel implemented the class `CoverageTool`, which provides functionality for manual coverage instrumentation.
 
 Link to branch with our coverage tool: [Link](https://github.com/hmellin97/geometry-api-java/blob/manual-coverage/src/main/java/big/brain/CoverageTool.java)
 
