@@ -27,7 +27,7 @@ These are the functions each group member has chosen to work with.
 * My : `PolygonUtils::testPointsOnPolyLine2D_` and `Envelope2D::clipLine`
 * Julian : `SweepComparator::compareSegments` and `Clipper::checkSegmentIntersection_`
 * Axel : `WktParser::attributes_` and `RelationalOperations::polygonTouchesPolygonImpl_`
-* Henrik : 
+* Henrik : `MultiPathImpl::insertPath` and `ConvexHull::construct`
 
 Please write here if you used any other functions for the part about increasing coverage/writing tests. 
 * Mathieu : 
