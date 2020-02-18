@@ -24,10 +24,22 @@
 
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
 import junit.framework.TestCase;
+import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
+
+@RunWith(JUnit4.class)
 public class TestClip extends TestCase {
+	@AfterClass
+	public static void afterAllTests() {
+		System.out.println("afterAllTests");
+		CoverageTool.printCoverageResults();
+	}
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -39,7 +51,7 @@ public class TestClip extends TestCase {
 	}
 
 	@Test
-	public static void testClipGeometries() {
+	public void testClipGeometries() {
 		// RandomTest();
 		OperatorFactoryLocal engine = OperatorFactoryLocal.getInstance();
 		OperatorClip clipOp = (OperatorClip) engine
@@ -150,7 +162,7 @@ public class TestClip extends TestCase {
 	}
 
 	@Test
-	public static void testGetXCorrectCR185697() {
+	public void testGetXCorrectCR185697() {
 		OperatorFactoryLocal engine = OperatorFactoryLocal.getInstance();
 		OperatorClip clipOp = (OperatorClip) engine
 				.getOperator(Operator.Type.Clip);
@@ -186,7 +198,7 @@ public class TestClip extends TestCase {
 	}
 
 	@Test
-	public static void testArcObjectsFailureCR196492() {
+	public void testArcObjectsFailureCR196492() {
 		OperatorFactoryLocal engine = OperatorFactoryLocal.getInstance();
 		OperatorClip clipOp = (OperatorClip) engine
 				.getOperator(Operator.Type.Clip);
@@ -254,7 +266,7 @@ public class TestClip extends TestCase {
 	}
 
 	@Test
-	public static void testClipOfCoinciding() {
+	public void testClipOfCoinciding() {
 		OperatorFactoryLocal engine = OperatorFactoryLocal.getInstance();
 		OperatorClip clipOp = (OperatorClip) engine
 				.getOperator(Operator.Type.Clip);
@@ -294,7 +306,7 @@ public class TestClip extends TestCase {
 	}
 
 	@Test
-	public static void testClipAttributes() {
+	public void testClipAttributes() {
 		OperatorFactoryLocal engine = OperatorFactoryLocal.getInstance();
 		OperatorClip clipOp = (OperatorClip) engine
 				.getOperator(Operator.Type.Clip);
@@ -360,7 +372,7 @@ public class TestClip extends TestCase {
 	}
 
 	@Test
-	public static void testClipIssue258243() {
+	public void testClipIssue258243() {
 		Polygon poly1 = new Polygon();
 		poly1.startPath(21.476191371901479, 41.267022001907215);
 		poly1.lineTo(59.669186665158051, 36.62700518555863);

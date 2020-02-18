@@ -27,7 +27,11 @@
  */
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 import java.util.ArrayList;
+
+import static big.brain.CoverageTool.addFunction;
 
 class SweepComparator extends Treap.Comparator {
 	static final class SimpleEdge {
@@ -130,7 +134,7 @@ class SweepComparator extends Treap.Comparator {
 			return se;
 		} else {
 			assert (se.m_value != value);// do not call TryCreateCachedEdge
-											// twice.
+			// twice.
 		}
 
 		return null;
@@ -211,17 +215,17 @@ class SweepComparator extends Treap.Comparator {
 	int compareNonHorizontal_(SimpleEdge line_1, SimpleEdge line_2) {
 		if (line_1.m_line.getStartY() == line_2.m_line.getStartY()
 				&& line_1.m_line.getStartX() == line_2.m_line.getStartX()) {// connected
-																			// at
-																			// the
-																			// start
-																			// V
-																			// shape
+			// at
+			// the
+			// start
+			// V
+			// shape
 			if (line_1.m_line.getEndY() == line_2.m_line.getEndY()
 					&& line_1.m_line.getEndX() == line_2.m_line.getEndX()) {// connected
-																			// at
-																			// another
-																			// end
-																			// also
+				// at
+				// another
+				// end
+				// also
 				if (m_b_is_simple)
 					return errorCoincident();
 				return 0;
@@ -256,7 +260,7 @@ class SweepComparator extends Treap.Comparator {
 			if (line_2.getEndX() > line_2.getStartX()
 					&& line_2.getEndY() - line_2.getStartY() < 2 * m_tolerance
 					&& line_1._isIntersectingPoint(line_2.getEndXY(),
-							m_tolerance, true))
+					m_tolerance, true))
 				return errorCracking();
 		} else {
 			// /
@@ -271,7 +275,7 @@ class SweepComparator extends Treap.Comparator {
 			double d = dydx * (line_1.getEndX() - line_1.getStartX());
 			if (d < m_tolerance_10
 					&& line_2._isIntersectingPoint(line_1.getEndXY(),
-							m_tolerance, true))
+					m_tolerance, true))
 				return errorCracking();
 		}
 
@@ -289,7 +293,7 @@ class SweepComparator extends Treap.Comparator {
 			if (line_2.getEndX() > line_2.getStartX()
 					&& line_2.getEndY() - line_2.getStartY() < 2 * m_tolerance
 					&& line_1._isIntersectingPoint(line_2.getEndXY(),
-							m_tolerance, true))
+					m_tolerance, true))
 				return errorCracking();
 		} else {
 			// --+
@@ -302,7 +306,7 @@ class SweepComparator extends Treap.Comparator {
 			double d = dydx * (line_1.getStartX() - line_1.getEndX());
 			if (d < m_tolerance_10
 					&& line_2._isIntersectingPoint(line_1.getStartXY(),
-							m_tolerance, true))
+					m_tolerance, true))
 				return errorCracking();
 		}
 
@@ -327,12 +331,12 @@ class SweepComparator extends Treap.Comparator {
 		if (ad1 < ad2) {
 			if (ad1 < m_tolerance_10
 					&& line_2._isIntersectingPoint(line_1.getStartXY(),
-							m_tolerance, true))
+					m_tolerance, true))
 				return errorCracking();
 		} else {
 			if (ad2 < m_tolerance_10
 					&& line_2._isIntersectingPoint(line_1.getEndXY(),
-							m_tolerance, true))
+					m_tolerance, true))
 				return errorCracking();
 		}
 
@@ -365,7 +369,7 @@ class SweepComparator extends Treap.Comparator {
 				&& line_1.getEndX() == line_2.getEndX()
 				&& line_1.getStartY() == line_2.getStartY()
 				&& line_1.getStartX() == line_2.getStartX()) {// both lines
-																// coincide
+			// coincide
 			if (m_b_is_simple)
 				return errorCoincident();
 			return 0;
@@ -439,7 +443,7 @@ class SweepComparator extends Treap.Comparator {
 	int errorCracking() {// cracking error
 		m_b_intersection_detected = true;
 		if (m_b_is_simple) {// only report the reason in IsSimple. Do not do
-							// that for regular cracking.
+			// that for regular cracking.
 			NonSimpleResult.Reason reason = NonSimpleResult.Reason.Cracking;
 			m_non_simple_result = new NonSimpleResult(reason, m_vertex_1,
 					m_vertex_2);
@@ -453,22 +457,22 @@ class SweepComparator extends Treap.Comparator {
 	}
 
 	int compareSegments_(int left, int right, SimpleEdge segLeft,
-			SimpleEdge segRight) {
-		if (m_b_intersection_detected)
+						 SimpleEdge segRight) {
+		if (m_b_intersection_detected)  //1
 			return -1;
 
-		boolean sameY = m_prev_y == m_sweep_y && m_prev_x == m_sweep_x;
+		boolean sameY = m_prev_y == m_sweep_y && m_prev_x == m_sweep_x; // 2 // 3
 		double xleft;
-		if (sameY && left == m_prev_1)
+		if (sameY && left == m_prev_1) //4
 			xleft = m_prevx_1;
-		else {
+		else {								//5
 			xleft = NumberUtils.NaN();
 			m_prev_1 = -1;
 		}
 		double xright;
-		if (sameY && right == m_prev_2)
+		if (sameY && right == m_prev_2) 	//6
 			xright = m_prevx_2;
-		else {
+		else {								//7
 			xright = NumberUtils.NaN();
 			m_prev_2 = -1;
 		}
@@ -478,9 +482,9 @@ class SweepComparator extends Treap.Comparator {
 				VertexDescription.Semantics.POSITION, 0);
 		Envelope1D envRight = segRight.m_segment.queryInterval(
 				VertexDescription.Semantics.POSITION, 0);
-		if (envLeft.vmax < envRight.vmin)
+		if (envLeft.vmax < envRight.vmin) //8
 			return -1;
-		if (envRight.vmax < envLeft.vmin)
+		if (envRight.vmax < envLeft.vmin) //9
 			return 1;
 
 		m_prev_y = m_sweep_y;
@@ -488,14 +492,14 @@ class SweepComparator extends Treap.Comparator {
 
 		// Now do intersection with the sweep line (it is a line parallel to the
 		// axis x.)
-		if (NumberUtils.isNaN(xleft)) {
+		if (NumberUtils.isNaN(xleft)) { //10
 			m_prev_1 = left;
 			double x = segLeft.m_segment.intersectionOfYMonotonicWithAxisX(
 					m_sweep_y, m_sweep_x);
 			xleft = x;
 			m_prevx_1 = x;
 		}
-		if (NumberUtils.isNaN(xright)) {
+		if (NumberUtils.isNaN(xright)) {  //11
 			m_prev_2 = right;
 			double x = segRight.m_segment.intersectionOfYMonotonicWithAxisX(
 					m_sweep_y, m_sweep_x);
@@ -503,11 +507,11 @@ class SweepComparator extends Treap.Comparator {
 			m_prevx_2 = x;
 		}
 
-		if (Math.abs(xleft - xright) <= m_tolerance) {
+		if (Math.abs(xleft - xright) <= m_tolerance) { //12
 			// special processing as we cannot decide in a simple way.
 			return compareTwoSegments_(segLeft.m_segment, segRight.m_segment);
 		} else {
-			return xleft < xright ? -1 : xleft > xright ? 1 : 0;
+			return xleft < xright ? -1 : xleft > xright ? 1 : 0; //13 //14 + 1 = 15
 		}
 	}
 
@@ -596,63 +600,100 @@ class SweepComparator extends Treap.Comparator {
 		return compareSegments(left, left, right, right);
 	}
 
+	// counted all conditions and added 1 to count CC. Lizard had same result.
 	int compareSegments(int leftElm, int left_vertex, int right_elm,
-			int right_vertex) {
+						int right_vertex) {
+
+		CoverageTool.CoverageFunction cF = addFunction("SweepComparator::compareSegments", 18);
+		cF.setReachedBranch(0);
 		SimpleEdge edgeLeft = tryGetCachedEdge_(leftElm);
 		if (edgeLeft == null) {
-			if (m_vertex_1 == left_vertex)
+			cF.setReachedBranch(1);
+			if (m_vertex_1 == left_vertex) {
 				edgeLeft = m_temp_simple_edge_1;
+				cF.setReachedBranch(2);
+			}
 			else {
+				cF.setReachedBranch(3);
 				m_vertex_1 = left_vertex;
 				edgeLeft = tryCreateCachedEdge_(leftElm);
 				if (edgeLeft == null) {
+					cF.setReachedBranch(4);
 					edgeLeft = m_temp_simple_edge_1;
 					m_temp_simple_edge_1.m_value = leftElm;
 				}
 				initSimpleEdge_(edgeLeft, left_vertex);
 			}
-		} else
+		} else {
 			m_vertex_1 = left_vertex;
-
+			cF.setReachedBranch(5);
+		}
 		SimpleEdge edgeRight = tryGetCachedEdge_(right_elm);
 		if (edgeRight == null) {
-			if (m_vertex_2 == right_vertex)
+			cF.setReachedBranch(6);
+			if (m_vertex_2 == right_vertex) {
 				edgeRight = m_temp_simple_edge_2;
+				cF.setReachedBranch(7);
+			}
 			else {
+				cF.setReachedBranch(8);
 				m_vertex_2 = right_vertex;
 				edgeRight = tryCreateCachedEdge_(right_elm);
 				if (edgeRight == null) {
+					cF.setReachedBranch(9);
 					edgeRight = m_temp_simple_edge_2;
 					m_temp_simple_edge_2.m_value = right_elm;
 				}
 				initSimpleEdge_(edgeRight, right_vertex);
 			}
-		} else
+		} else {
 			m_vertex_2 = right_vertex;
-
-		if (edgeLeft.m_b_curve || edgeRight.m_b_curve)
+			cF.setReachedBranch(10);
+		}
+		if (edgeLeft.m_b_curve || edgeRight.m_b_curve) {
+			cF.setReachedBranch(11);
 			return compareSegments_(left_vertex, right_vertex, edgeLeft,
 					edgeRight);
 
+		}
+
 		// Usually we work with lines, so process them in the fastest way.
 		// First check - assume segments are far apart. compare x intervals
-		if (edgeLeft.m_env.vmax < edgeRight.m_env.vmin)
+		if (edgeLeft.m_env.vmax < edgeRight.m_env.vmin) {
+			cF.setReachedBranch(12);
 			return -1;
-		if (edgeRight.m_env.vmax < edgeLeft.m_env.vmin)
+
+		}
+		if (edgeRight.m_env.vmax < edgeLeft.m_env.vmin) {
+			cF.setReachedBranch(13);
 			return 1;
+
+		}
 
 		// compare case by case.
 		int kind = edgeLeft.m_b_horizontal ? 1 : 0;
 		kind |= edgeRight.m_b_horizontal ? 2 : 0;
-		if (kind == 0)// both segments are non-horizontal
+		if (kind == 0) {// both segments are non-horizontal
+			cF.setReachedBranch(14);
 			return compareNonHorizontal_(edgeLeft, edgeRight);
-		else if (kind == 1) // line_1 horizontal, line_2 is not
+
+		}
+		else if (kind == 1) { // line_1 horizontal, line_2 is not
+			cF.setReachedBranch(15);
 			return compareHorizontal1_(edgeLeft.m_line, edgeRight.m_line);
-		else if (kind == 2) // line_2 horizontal, line_1 is not
+
+		}
+		else if (kind == 2) { // line_2 horizontal, line_1 is not
+			cF.setReachedBranch(16);
 			return compareHorizontal1_(edgeRight.m_line, edgeLeft.m_line) * -1;
-		else
+
+		}
+		else {
 			// if (kind == 3) //both horizontal
+			cF.setReachedBranch(17);
 			return compareHorizontal2_(edgeLeft.m_line, edgeRight.m_line);
+
+		}
 	}
 
 	@Override
