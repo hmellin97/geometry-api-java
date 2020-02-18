@@ -152,7 +152,11 @@ Show the comments that describe the requirements for the coverage.
 
 Report of old coverage:
 * Mathieu : 
-* My : `Envelope2D`: methods coverage 59%, line coverage 48%. `PolygonUtils`: method coverage 56%, line coverage 41%. 
+* My : `Envelope2D`: methods coverage 59%, line coverage 48%, function coverage 0% (not tests at all). `PolygonUtils`: method coverage 56%, line coverage 41%, function coverage 66.6%. Output from our coverage tool:
+```
+* PolygonUtils::testPointsonPolyLine2D_ has 66.66666666666666% coverage, reached 8/12 branches.
+    * The Branch ID that are not reached are [0, 2, 3, 11]
+```
 * Julian : 
 * Axel : 
   * `polygonTouchesPolygonImpl_`: The containing class has 97% method coverage and 85% line coverage. The function has 70.6% branch coverage;
@@ -169,7 +173,13 @@ Report of old coverage:
 
 Report of new coverage:
 * Mathieu : 
-* My : `Envelope2D`: methods coverage 60%, line coverage 50%. `PolygonUtils`: method coverage 56%, line coverage 45%. 
+* My : `Envelope2D`: methods coverage 60%, line coverage 50%, function coverage 28.6%. `PolygonUtils`: method coverage 56%, line coverage 45%, function coverage 83.3%. Output from our coverage tool: 
+```
+ * Envelope2D::clipLine has 28.57142857142857% coverage, reached 2/7 branches.
+    * The Branch ID that are not reached are [2, 3, 4, 5, 6]
+ * PolygonUtils::testPointsonPolyLine2D_ has 83.33333333333334% coverage, reached 10/12 branches.
+    * The Branch ID that are not reached are [3, 11]
+```
 * Julian : 
 * Axel : 
   * `RelationalOperations`: IntelliJ reports the same coverage percentages, because I just added one test which covers one new branch (it's just a return statement) and the source file has 2565 lines of code. My DIY branch coverage instrumentation shows that the previously unreached branch (8) was now reached:
