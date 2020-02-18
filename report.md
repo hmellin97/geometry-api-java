@@ -143,6 +143,9 @@ COVERAGE RESULTS
 
 ### Coverage improvement
 What is the coverage like overall for your project?
+The IntelliJ coverage tool reports 91% class coverage, 71% method coverage and 72% line coverage.
+
+TODO: branch coverage %?
 
 Show the comments that describe the requirements for the coverage.
 
