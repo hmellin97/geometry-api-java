@@ -233,7 +233,15 @@ Is the complexity of the functions really necessary?
 * Henrik : 
 
 Plan for refactoring complex code:
-* Mathieu : in `SegmentIntersector` l.291 they test whichi rank is bigger and then do exactly the same thing but with different line. The code could easily be rewritten using an helper function `private boolean notEqualRank(Line l1, Line l2)` that should be used to set the boolean `bigmove`. Moreover l.318 the first line is splitted and the the second one. We could easily implement a `private void splitLine(Line l, int count, double [] m_param)` that could be used for both `line1` and `line2`. 
+* Mathieu : in `SegmentIntersector` l.291 they test whichi rank is bigger and then do exactly the same thing but with different line. The code could easily be rewritten using an helper function `private boolean notEqualRank(Line l1, Line l2)` that should be used to set the boolean `bigmove`.
+```java
+if (rank1 > rank2) {                               
+	bigmove = notEqualRank(line_1, line_2);
+} else {
+	bigmove = notEqualRank(line_2, line_1);
+}
+```
+Moreover l.318 the first line is splitted and the the second one. We could easily implement a `private void splitLine(Line l, int count, double [] m_param)` that could be used for both `line1` and `line2`. 
 * My :
 * Julian : 
   *`Clipper::checkSegmentIntersection_` works with different `cases`. The plan would be to break each section of code in each `case` into their own functions. This would how a great impact since a lot of the CC lies in the fact that the function has to be able to return 3 different values depending on the outcome for all cases. These new functions can be broken down into 1 new function that can handle all three cases but in order to lower the complexity of the new functions it would be best to have a new function for each case. The same applies for `SweepComparator::compareSegments`. Many parts of the function can be broken down into smaller functions. For example, there is a part of the function that checks the left edge and one part that checks the right edge. These parts are big contributors to the high CC. They can be broken down into their individual function. At the end of the code we have a group of `if`-statements that each call on other functions depending on what kind of check that needs to be done. So it is clear here that some work has previously been done in order to simplify the function.
@@ -273,7 +281,7 @@ Plan for refactoring complex code:
 * Henrik : 
 
 Estimated impact of refactoring (lower CC, but other drawbacks?).
-* Mathieu : 
+* Mathieu : The first proposition will reduce the CC by 2 and the second will reduce it by 8. But most of all, it will increase the readability of the function. A function that is more than 100 LOC with `if`s depth of 6 without documentation it is really hard to follow. For those two proposition I cannot find a drawback.
 * My :
 * Julian : `Clipper::checkSegmentIntersection_` will experience CC will drop to around 1/3 of what it had before. So a lower CC is applicable. Other drawbacks may be that it will be harder to understand the code. Since the documentation is not so extensive and there are no comments at the moment. It will be even more difficult for a new member to learn and understand how the function is executed. `SweepComparator::compareSegments` can also expect a large drop in CC due to the division into smaller functions. Compared to the `Clipper::checkSegmentIntersection_`, this function will be easier to follow since the name of the functions are much more straight forward.
 * Axel :
@@ -283,7 +291,7 @@ Estimated impact of refactoring (lower CC, but other drawbacks?).
 * Henrik : 
 
 Carried out refactoring (optional)
-* Mathieu : 
+* Mathieu : None.
 * My :
 * Julian : None.
 * Axel : None.
