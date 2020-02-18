@@ -32,7 +32,7 @@ These are the functions each group member has chosen to work with.
 Please write here if you used any other functions for the part about increasing coverage/writing tests. 
 * Mathieu : 
 * My :
-* Julian : test
+* Julian : 
 * Axel : `Boundary::hasNonEmptyBoundary`
 * Henrik : 
 
@@ -216,7 +216,7 @@ Is the complexity of the functions really necessary?
 * Mathieu : 
 * My :
 * Julian : 
-* Axel :
+* Axel : As mentioned before, I don't understand `WktParser::attributes_` in detail, though I get on a higher level what it is supposed to do. I can understand that most of this complexity is needed because there are a lot of different cases for how the attributes to be parsed can be formatted. There are however some improvements that can be made to decrease complexity.
 * Henrik : 
 
 Plan for refactoring complex code:
@@ -224,6 +224,38 @@ Plan for refactoring complex code:
 * My :
 * Julian : 
 * Axel :
+  * Simplify character-comparisons. In two of the `if`-statements in the `attributes_`-function the condition checks whether a character is equal to another character, like so:
+  ```java
+  if (m_wkt_string.charAt(m_end_token) == 'z'
+				|| m_wkt_string.charAt(m_end_token) == 'Z') { ... }
+  ```
+  Which can be simplified to:
+  ```java
+  if (m_wkt_string.toLowerCase().charAt(m_end_token) == 'z') { ... }
+  ```
+  * The last part of the function sets the current token type depending on what was parsed. This could be its own subroutine called from the function:
+  ```java
+  private void setCurrentTokenType(boolean m_b_has_zs, boolean m_b_has_ms) {
+      if (m_b_has_zs || m_b_has_ms) {
+        cf.setReachedBranch(8);
+        if (m_b_has_zs && !m_b_has_ms) { 
+          cf.setReachedBranch(9);
+          m_current_token_type = WktToken.attribute_z;
+        }
+        else if (m_b_has_ms && !m_b_has_zs) {
+          cf.setReachedBranch(10);
+          m_current_token_type = WktToken.attribute_m;
+        }
+        else {
+          cf.setReachedBranch(11);
+          m_current_token_type = WktToken.attribute_zm;
+        }
+      } else {
+        cf.setReachedBranch(12);
+        nextToken();
+      }
+    }
+  ```
 * Henrik : 
 
 Estimated impact of refactoring (lower CC, but other drawbacks?).
@@ -231,13 +263,16 @@ Estimated impact of refactoring (lower CC, but other drawbacks?).
 * My :
 * Julian : 
 * Axel :
+  * Simplifying character-comparisons reduces CC from 16 to 14.
+  * Breaking code into subroutine: reduces CC from 14 to 8.
+  * In total my suggestions would reduce CC by half (16 to 8) and make the code more readable.
 * Henrik : 
 
 Carried out refactoring (optional)
 * Mathieu : 
 * My :
 * Julian : 
-* Axel :
+* Axel : None.
 * Henrik : 
 
 git diff ...
@@ -245,5 +280,6 @@ git diff ...
 ## Overall experience
 
 What are your main take-aways from this project? What did you learn?
+* Axel : I haven't really worked that much with coverage before so it was interesting and a good experience. I particularly enjoyed implementing the manual coverage implementation, and seeing how the branch coverage went up when I added tests. A slightly unrelated take-away is that using the built-in editor in GitHub to collaborate on a report (without pull requests) is not a good idea, because sometimes your changes get lost in the void.
 
 Is there something special you want to mention here?
