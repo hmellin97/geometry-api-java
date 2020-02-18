@@ -25,7 +25,7 @@ Before we went with this project we looked at the Apache Commons library (Java) 
 These are the functions each group member has chosen to work with.
 * Mathieu : 
 * My : `PolygonUtils::testPointsOnPolyLine2D_` and `Envelope2D::clipLine`
-* Julian : 
+* Julian : `SweepComparator::compareSegments` and `Clipper::checkSegmentIntersection_`
 * Axel : `WktParser::attributes_` and `RelationalOperations::polygonTouchesPolygonImpl_`
 * Henrik : 
 
@@ -43,6 +43,7 @@ Please write here if you used any other functions for the part about increasing 
        * Mathieu : I have the same result computing the CC by hand or with `lizard`
        * My : I can not get the same results computing the CC by hand as I get using `lizard` for one function (clipLine, I get 15 but lizard says 22) but for the other function it is the same.
        * Axel : I get the same results (16) both with `lizard` and by hand.
+       * Julian : Yes I get exactly the same results by hand and with lizard.
    * Are the results clear?
        * Yes, it is very straightforward.
        * All the conditions in an `if`, a `for` or a `while` add 1 to the cyclomatic complexity. So if there are 10 conditions on arguments this will add ten to the cyclomatic complexity.
@@ -52,7 +53,7 @@ Please write here if you used any other functions for the part about increasing 
 2. Are the functions just complex, or also long?
     * Mathieu : The functions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
     * My : The functions I choose is both complex and long. The one with CC 22 has 106 LOC and the one with CC 16 has 43 LOC which is a lot less. The latter function contains a lot more loops (containing conditions) than the first one, which increases the cyclic complexity even though there are much fewer lines of code.
-    * Julian : 
+    * Julian : `SweepComparator::compareSegments` has CC 16 and LOC of 63. `Clipper::checkSegmentIntersection_` has CC 17 and LOC of 42. So one of them is cleary on the shorter end but has slightly higher complexity. 
     * Axel : `attributes_` has 34 LOC and `polygonTouchesPolygonImpl_` has 76 LOC (both have CC 16).
     * Henrik : `construct` has 81 LOC and `insertPath` has 67 LOC
 3. What is the purpose of the functions?
@@ -66,6 +67,9 @@ Please write here if you used any other functions for the part about increasing 
     * The problem with those functions is that they are not using some helper functions. All the code is written sequentially.
     * The goal of `construct` is to create a convex hull.
     * The goal of `insertPath` is to insert a vertex into a path.
+    * The goal of `SweepComparator::compareSegments` is to compare x values of the edge given by its origin (elm) and the edge in the sweep structure and checks them for intersection at the same time.
+    * The goal of `Clipper::checkSegmentIntersection_` is to say whether there is an intersection and if there is not an intersection, it will say whether it is on the inside or outside of the border. 
+    
 4. Are exceptions taken into account in the given measurements?
     * The `if` branch at the beginning of each function that test parameters and throws exceptions if the parameters are invalid are taken into account. However, almost no arguments is tested at the beginning of the functions so the ratio of exception is very low.
     * The `try...catch` also add 1 to the CC
@@ -74,7 +78,7 @@ Please write here if you used any other functions for the part about increasing 
 5. Is the documentation clear w.r.t. all the possible outcomes?
     * Mathieu : No, there is no documentation at all.
     * My : In one of the functions yes, in the other there is no documentation.
-    * Julian : 
+    * Julian : One of the function had a short comment but not too helpful. It did however help to understand the return values (0,1,-1) and their meaning. The other had no documentation or comments. 
     * Axel : No, there is close to no documentation at all. There are just two short comments, in one of the functions. The fact that variable names are cryptic doesn't help either.
     * Henrik : There are very few comments that explain what the functions does, which makes it hard to fully understand them.
 
@@ -136,7 +140,7 @@ COVERAGE RESULTS
 3. Are the results of your tool consistent with existing coverage tools?
     * Mathieu : For me it gives the same results
     * My : It gives the same results
-    * Julian : 
+    * Julian : Yes, they are. 
     * Axel : Yes, see the image below
     ![Coverage comparison for WktParser](https://i.imgur.com/oq26u3a.png)
     * Henrik : 
@@ -215,14 +219,14 @@ Can the functions you test be called directly or did you need to make them publi
 Is the complexity of the functions really necessary?
 * Mathieu : 
 * My :
-* Julian : 
+* Julian : For `Clipper::checkSegmentIntersection_` the complexity is necessary. It has a higher complexity since it needs to be able to handle the three different cases. In each case it needs to be able to identify whether to return 0, 1, -1. It can however be broken down into smaller functions and still achieve its purpose. 
 * Axel : As mentioned before, I don't understand `WktParser::attributes_` in detail, though I get on a higher level what it is supposed to do. I can understand that most of this complexity is needed because there are a lot of different cases for how the attributes to be parsed can be formatted. There are however some improvements that can be made to decrease complexity.
 * Henrik : 
 
 Plan for refactoring complex code:
 * Mathieu : 
 * My :
-* Julian : 
+* Julian : `Clipper::checkSegmentIntersection_` works with different `cases`. The plan would be to break each section of code in each `case` into their own functions. This would how a great impact since a lot of the CC lies in the fact that the function has to be able to return 3 different values depending on the outcome for all cases. These new functions can be broken down into 1 new function that can handle all three cases but in order to lower the complexity of the new functions it would be best to have a new function for each case. 
 * Axel :
   * Simplify character-comparisons. In two of the `if`-statements in the `attributes_`-function the condition checks whether a character is equal to another character, like so:
   ```java
@@ -261,7 +265,7 @@ Plan for refactoring complex code:
 Estimated impact of refactoring (lower CC, but other drawbacks?).
 * Mathieu : 
 * My :
-* Julian : 
+* Julian : `Clipper::checkSegmentIntersection_` will experience CC will drop to around 1/3 of what it had before. So a lower CC is applicable. Other drawbacks may be that it will be harder to understand the code. Since the documentation is not so extensive and there are no comments at the moment. It will be even more difficult for a new member to learn and understand how the function is executed. 
 * Axel :
   * Simplifying character-comparisons reduces CC from 16 to 14.
   * Breaking code into subroutine: reduces CC from 14 to 8.
@@ -271,7 +275,7 @@ Estimated impact of refactoring (lower CC, but other drawbacks?).
 Carried out refactoring (optional)
 * Mathieu : 
 * My :
-* Julian : 
+* Julian : None.
 * Axel : None.
 * Henrik : 
 
@@ -281,5 +285,6 @@ git diff ...
 
 What are your main take-aways from this project? What did you learn?
 * Axel : I haven't really worked that much with coverage before so it was interesting and a good experience. I particularly enjoyed implementing the manual coverage implementation, and seeing how the branch coverage went up when I added tests. A slightly unrelated take-away is that using the built-in editor in GitHub to collaborate on a report (without pull requests) is not a good idea, because sometimes your changes get lost in the void.
+* Julian : This was completely new for me so it was interesting to see how large programs are dealt with when collaborating with others. Coverage is also something that I now have opened my eyes for since I had not thought about testing in this manner. 
 
 Is there something special you want to mention here?
