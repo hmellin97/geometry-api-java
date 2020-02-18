@@ -52,7 +52,7 @@ Please write here if you used any other functions for the part about increasing 
        * At the end add 1 to have the cyclomatic complexity metric
 2. Are the functions just complex, or also long?
     * Mathieu : The functions are complex and long. The one with CC 30 has 84 LOC and the function with CC 37 has 110 LOC
-    * My : The functions I choose is both complex and long. The one with CC 15 has 50 LOC and the one with CC 16 has 43 LOC.
+    * My : The functions I chose are both complex and long. The one with CC 15 has 50 LOC and the one with CC 16 has 43 LOC.
     * Julian : `SweepComparator::compareSegments` has CC 16 and LOC of 63. `Clipper::checkSegmentIntersection_` has CC 17 and LOC of 42. So one of them is cleary on the shorter end but has slightly higher complexity. 
     * Axel : `attributes_` has 34 LOC and `polygonTouchesPolygonImpl_` has 76 LOC (both have CC 16).
     * Henrik : `construct` has 81 LOC and `insertPath` has 67 LOC
