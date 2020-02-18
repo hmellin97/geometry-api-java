@@ -160,13 +160,7 @@ TODO: branch coverage %?
 
 Show the comments that describe the requirements for the coverage.
 
-Report of old coverage:
-* Mathieu : 
-
-* Julian : 
-* Henrik : 
-
-Report of new coverage:
+#### Old and new Coverage
 * Mathieu : 
 * My :
     * old : `Envelope2D`: methods coverage 59%, line coverage 48%, function coverage 0% (not tests at all). `PolygonUtils`: method coverage 56%, line coverage 41%, function coverage 66.6%. Output from our coverage tool:
@@ -201,7 +195,7 @@ Report of new coverage:
 
 * Henrik : 
 
-Test cases added:
+#### Test cases added:
 * My : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the command `git diff My-DIY..My-test`.
 * Mathieu : The branch [mathieu-test](https://github.com/hmellin97/geometry-api-java/tree/mathieu-test) contains the added tests in the `TestLine` class. To easily display them use the command `git diff mathieu-diy..mathieu-test`.
 * Julian : 
@@ -209,7 +203,7 @@ Test cases added:
 * Henrik : 
 
 Can the functions you test be called directly or did you need to make them public?
-* Mathieu : 
+* Mathieu : The function are called directly because they are static
 * My : The functions are called directly.
 * Julian : 
 * Axel : I had to make `polygonTouchesPolygonImpl_` public, but `hasNonEmptyBoundary` can be called directly.
