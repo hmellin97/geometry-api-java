@@ -29,14 +29,13 @@ import com.esri.core.geometry.Geometry.Type;
 import junit.framework.TestCase;
 import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static com.esri.core.geometry.PolygonUtils.testPointsOnPolyline2D_;
 
 public class TestIntersect2 extends TestCase {
-	@AfterClass
-	public static void afterTestPolygon(){
-		CoverageTool.printCoverageResults();
-	}
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -45,13 +44,6 @@ public class TestIntersect2 extends TestCase {
 	@Override
 	protected void tearDown() throws Exception {
 		super.tearDown();
-	}
-	@Test
-	public void testPointsOnPolyLine2DTest(){
-		Polyline poly = new Polyline();
-		poly.m_impl.m_accelerators = new GeometryAccelerators();
-		testPointsOnPolyline2D_(poly, new Point2D[]{new Point2D()}, 1,
-				0.00000001, new PolygonUtils.PiPResult[]{null});
 	}
 
 	@Test

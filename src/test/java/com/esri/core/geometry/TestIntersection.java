@@ -24,15 +24,25 @@
 
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
 import junit.framework.TestCase;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import com.esri.core.geometry.PolygonUtils.PiPResult;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 //import java.util.Random;
 
+@RunWith(JUnit4.class)
 public class TestIntersection extends TestCase {
+	@AfterClass
+	public static void afterTestPolygon(){
+		CoverageTool.printCoverageResults();
+	}
+
 	static OperatorFactoryLocal projEnv = OperatorFactoryLocal.getInstance();
 	static int codeIn = 26910;// NAD_1983_UTM_Zone_10N : GCS 6269
 	static int codeOut = 32610;// WGS_1984_UTM_Zone_10N; : GCS 4326
@@ -576,6 +586,7 @@ public class TestIntersection extends TestCase {
 		polyline.lineTo(0, 10);
 		polyline.lineTo(20, 10);
 		polyline.lineTo(20, 0);
+		polyline.m_impl.m_accelerators = new GeometryAccelerators();
 		MultiPoint mp = new MultiPoint();
 		mp.add(0, 10, 7);
 		mp.add(0, 5, 7);
