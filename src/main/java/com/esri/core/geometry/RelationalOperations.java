@@ -4491,7 +4491,7 @@ class RelationalOperations {
 		return false;
 	}
 
-	private static boolean polygonTouchesPolygonImpl_(Polygon polygon_a,
+	public static boolean polygonTouchesPolygonImpl_(Polygon polygon_a,
 			Polygon polygon_b, double tolerance, ProgressTracker progressTracker) {
 		CoverageTool.CoverageFunction cf = CoverageTool.addFunction("RelationalOperations::polygonTouchesPolygonImpl_", 17);
 		cf.setReachedBranch(0);

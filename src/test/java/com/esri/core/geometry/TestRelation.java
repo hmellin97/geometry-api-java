@@ -306,6 +306,27 @@ public class TestRelation extends TestCase {
 	}
 
 	@Test
+	public void testNoTouchPolygonPolygon() {
+		Polygon pg = new Polygon();
+		pg.startPath(5, 5);
+		pg.lineTo(15, 5);
+		pg.lineTo(10, 15);
+
+		Polygon pg2 = new Polygon();
+		pg2.startPath(-5, 15);
+		pg2.lineTo(-15, 5);
+		pg2.lineTo(-10, 15);
+		SpatialReference sr = SpatialReference.create(4326);
+
+		final int tolerance = 1;
+		boolean isTouched;
+		boolean isTouched2;
+		isTouched = RelationalOperations.polygonTouchesPolygonImpl_(pg, pg2, tolerance, null);
+		isTouched2 = RelationalOperations.polygonTouchesPolygonImpl_(pg2, pg, tolerance, null);
+		assertFalse(isTouched && isTouched2);
+	}
+
+	@Test
 	public void testContainsFailureCR186456() {
 		{
 			OperatorContains op = (OperatorContains) (OperatorFactoryLocal
