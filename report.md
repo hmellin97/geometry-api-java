@@ -160,17 +160,17 @@ Show the comments that describe the requirements for the coverage.
 * Mathieu : 
     * old : Before the tests
 	```
-	* SegmentIntersector::intersect has 77.27272727272727% coverage, reached 34/44 branches.
-    		* The Branch ID that are not reached are [0, 4, 16, 17, 18, 19, 20, 21, 41, 42]
 	* Line::_intersectLineLine has 88.46153846153845% coverage, reached 46/52 branches.
     		* The Branch ID that are not reached are [5, 13, 22, 32, 39, 40]
+	* SegmentIntersector::intersect has 77.27272727272727% coverage, reached 34/44 branches.
+    		* The Branch ID that are not reached are [0, 4, 16, 17, 18, 19, 20, 21, 41, 42]
 	```
     * new : After the test for `SegmentIntersector::intersect` and `Line::_intersectLineLine`
 	```
-	* SegmentIntersector::intersect has 79.54545454545455% coverage, reached 35/44 branches.
-   		* The Branch ID that are not reached are [4, 16, 17, 18, 19, 20, 21, 41, 42]
  	* Line::_intersectLineLine has 98.07692307692307% coverage, reached 51/52 branches.
     		* The Branch ID that are not reached are [39]
+	* SegmentIntersector::intersect has 79.54545454545455% coverage, reached 35/44 branches.
+   		* The Branch ID that are not reached are [4, 16, 17, 18, 19, 20, 21, 41, 42]
 	```
 
 * My :
