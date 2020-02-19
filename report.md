@@ -32,7 +32,7 @@ These are the functions each group member has chosen to work with.
 Please write here if you used any other functions for the part about increasing coverage/writing tests. 
 * Mathieu : 
 * My :
-* Julian : 
+* Julian : `Envelope2D::_boundaryDistance` and `Envelope2D::merge`
 * Axel : `Boundary::hasNonEmptyBoundary`
 * Henrik : `Envelope3D::intersect` and `Envelope2D::_snapToBoundary`
 
@@ -191,7 +191,7 @@ Show the comments that describe the requirements for the coverage.
     		* The Branch ID that are not reached are [3, 11]
 	```
 * Julian : 
-   * old : `Envelope2D::` had 59% method coverage and 49% line coverage. Since my method `Envelope2D::_boundaryDistance` had no tests before, our coverage tool had nothing to show. `Envelope1D::` had 50% method coverage and 48% line coverage. `Envelope2D::merge` had no tests before, our coverage tool had nothing to show.
+   * old : `Envelope2D::` had 59% method coverage and 49% line coverage. Since my method `Envelope2D::_boundaryDistance` had no tests before, our coverage tool had nothing to show. `Envelope1D::` had 50% method coverage and 48% line coverage. `Envelope1D::merge` had no tests before, our coverage tool had nothing to show.
    * new : `Envelope2D::` now has 61% method coverage and 53% line coverage. `Envelope1D::` now has 54% method coverage and 63% line coverage. These are the results of the branch coverage from our own tool. 
    ```
    	* Envelope2D::_boundaryDistance has 85.71428571428571% coverage, reached 6/7 branches.
