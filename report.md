@@ -191,6 +191,8 @@ Show the comments that describe the requirements for the coverage.
     		* The Branch ID that are not reached are [3, 11]
 	```
 * Julian : 
+   * old : `Envelope2D::` had 59% method coverage and 49% line coverage. Since my method `Envelope2D::_boundaryDistance` had no tests before, our coverage tool had nothing to show. 
+   * new : `Envelope2D::` now has 61% method coverage and 53% line coverage.
 * Axel : 
    * old : `polygonTouchesPolygonImpl_`: The containing class has 97% method coverage and 85% line coverage. The function has 70.6% branch coverage and `hasNonEmptyBoundary` : The containing class has 87% method coverage and 65% line coverage. The function has 23% branch coverage
    	```
@@ -219,14 +221,14 @@ Show the comments that describe the requirements for the coverage.
 #### Test cases added:
 * My : The branch [My-test](https://github.com/hmellin97/geometry-api-java/tree/My-test) contains the added tests. To easily display them use the command `git diff My-DIY..My-test`.
 * Mathieu : The branch [mathieu-test](https://github.com/hmellin97/geometry-api-java/tree/mathieu-test) contains the added tests in the `TestLine` and `TestSegmentIntersector`class. To easily display them use the command `git diff mathieu-diy..mathieu-test`.
-* Julian : 
+* Julian : The branch [Julian-test](https://github.com/hmellin97/geometry-api-java/tree/Julian-test) contains the added tests. To easily display them use the command `git diff Julian-DIY..Julian-test`.
 * Axel : The branch [Axel-test](https://github.com/hmellin97/geometry-api-java/tree/Axel-test) contains the added tests. To easily display them use the command `git diff axel-manual-coverage..Axel-test`.
 * Henrik : The branch [henrik-test](https://github.com/hmellin97/geometry-api-java/tree/henrik-test) contains the added tests. To easily display them use the command `git diff henrik-DIY..henrik-test`.
 
 Can the functions you test be called directly or did you need to make them public?
 * Mathieu : The function are called directly because they are static
 * My : The functions are called directly.
-* Julian : 
+* Julian : The functions are called directly.
 * Axel : I had to make `polygonTouchesPolygonImpl_` public, but `hasNonEmptyBoundary` can be called directly.
 * Henrik : They were public so that was not a problem.
 
