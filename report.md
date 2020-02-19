@@ -62,8 +62,8 @@ Please write here if you used any other functions for the part about increasing 
       * The goal of `Line::_intersectLineLine` is to see if two lines intersect. If it is the case it returns the points that are in both lines
       * The goal of `SegmentIntersecot::intersect` is to determine if there is an intersection between a Point and a Segment with a certain `tolerance` where a Segment is a collection of line 
     * My : 
-      * The goal of `Envelope2D::clipLine` is to implement the Liang-Barsky algorithm for parametric line-clipping. The input parameters is: a start point and a end point. Depending on whether the points are within a given envelope, one of them will be modified and thus extending the line they create.
-      * The goal of `PolygonUtils::testPointsOnPolyLine2D_` is to determine if two points are on a "polyline".
+      * The goal of `Envelope2D::clipLine` is to implement the Liang-Barsky algorithm for parametric line-clipping. The input parameters is: a start point and a end point. Depending on whether the points are within a given envelope, one of them will be modified and thus extending the line they create. The function will return 0, 1, 2, 3, 4 depending on how the line is modified. 
+      * The goal of `PolygonUtils::testPointsOnPolyLine2D_` is to determine if two points are on a polyline.
     * Henrik :
       * The goal of `construct` is to create a convex hull.
       * The goal of `insertPath` is to insert a vertex into a path.
