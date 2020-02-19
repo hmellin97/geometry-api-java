@@ -191,8 +191,14 @@ Show the comments that describe the requirements for the coverage.
     		* The Branch ID that are not reached are [3, 11]
 	```
 * Julian : 
-   * old : `Envelope2D::` had 59% method coverage and 49% line coverage. Since my method `Envelope2D::_boundaryDistance` had no tests before, our coverage tool had nothing to show. 
-   * new : `Envelope2D::` now has 61% method coverage and 53% line coverage.
+   * old : `Envelope2D::` had 59% method coverage and 49% line coverage. Since my method `Envelope2D::_boundaryDistance` had no tests before, our coverage tool had nothing to show. `Envelope1D::` had 50% method coverage and 48% line coverage. `Envelope2D::merge` had no tests before, our coverage tool had nothing to show.
+   * new : `Envelope2D::` now has 61% method coverage and 53% line coverage. `Envelope1D::` now has 54% method coverage and 63% line coverage. These are the results of the branch coverage from our own tool. 
+   ```
+   	* Envelope2D::_boundaryDistance has 85.71428571428571% coverage, reached 6/7 branches.
+    		* The Branch ID that are not reached are [1]
+ 	* Envelope1D::merge has 100.0% coverage, reached 6/6 branches.
+    		* The Branch ID that are not reached are []
+  	```
 * Axel : 
    * old : `polygonTouchesPolygonImpl_`: The containing class has 97% method coverage and 85% line coverage. The function has 70.6% branch coverage and `hasNonEmptyBoundary` : The containing class has 87% method coverage and 65% line coverage. The function has 23% branch coverage
    	```
