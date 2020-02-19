@@ -229,7 +229,7 @@ Show the comments that describe the requirements for the coverage.
 
 Can the functions you test be called directly or did you need to make them public?
 * Mathieu : The function are called directly because they are static
-* My : The functions are called directly.
+* My : One function is called directly, the other is called by calling another function that later calls that function.
 * Julian : The functions are called directly.
 * Axel : I had to make `polygonTouchesPolygonImpl_` public, but `hasNonEmptyBoundary` can be called directly.
 * Henrik : They were public so that was not a problem.
@@ -340,8 +340,6 @@ Carried out refactoring (optional)
 * Axel : None.
 * Henrik : None.
 
-git diff ...
-
 ## Overall experience
 
 What are your main take-aways from this project? What did you learn?
@@ -349,5 +347,6 @@ What are your main take-aways from this project? What did you learn?
 * Julian : This was completely new for me so it was interesting to see how large programs are dealt with when collaborating with others. Coverage is also something that I now have opened my eyes for since I had not thought about testing in this manner. 
 * Mathieu : It was my first experience with OpenSource and I was surprise by the fact that almost none of the functions were documented, that the function were really long without reason and without using other methods. Except that it was interesting to see how coverage work and to see where we can improve our code easily.
 * Henrik : It was good to learn about coverage and cyclic complexity. I was surprised to see that lizard worked so well at quickly analyzing your code like that. I also learned that open-source projects can be a hazzle to work with.
+* My : It was my first time working with OpenSource and coverage, and I agree with Mathieu that it was surprising that there where so little documentation. The coverage-part is my main take-away from this assignment, it was something I have never thought of and will probably use coverage tools in future projects of mine.
 
 Is there something special you want to mention here?
