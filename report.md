@@ -23,18 +23,18 @@ Before we went with this project we looked at the Apache Commons library (Java) 
 
 ## Chosen Functions
 These are the functions each group member has chosen to work with.
-* Mathieu : `Line::_intersectLineLine` and `SegmentIntersecot::intersect`
-* My : `PolygonUtils::testPointsOnPolyLine2D_` and `Envelope2D::clipLine`
-* Julian : `SweepComparator::compareSegments` and `Clipper::checkSegmentIntersection_`
-* Axel : `WktParser::attributes_` and `RelationalOperations::polygonTouchesPolygonImpl_`
-* Henrik : `MultiPathImpl::insertPath` and `ConvexHull::construct`
+* Mathieu : [`Line::_intersectLineLine`](https://github.com/hmellin97/geometry-api-java/blob/mathieu-diy/src/main/java/com/esri/core/geometry/Line.java) and [`SegmentIntersecot::intersect`](https://github.com/hmellin97/geometry-api-java/blob/mathieu-diy/src/main/java/com/esri/core/geometry/SegmentIntersector.java)
+* My : [`PolygonUtils::testPointsOnPolyLine2D_`](https://github.com/hmellin97/geometry-api-java/blob/My-test/src/main/java/com/esri/core/geometry/PolygonUtils.java) and [`Envelope2D::clipLine`](https://github.com/hmellin97/geometry-api-java/blob/My-test/src/main/java/com/esri/core/geometry/Envelope2D.java)
+* Julian : [`SweepComparator::compareSegments`](https://github.com/hmellin97/geometry-api-java/blob/Julian-DIY/src/main/java/com/esri/core/geometry/SweepComparator.java) and [`Clipper::checkSegmentIntersection_`](https://github.com/hmellin97/geometry-api-java/blob/Julian-DIY/src/main/java/com/esri/core/geometry/Clipper.java)
+* Axel : `WktParser::attributes_` and [`RelationalOperations::polygonTouchesPolygonImpl_`](https://github.com/hmellin97/geometry-api-java/blob/Axel-test/src/main/java/com/esri/core/geometry/RelationalOperations.java)
+* Henrik : [`MultiPathImpl::insertPath`](https://github.com/hmellin97/geometry-api-java/blob/henrik-test/src/main/java/com/esri/core/geometry/MultiPathImpl.java) and [`ConvexHull::construct`](https://github.com/hmellin97/geometry-api-java/blob/henrik-test/src/main/java/com/esri/core/geometry/ConvexHull.java)
 
 Please write here if you used any other functions for the part about increasing coverage/writing tests. 
 * Mathieu : -
 * My : -
-* Julian : `Envelope2D::_boundaryDistance` and `Envelope2D::merge`
+* Julian : [`Envelope2D::_boundaryDistance`](https://github.com/hmellin97/geometry-api-java/blob/Julian-test/src/main/java/com/esri/core/geometry/Envelope2D.java) and [`Envelope2D::merge`](https://github.com/hmellin97/geometry-api-java/blob/Julian-test/src/main/java/com/esri/core/geometry/Envelope2D.java)
 * Axel : `Boundary::hasNonEmptyBoundary`
-* Henrik : `Envelope3D::intersect` and `Envelope2D::_snapToBoundary`
+* Henrik : [`Envelope3D::intersect`](https://github.com/hmellin97/geometry-api-java/blob/henrik-test/src/main/java/com/esri/core/geometry/Envelope3D.java) and [`Envelope2D::_snapToBoundary`](https://github.com/hmellin97/geometry-api-java/blob/henrik-test/src/main/java/com/esri/core/geometry/Envelope2D.java)
 
 ## Complexity
 
