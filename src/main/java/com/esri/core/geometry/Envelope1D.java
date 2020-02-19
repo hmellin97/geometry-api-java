@@ -25,7 +25,11 @@
 
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 import java.io.Serializable;
+
+import static big.brain.CoverageTool.addFunction;
 
 /**
  * A 1-dimensional interval.
@@ -99,22 +103,33 @@ public final class Envelope1D implements Serializable {
 	}
 
 	public void merge(Envelope1D other) {
-		if (other.isEmpty())
+		CoverageTool.CoverageFunction cF = addFunction("Envelope1D::merge", 6);
+		cF.setReachedBranch(0);
+		if (other.isEmpty()) {
+			cF.setReachedBranch(1);
 			return;
+		}
 
 		if (isEmpty()) {
+			cF.setReachedBranch(2);
 			vmin = other.vmin;
 			vmax = other.vmax;
 			return;
 		}
 
-		if (vmin > other.vmin)
+		if (vmin > other.vmin) {
+			cF.setReachedBranch(3);
 			vmin = other.vmin;
-		if (vmax < other.vmax)
+		}
+		if (vmax < other.vmax) {
+			cF.setReachedBranch(4);
 			vmax = other.vmax;
+		}
 
-		if (vmin > vmax)
+		if (vmin > vmax) {
+			cF.setReachedBranch(5);
 			setEmpty();
+		}
 	}
 
 	public void mergeNE(double v) {

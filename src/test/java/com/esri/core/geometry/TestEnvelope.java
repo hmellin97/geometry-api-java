@@ -13,6 +13,8 @@
  */
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -21,6 +23,84 @@ import static org.junit.Assert.assertTrue;
 
 public class TestEnvelope
 {
+
+	@AfterClass
+	public static void afterAllTests() {
+		System.out.println("afterAllTests");
+		CoverageTool.printCoverageResults();
+	}
+
+
+	// Here we test merging a smaller one into a bigger envelope.
+	@Test
+	public void testMergeOne(){
+		Envelope1D envelope = new Envelope1D();
+		envelope.vmin = 14; envelope.vmax = 21;
+
+		Envelope1D envelopeOther = new Envelope1D();
+		envelopeOther.vmin = 10; envelopeOther.vmax = 22;
+
+		envelope.merge(envelopeOther);
+
+		assertEquals(22.0, envelope.vmax, 0.5);
+		assertEquals(10.0, envelope.vmin, 0.5);
+		//System.out.println(envelope.vmin);
+	}
+
+	// Here we test inserting a faulty envelope.
+	@Test
+	public void testMergeTwo(){
+		Envelope1D envelope = new Envelope1D();
+		envelope.vmin = 22; envelope.vmax = 21;
+
+		Envelope1D envelopeOther = new Envelope1D();
+		envelopeOther.vmin = 22; envelopeOther.vmax = 21;
+
+		envelope.merge(envelopeOther);
+
+		assertEquals(Double.NaN, envelope.vmax, 0.5);
+		assertEquals(Double.NaN, envelope.vmin, 0.5);
+		//assertEquals(null, envelope.vmin);
+		//System.out.println(envelope.vmin);
+	}
+
+	// Here we test merging an empty envelope with a filled one.
+	@Test
+	public void testMergeThree(){
+		Envelope1D envelope = new Envelope1D();
+		envelope.vmin = Double.NaN; envelope.vmax = Double.NaN;
+
+		Envelope1D envelopeOther = new Envelope1D();
+		envelopeOther.vmin = 21; envelopeOther.vmax = 22;
+
+		envelope.merge(envelopeOther);
+
+		assertEquals(22.0, envelope.vmax, 0.5);
+		assertEquals(21.0, envelope.vmin, 0.5);
+		//assertEquals(null, envelope.vmin);
+		//System.out.println(envelope.vmin);
+	}
+
+	// Here we test merging an empty envelope with a filled one.
+	@Test
+	public void testMergeFour(){
+		Envelope1D envelope = new Envelope1D();
+		envelope.vmin = 21; envelope.vmax = 22;
+
+		Envelope1D envelopeOther = new Envelope1D();
+		envelopeOther.vmin = Double.NaN; envelopeOther.vmax = Double.NaN;
+
+		envelope.merge(envelopeOther);
+
+		assertEquals(22.0, envelope.vmax, 0.5);
+		assertEquals(21.0, envelope.vmin, 0.5);
+		//assertEquals(null, envelope.vmin);
+		//System.out.println(envelope.vmin);
+	}
+
+
+
+
 	@Test
 	public void testIntersect() {
 		assertIntersection(new Envelope(0, 0, 5, 5), new Envelope(0, 0, 5, 5), new Envelope(0, 0, 5, 5));

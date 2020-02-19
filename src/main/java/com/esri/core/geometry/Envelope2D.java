@@ -24,10 +24,13 @@
 
 package com.esri.core.geometry;
 
+import big.brain.CoverageTool;
+
 import java.io.IOException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 
+import static big.brain.CoverageTool.addFunction;
 import static com.esri.core.geometry.SizeOf.SIZE_OF_ENVELOPE2D;
 
 /**
@@ -758,24 +761,35 @@ public final class Envelope2D implements Serializable {
 	// it is more efficient to perform ProjectToBoundary before using this
 	// function).
 	double _boundaryDistance(Point2D pt) {
-		if (isEmpty())
+
+		CoverageTool.CoverageFunction cF = addFunction("Envelope2D::_boundaryDistance", 7);
+		cF.setReachedBranch(0);
+
+		if (isEmpty()) {
+			cF.setReachedBranch(1);
 			return NumberUtils.NaN();
+		}
 
-		if (pt.x == xmin)
+		if (pt.x == xmin) {
+			cF.setReachedBranch(2);
 			return pt.y - ymin;
-
+		}
 		double height = ymax - ymin;
 		double width = xmax - xmin;
 
-		if (pt.y == ymax)
+		if (pt.y == ymax) {
+			cF.setReachedBranch(3);
 			return height + pt.x - xmin;
-
-		if (pt.x == xmax)
+		}
+		if (pt.x == xmax) {
+			cF.setReachedBranch(4);
 			return height + width + ymax - pt.y;
-
-		if (pt.y == ymin)
+		}
+		if (pt.y == ymin) {
+			cF.setReachedBranch(5);
 			return height * 2.0 + width + xmax - pt.x;
-
+		}
+		cF.setReachedBranch(6);
 		return _boundaryDistance(_snapToBoundary(pt));
 	}
 
