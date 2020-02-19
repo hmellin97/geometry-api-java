@@ -30,8 +30,8 @@ These are the functions each group member has chosen to work with.
 * Henrik : `MultiPathImpl::insertPath` and `ConvexHull::construct`
 
 Please write here if you used any other functions for the part about increasing coverage/writing tests. 
-* Mathieu : 
-* My :
+* Mathieu : -
+* My : -
 * Julian : `Envelope2D::_boundaryDistance` and `Envelope2D::merge`
 * Axel : `Boundary::hasNonEmptyBoundary`
 * Henrik : `Envelope3D::intersect` and `Envelope2D::_snapToBoundary`
@@ -154,7 +154,7 @@ The IntelliJ coverage tool reports 91% class coverage, 71% method coverage and 7
 
 TODO: branch coverage %?
 
-Show the comments that describe the requirements for the coverage.
+TODO: Show the comments that describe the requirements for the coverage.
 
 #### Old and new Coverage
 * Mathieu : 
