@@ -40,11 +40,7 @@ Please write here if you used any other functions for the part about increasing 
 
 1. What are your results for ten complex functions?
    * Did all tools/methods get the same result?
-       * Mathieu : I have the same result computing the CC by hand or with `lizard`
-       * My : Yes, they are the same!
-       * Axel : I get the same results (16) both with `lizard` and by hand.
-       * Julian : Yes I get exactly the same results by hand and with lizard.
-       * Henrik: Yes I got 17 on both.
+       * We all get the same results with `lizard` and by hand
    * Are the results clear?
        * Yes, it is very straightforward.
        * All the conditions in an `if`, a `for` or a `while` add 1 to the cyclomatic complexity. So if there are 10 conditions on arguments this will add ten to the cyclomatic complexity.
